@@ -1,4 +1,4 @@
 node_modules
 test-key.pem
 test.txt
-,gitignore
+.env
