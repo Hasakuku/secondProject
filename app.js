@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors");
+
+
 dotenv.config();
 
 var indexRouter = require('./routes/index');
@@ -31,7 +33,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 스웨거
+const { swaggerUi, specs } = require('./modules/swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use('/api', indexRouter);
+
 // app.use('/users', usersRouter);
 
 // // catch 404 and forward to error handler
