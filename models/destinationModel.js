@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const destinationSchema = new Schema({
+   lodgingId:{type: Schema.Types.ObjectId, ref:'Lodging'},
    name: { type: String, required: true, unique: true }, // 여행지
    country: { type: String, required: true }, // 국가
    city: { type: String, required: true }, // 도시

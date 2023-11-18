@@ -16,6 +16,7 @@ const roomSchema = new Schema({
 });
 
 const lodgingSchema = new Schema({
+   destinationId: {type: Schema.Types.ObjectId, ref:'Destination'},
    types: { // 숙소 유형
       type: String,
       enum: ['hotel', 'apart', 'motel', 'hostel', 'guestHouse'],
