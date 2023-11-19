@@ -1,22 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
-const roomSchema = new Schema({
-   name: { type: String, required: true }, // 객실 이름
-   type: { type: String, required: true }, // 유형 (예시: 싱글룸, 더블룸 등)
-   price: { type: Number, required: true }, // 1박 요금
-   capacity: { type: Number, required: true }, // 수용 가능 인원
-   bedType: { type: String, required: true }, // 침대 유형 (예시: 킹 사이즈, 퀸 사이즈 등)
-   size: { type: Number, required: true }, // 방의 크기 (단위: m^2)
-   floor: { type: Number, required: true }, // 방이 위치한 층수
-   amenities: { type: [String] }, // 제공되는 편의 시설 (예시: 와이파이, 에어컨 등)
-   status: { type: Boolean, default: false }, // 예약가능 여부
-},{
-   timestamps: true
-});
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const lodgingSchema = new Schema({
-   destinationId: {type: Schema.Types.ObjectId, ref:'Destination'},
+   lodgingId: { type: Number, required: true },
+   destination: { type: Schema.Types.ObjectId, ref: 'Destination' }, // 여행지
    types: { // 숙소 유형
       type: String,
       enum: ['hotel', 'apart', 'motel', 'hostel', 'guestHouse'],
@@ -24,8 +12,13 @@ const lodgingSchema = new Schema({
    },
    theme: { type: String }, // 숙소 테마 (예시: 온천호텔, 야경 명소)
    name: { type: String, required: true }, // 숙소 이름
-   address: { type: String, required: true }, // 숙소 주소
-   rooms: [roomSchema], // 객실 목록
+   address: {
+      city: { type: String }, // 시
+      county: { type: String }, // 군
+      district: { type: String }, // 구
+      detail: { type: String }, // 상세
+   },
+   rooms: [{ type: Schema.Types.ObjectId, ref: 'Room', required: true }], // 객실 목록
    map: {
       latitude: { type: Number }, // 위도
       longitude: { type: Number }, // 경도
@@ -33,12 +26,19 @@ const lodgingSchema = new Schema({
    option: [{ // 서비스&편의시설
       category: { type: String, required: true }, // 옵션의 카테고리 (예시: 프론트서비스 등)
       details: { type: [String] } // 옵션의 세부 사항(예시: 벨멘, 24시간서비스..)
-   }], 
+   }],
    image: { type: [String], required: true }, // 이미지 URL
+   mainImage: {
+      type: String,
+      default: function () {
+         return this.images.length > 0 ? this.images[this.images.length - 1] : null;
+      }
+   },
    description: { type: String, required: true }, //  설명
    review: { type: [Schema.Types.ObjectId], ref: 'Review', }, // 호텔 리뷰
 })
 
+lodgingSchema.plugin(AutoIncrement, { inc_field: 'lodgingId' });
 const Lodging = mongoose.model('Lodging', lodgingSchema);
 
 module.exports = Lodging;
@@ -52,3 +52,93 @@ module.exports = Lodging;
 // 비즈니스 서비스	회의실, 비즈니스 센터, 팩스/복사 서비스, 다목적실, 비즈니스 시설&서비스
 // 장애인 편의시설	계단없는 입구, 장애인 지원객, 점자안내
 // 안전 및 보안	공용공간 CCTV, 의무실, 구급상자, 소화기, 보안요원, 보안 경보기, 연기 감지기
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Lodging:
+ *       type: object
+ *       required:
+ *         - lodgingId
+ *         - name
+ *         - rooms
+ *         - image
+ *         - description
+ *       properties:
+ *         lodgingId:
+ *           type: number
+ *           description: The lodging ID
+ *         destination:
+ *           type: string
+ *           description: The ID of the destination
+ *         types:
+ *           type: string
+ *           enum: [hotel, apart, motel, hostel, guestHouse]
+ *           default: hotel
+ *           description: The type of the lodging
+ *         theme:
+ *           type: string
+ *           description: The theme of the lodging
+ *         name:
+ *           type: string
+ *           description: The name of the lodging
+ *         address:
+ *           type: object
+ *           properties:
+ *             city:
+ *               type: string
+ *               description: The city of the lodging
+ *             county:
+ *               type: string
+ *               description: The county of the lodging
+ *             district:
+ *               type: string
+ *               description: The district of the lodging
+ *             detail:
+ *               type: string
+ *               description: The detailed address of the lodging
+ *         rooms:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The list of room IDs
+ *         map:
+ *           type: object
+ *           properties:
+ *             latitude:
+ *               type: number
+ *               description: The latitude of the lodging
+ *             longitude:
+ *               type: number
+ *               description: The longitude of the lodging
+ *         option:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               category:
+ *                 type: string
+ *                 description: The category of the option
+ *               details:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: The details of the option
+ *         image:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The URLs of the images
+ *         mainImage:
+ *           type: string
+ *           description: The URL of the main image
+ *         description:
+ *           type: string
+ *           description: The description of the lodging
+ *         review:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The list of review IDs
+ */
