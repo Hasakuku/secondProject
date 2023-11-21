@@ -41,7 +41,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/findId:
+ * /users/findUser:
  *   get:
  *     summary: 사용자 찾기
  *     responses:
