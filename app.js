@@ -24,8 +24,9 @@ app.use(
     credentials: true, // 사용자 인증이 필요한 리소스(쿠키 등) 접근
 }));
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+app.use(express.static("views"));
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -26,7 +26,7 @@ const airplaneSchema = new Schema({
       firstName: { type: String, required: true }, // 이름
       lastName: { type: String, required: true }, // 성
       gender: { type: String, required: true }, // 성별
-      birthDate: { type: Date, required: true }, // 생년월일
+      birthDay: { type: Date, required: true }, // 생년월일
       nationality: { type: String, required: true }, // 국적
       passportNumber: { type: String, required: true }, // 여권 번호
       passportExpiry: { type: Date, required: true } // 여권 만료일

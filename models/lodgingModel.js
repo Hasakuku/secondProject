@@ -4,13 +4,14 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const lodgingSchema = new Schema({
    lodgingId: { type: Number, required: true },
-   destination: { type: Schema.Types.ObjectId, ref: 'Destination' }, // 여행지
+   attraction: { type: Schema.Types.ObjectId, ref: 'Attraction' }, // 관광지
    types: { // 숙소 유형
       type: String,
       enum: ['hotel', 'apart', 'motel', 'hostel', 'guestHouse'],
       default: "hotel"
    },
-   theme: { type: String }, // 숙소 테마 (예시: 온천호텔, 야경 명소)
+   level: { type: Number, min: 0, max: 5, }, // 호텔일 경우 성급
+   theme: [{ type: String }], // 숙소 테마 (예시: 온천호텔, 야경 명소)
    name: { type: String, required: true }, // 숙소 이름
    address: {
       city: { type: String }, // 시
@@ -27,16 +28,20 @@ const lodgingSchema = new Schema({
       category: { type: String, required: true }, // 옵션의 카테고리 (예시: 프론트서비스 등)
       details: { type: [String] } // 옵션의 세부 사항(예시: 벨멘, 24시간서비스..)
    }],
-   image: { type: [String], required: true }, // 이미지 URL
+   image: [{ type: [String], required: true }], // 이미지 URL
    mainImage: {
       type: String,
-      default: function () {
-         return this.images.length > 0 ? this.images[this.images.length - 1] : null;
-      }
    },
    description: { type: String, required: true }, //  설명
    review: { type: [Schema.Types.ObjectId], ref: 'Review', }, // 호텔 리뷰
 })
+lodgingSchema.pre('save', function (next) {
+   // 숙소 유형이 'hotel'이 아니면 level필드를 제거
+   if (this.types !== 'hotel') {
+      this.level = undefined;
+   }
+   next();
+});
 
 lodgingSchema.plugin(AutoIncrement, { inc_field: 'lodgingId' });
 const Lodging = mongoose.model('Lodging', lodgingSchema);

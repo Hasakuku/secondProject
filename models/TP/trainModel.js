@@ -14,20 +14,19 @@ const trainSchema = new Schema({
       enum: ['economy', 'premium'], // 좌석 등급
       required: true,
       number: { type: String, required: true }, // 좌석 번호
+      passenger: { // 승객 정보
+         firstName: { type: String, required: true }, // 이름
+         lastName: { type: String, required: true }, // 성
+         email: { type: String, required: true }, // 이메일
+         birthDay: { type: Date, required: true }, // 생년월일
+         region: { type: String, required: true }, // 지역
+      },
       fare: { // 요금 정보
-         adult: { type: Number, required: true, }, // 성인 
+         adult: { type: Number, }, // 성인 
          child: { type: Number, }, // 아동 
       },
    },
-   passenger: { // 승객 정보
-      firstName: { type: String, required: true }, // 이름
-      lastName: { type: String, required: true }, // 성
-      email: { type: String, required: true }, // 이메일
-      birthDate: { type: Date, required: true }, // 생년월일
-      region: { type: String, required: true } // 지역
-   }
 });
-
 
 trainSchema.plugin(AutoIncrement, { inc_field: 'trainId' });
 const Train = mongoose.model('Train', trainSchema);

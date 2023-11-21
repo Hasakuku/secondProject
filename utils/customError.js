@@ -1,72 +1,67 @@
 class CustomError extends Error {
-   constructor(code, message) {
-       super(message);
-       this.code = code;
-   }
+    constructor(status, message, name) {
+        super(message);
+        this.name = name;
+        this.status = status;
+    }
 }
 
-class NotFoundError extends Error {
-   constructor(message = 'Not found') {
-       super(message);
-       this.name = 'NotFoundError';
-       this.status = 404;
-   }
+class NotFoundError extends CustomError {
+    constructor(message) {
+        super(404, message, 'NotFoundError');
+    }
 }
 
-class BadRequestError extends Error {
-   constructor(message = 'Bad request') {
-       super(message);
-       this.name = 'BadRequestError';
-       this.status = 400;
-   }
+class BadRequestError extends CustomError {
+    constructor(message) {
+        super(400, message, 'BadRequestError');
+    }
 }
 
-class UnauthorizedError extends Error {
-   constructor(message = 'Unauthorized') {
-       super(message);
-       this.name = 'UnauthorizedError';
-       this.status = 401;
-   }
+class UnauthorizedError extends CustomError {
+    constructor(message) {
+        super(401, message, 'UnauthorizedError');
+    }
 }
 
-class ForbiddenError extends Error {
-   constructor(message = 'Forbidden') {
-       super(message);
-       this.name = 'ForbiddenError';
-       this.status = 403;
-   }
+class ForbiddenError extends CustomError {
+    constructor(message) {
+        super(403, message, 'ForbiddenError');
+    }
 }
 
-class InternalServerError extends Error {
-   constructor(message = 'Internal server error') {
-       super(message);
-       this.name = 'InternalServerError';
-       this.status = 500;
-   }
+class InternalServerError extends CustomError {
+    constructor(message) {
+        super(500, message, 'InternalServerError');
+    }
 }
 
-class ValidationError extends Error {
-   constructor(message = 'Validation failed') {
-       super(message);
-       this.name = 'ValidationError';
-       this.status = 422;
-   }
+class ValidationError extends CustomError {
+    constructor(message) {
+        super(422, message, 'ValidationError');
+    }
 }
 
-class DatabaseError extends Error {
-   constructor(message = 'Database error') {
-       super(message);
-       this.name = 'DatabaseError';
-       this.status = 500;
-   }
+class DatabaseError extends CustomError {
+    constructor(message) {
+        super(500, message, 'DatabaseError');
+    }
 }
 
-class NotModifiedError extends Error {
-   constructor(message = 'NotModified error') {
-       super(message);
-       this.name = 'NotModifiedError';
-       this.status = 304;
-   }
+class NotModifiedError extends CustomError {
+    constructor(message) {
+        super(304, message, 'NotModifiedError');
+    }
 }
 
-module.exports = { NotModifiedError, DatabaseError, ValidationError, InternalServerError, ForbiddenError, UnauthorizedError, BadRequestError, NotFoundError, CustomError }
+module.exports = {
+    NotModifiedError,
+    DatabaseError,
+    ValidationError,
+    InternalServerError,
+    ForbiddenError,
+    UnauthorizedError,
+    BadRequestError,
+    NotFoundError,
+    CustomError
+}
