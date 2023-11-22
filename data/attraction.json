@@ -1,0 +1,222 @@
+[
+   {
+       "attractionId": 1,
+       "lodging": "60d21b86b31de2d418296a68",
+       "types": "activity",
+       "name": "롯데월드",
+       "country": "KR",
+       "address": {
+           "city": "서울특별시",
+           "county": "송파구",
+           "district": "잠실동",
+           "detail": "올림픽로 240"
+       },
+       "map": {
+           "latitude": 37.5111,
+           "longitude": 127.0980
+       },
+       "phoneNumber": "02-411-2000",
+       "description": "롯데월드는 실내와 실외로 이루어진 대형 놀이공원입니다.",
+       "image": ["image1.jpg", "image2.jpg"],
+       "mainImage": "mainImage1.jpg",
+       "ticket": {
+           "adult": {
+               "price": 54000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "youth": {
+               "price": 47000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "child": {
+               "price": 43000,
+               "period": "1day",
+               "mandatoryTicket": true
+           }
+       },
+       "operatingTime": {
+           "open": "09:30",
+           "close": "22:00"
+       },
+       "recommendTourTime": 5,
+       "review": ["60d21b86b31de2d418296a69", "60d21b86b31de2d418296a70"]
+   },
+   {
+       "attractionId": 2,
+       "lodging": "60d21b86b31de2d418296a71",
+       "types": "landmark",
+       "name": "63빌딩",
+       "country": "KR",
+       "address": {
+           "city": "서울특별시",
+           "county": "영등포구",
+           "district": "여의도동",
+           "detail": "63로 50"
+       },
+       "map": {
+           "latitude": 37.5194,
+           "longitude": 126.9403
+       },
+       "phoneNumber": "02-789-5663",
+       "description": "63빌딩은 한강을 가로지르며 서울의 상징적인 랜드마크입니다.",
+       "image": ["image3.jpg", "image4.jpg"],
+       "mainImage": "mainImage2.jpg",
+       "ticket": {
+           "adult": {
+               "price": 15000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "youth": {
+               "price": 13000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "child": {
+               "price": 11000,
+               "period": "1day",
+               "mandatoryTicket": true
+           }
+       },
+       "operatingTime": {
+           "open": "10:00",
+           "close": "22:00"
+       },
+       "recommendTourTime": 2,
+       "review": ["60d21b86b31de2d418296a72", "60d21b86b31de2d418296a73"]
+   },
+   {
+       "attractionId": 3,
+       "lodging": "60d21b86b31de2d418296a74",
+       "types": "activity",
+       "name": "에버랜드",
+       "country": "KR",
+       "address": {
+           "city": "용인시",
+           "county": "처인구",
+           "district": "포곡읍",
+           "detail": "전대리 199"
+       },
+       "map": {
+           "latitude": 37.2935,
+           "longitude": 127.2024
+       },
+       "phoneNumber": "031-320-5000",
+       "description": "에버랜드는 대한민국 최대 규모의 테마파크입니다.",
+       "image": ["image5.jpg", "image6.jpg"],
+       "mainImage": "mainImage3.jpg",
+       "ticket": {
+           "adult": {
+               "price": 56000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "youth": {
+               "price": 47000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "child": {
+               "price": 44000,
+               "period": "1day",
+               "mandatoryTicket": true
+           }
+       },
+       "operatingTime": {
+           "open": "10:00",
+           "close": "21:00"
+       },
+       "recommendTourTime": 6,
+       "review": ["60d21b86b31de2d418296a75", "60d21b86b31de2d418296a76"]
+   },
+   {
+       "attractionId": 4,
+       "lodging": "60d21b86b31de2d418296a77",
+       "types": "landmark",
+       "name": "서울타워",
+       "country": "KR",
+       "address": {
+           "city": "서울특별시",
+           "county": "용산구",
+           "district": "용산동2가",
+           "detail": "남산공원길 105"
+       },
+       "map": {
+           "latitude": 37.5512,
+           "longitude": 126.9880
+       },
+       "phoneNumber": "02-3455-9277",
+       "description": "서울타워는 서울의 중심에 위치한 관광 명소입니다.",
+       "image": ["image7.jpg", "image8.jpg"],
+       "mainImage": "mainImage4.jpg",
+       "ticket": {
+           "adult": {
+               "price": 11000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "youth": {
+               "price": 9000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "child": {
+               "price": 7000,
+               "period": "1day",
+               "mandatoryTicket": true
+           }
+       },
+       "operatingTime": {
+           "open": "10:00",
+           "close": "23:00"
+       },
+       "recommendTourTime": 2,
+       "review": ["60d21b86b31de2d418296a78", "60d21b86b31de2d418296a79"]
+   },
+   {
+       "attractionId": 5,
+       "lodging": "60d21b86b31de2d418296a80",
+       "types": "activity",
+       "name": "코엑스 아쿠아리움",
+       "country": "KR",
+       "address": {
+           "city": "서울특별시",
+           "county": "강남구",
+           "district": "삼성동",
+           "detail": "영동대로 513"
+       },
+       "map": {
+           "latitude": 37.5131,
+           "longitude": 127.0590
+       },
+       "phoneNumber": "02-6002-6200",
+       "description": "코엑스 아쿠아리움은 다양한 수중 생물을 볼 수 있는 아쿠아리움입니다.",
+       "image": ["image9.jpg", "image10.jpg"],
+       "mainImage": "mainImage5.jpg",
+       "ticket": {
+           "adult": {
+               "price": 28000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "youth": {
+               "price": 25000,
+               "period": "1day",
+               "mandatoryTicket": true
+           },
+           "child": {
+               "price": 22000,
+               "period": "1day",
+               "mandatoryTicket": true
+           }
+       },
+       "operatingTime": {
+           "open": "10:00",
+           "close": "20:00"
+       },
+       "recommendTourTime": 3,
+       "review": ["60d21b86b31de2d418296a81", "60d21b86b31de2d418296a82"]
+   }
+]

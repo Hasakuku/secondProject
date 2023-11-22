@@ -5,7 +5,8 @@ const { InternalServerError } = require('../utils/customError')
 
 //인기 호텔 도시별 숙소 목록(4개)
 const getTopLodgings = asyncHandler(async (req, res) => {
-   const lodgings = await lodgingService.getTopLodgings();
+   const city = req.query.city
+   const lodgings = await lodgingService.getTopLodgings(city);
    res.json(lodgings);
 });
 

@@ -1,49 +1,82 @@
-[{
-   "_id": 1,
-   "user": "60c72b8f9f1b2c001f8e4d8d",
-   "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다.",
-   "rating": 5,
-   "image": "/images/review1.jpg",
-   "createdAt": "2023-11-18T13:57:18.000Z"
-},
-{
-   "_id": 2,
-   "user": "60c72b8f9f1b2c001f8e4d8e",
-   "content": "이 호텔의 위치는 최고였습니다. 주변에 많은 관광지가 있어서 편리했습니다.",
-   "rating": 4,
-   "image": "/images/review2.jpg",
-   "createdAt": "2023-11-18T14:00:00.000Z"
-},
-{
-   "_id": 3,
-   "user": "60c72b8f9f1b2c001f8e4d8f",
-   "content": "방이 너무 깨끗해서 좋았습니다. 다음에도 이용하고 싶네요.",
-   "rating": 5,
-   "image": "/images/review3.jpg",
-   "createdAt": "2023-11-18T14:05:00.000Z"
-},
-{
-   "_id": 4,
-   "user": "60c72b8f9f1b2c001f8e4d90",
-   "content": "직원들의 서비스가 인상적이었습니다. 매우 친절했습니다.",
-   "rating": 4,
-   "image": "/images/review4.jpg",
-   "createdAt": "2023-11-18T14:10:00.000Z"
-},
-{
-   "_id": 5,
-   "user": "60c72b8f9f1b2c001f8e4d91",
-   "content": "가격 대비 만족스러운 숙박이었습니다. 추천하고 싶네요.",
-   "rating": 5,
-   "image": "/images/review5.jpg",
-   "createdAt": "2023-11-18T14:15:00.000Z"
-},
-{
-   "_id": 6,
-   "user": "60c72b8f9f1b2c001f8e4d92",
-   "content": "아침식사가 훌륭했습니다. 다양한 메뉴가 있어서 좋았습니다.",
-   "rating": 4,
-   "image": "/images/review6.jpg",
-   "createdAt": "2023-11-18T14:20:00.000Z"
-}
+[
+   {
+       "reviewId": 1,
+       "user": "60d21b86b31de2d418296a68",
+       "content": "상품이 아주 마음에 듭니다.",
+       "rating": 5,
+       "image": "image1.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 2,
+       "user": "60d21b86b31de2d418296a69",
+       "content": "배송이 빨라서 좋았습니다.",
+       "rating": 4,
+       "image": "image2.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 3,
+       "user": "60d21b86b31de2d418296a70",
+       "content": "가격 대비 품질이 좋습니다.",
+       "rating": 4,
+       "image": "image3.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 4,
+       "user": "60d21b86b31de2d418296a71",
+       "content": "다음에 또 구매하려고 합니다.",
+       "rating": 5,
+       "image": "image4.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 5,
+       "user": "60d21b86b31de2d418296a72",
+       "content": "상품이 생각보다 작아서 아쉽습니다.",
+       "rating": 3,
+       "image": "image5.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 6,
+       "user": "60d21b86b31de2d418296a73",
+       "content": "색상이 화면과 다르게 도착했습니다.",
+       "rating": 2,
+       "image": "image6.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 7,
+       "user": "60d21b86b31de2d418296a74",
+       "content": "상품 설명이 부족한 것 같습니다.",
+       "rating": 3,
+       "image": "image7.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 8,
+       "user": "60d21b86b31de2d418296a75",
+       "content": "상품이 손상되어 도착했습니다.",
+       "rating": 1,
+       "image": "image8.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 9,
+       "user": "60d21b86b31de2d418296a76",
+       "content": "상품이 너무 마음에 들어요!",
+       "rating": 5,
+       "image": "image9.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   },
+   {
+       "reviewId": 10,
+       "user": "60d21b86b31de2d418296a77",
+       "content": "다음에 또 이용하려고 합니다.",
+       "rating": 5,
+       "image": "image10.jpg",
+       "createdAt": "2023-11-22T05:40:08Z"
+   }
 ]

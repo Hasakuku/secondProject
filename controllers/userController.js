@@ -5,8 +5,8 @@ const { InternalServerError } = require('../utils/customError')
 
 //회원가입
 const signup = asynchandler(async (req, res) => {
-   const { email, userName, password, birthDay, address, userRole } = req.body;
-   await userService.signup(email, userName, password, birthDay, address, userRole);
+   const { email, userName, password, birthDay, address, isAdmin } = req.body;
+   await userService.signup(email, userName, password, birthDay, address, isAdmin);
    res.json({ message: '회원 가입이 완료 되었습니다.' });
 });
 

@@ -1,34 +1,143 @@
-{
-   "destination": "60c72b8f9f1b2c001f8e4d8a",
-   "types": "hotel",
-   "theme": "온천호텔",
-   "name": "화성 온천호텔",
-   "address": "경기도 화성시 ",
-   "rooms": [
-      {
-         "name": "스탠다드 룸",
-         "price": 150000,
-         "description": "편안한 퀸 사이즈 침대가 있는 스탠다드 룸입니다."
-      }
-   ],
-   "map": {
-      "latitude": 37.19902,
-      "longitude": 127.05254
+[
+   {
+      "lodgingId": 1,
+      "attraction": "60d2c47e129b1854850ad3b1",
+      "types": "hotel",
+      "level": 5,
+      "theme": ["온천호텔", "야경 명소"],
+      "name": "호텔1",
+      "address": {
+         "city": "서울",
+         "county": "강남구",
+         "district": "삼성동",
+         "detail": "테헤란로 123"
+      },
+      "rooms": ["60d2c47e129b1854850ad3b2", "60d2c47e129b1854850ad3b3"],
+      "map": {
+         "latitude": 37.50802,
+         "longitude": 127.062835
+      },
+      "option": [
+         {
+            "category": "프론트서비스",
+            "details": ["벨멘", "24시간서비스"]
+         }
+      ],
+      "image": ["image1.jpg", "image2.jpg"],
+      "mainImage": "mainImage.jpg",
+      "description": "서울 강남구에 위치한 5성급 호텔입니다. 온천과 야경을 즐길 수 있습니다.",
+      "review": ["60d2c47e129b1854850ad3b4", "60d2c47e129b1854850ad3b5"]
    },
-   "option": [
-      {
-         "category": "프론트서비스",
-         "details": ["벨멘", "24시간서비스"]
-      }
-   ],
-   "image": [
-      "/hotel1.jpg",
-      "/hotel2.jpg",
-      "/hotel3.jpg"
-   ],
-   "description": "화성 온천호텔은 편안한 휴식을 즐길 수 있는 최고의 숙소입니다.",
-   "review": [
-      "60c72b8f9f1b2c001f8e4d8b",
-      "60c72b8f9f1b2c001f8e4d8c"
-   ]
-}
+   {
+      "lodgingId": 2,
+      "attraction": "60d2c47e129b1854850ad3b6",
+      "types": "apart",
+      "theme": ["가족여행", "비즈니스"],
+      "name": "아파트2",
+      "address": {
+         "city": "부산",
+         "county": "해운대구",
+         "district": "중동",
+         "detail": "해운대로 456"
+      },
+      "rooms": ["60d2c47e129b1854850ad3b7", "60d2c47e129b1854850ad3b8"],
+      "map": {
+         "latitude": 35.158697,
+         "longitude": 129.175899
+      },
+      "option": [
+         {
+            "category": "프론트서비스",
+            "details": ["24시간서비스"]
+         }
+      ],
+      "image": ["image3.jpg", "image4.jpg"],
+      "mainImage": "mainImage2.jpg",
+      "description": "부산 해운대구에 위치한 아파트입니다. 가족여행과 비즈니스에 적합합니다.",
+      "review": ["60d2c47e129b1854850ad3b9", "60d2c47e129b1854850ad3ba"]
+   },
+   {
+      "lodgingId": 3,
+      "attraction": "60d2c47e129b1854850ad3bb",
+      "types": "motel",
+      "theme": ["로맨틱", "커플"],
+      "name": "모텔3",
+      "address": {
+         "city": "제주",
+         "county": "제주시",
+         "district": "이도2동",
+         "detail": "연동로 789"
+      },
+      "rooms": ["60d2c47e129b1854850ad3bc", "60d2c47e129b1854850ad3bd"],
+      "map": {
+         "latitude": 33.499621,
+         "longitude": 126.531188
+      },
+      "option": [
+         {
+            "category": "프론트서비스",
+            "details": ["24시간서비스"]
+         }
+      ],
+      "image": ["image5.jpg", "image6.jpg"],
+      "mainImage": "mainImage3.jpg",
+      "description": "제주시에 위치한 모텔입니다. 로맨틱하고 커플에게 적합합니다.",
+      "review": ["60d2c47e129b1854850ad3be", "60d2c47e129b1854850ad3bf"]
+   },
+   {
+      "lodgingId": 4,
+      "attraction": "60d2c47e129b1854850ad3c0",
+      "types": "hostel",
+      "theme": ["백패커", "저렴한"],
+      "name": "호스텔4",
+      "address": {
+         "city": "인천",
+         "county": "중구",
+         "district": "운서동",
+         "detail": "공항대로 1234"
+      },
+      "rooms": ["60d2c47e129b1854850ad3c1", "60d2c47e129b1854850ad3c2"],
+      "map": {
+         "latitude": 37.460191,
+         "longitude": 126.440696
+      },
+      "option": [
+         {
+            "category": "프론트서비스",
+            "details": ["24시간서비스"]
+         }
+      ],
+      "image": ["image7.jpg", "image8.jpg"],
+      "mainImage": "mainImage4.jpg",
+      "description": "인천 중구에 위치한 호스텔입니다. 백패커와 저렴한 숙박을 찾는 분들에게 적합합니다.",
+      "review": ["60d2c47e129b1854850ad3c3", "60d2c47e129b1854850ad3c4"]
+   },
+   {
+      "lodgingId": 5,
+      "attraction": "60d2c47e129b1854850ad3c5",
+      "types": "guestHouse",
+      "theme": ["친절한", "편안한"],
+      "name": "게스트하우스5",
+      "address": {
+         "city": "광주",
+         "county": "북구",
+         "district": "용봉동",
+         "detail": "용봉로 5678"
+      },
+      "rooms": ["60d2c47e129b1854850ad3c6", "60d2c47e129b1854850ad3c7"],
+      "map": {
+         "latitude": 35.1601,
+         "longitude": 126.8536
+      },
+      "option": [
+         {
+            "category": "프론트서비스",
+            "details": ["24시간서비스"]
+         }
+      ],
+      "image": ["image9.jpg", "image10.jpg"],
+      "mainImage": "mainImage5.jpg",
+      "description": "광주 북구에 위치한 게스트하우스입니다. 친절하고 편안한 숙박을 원하는 분들에게 적합합니다.",
+      "review": ["60d2c47e129b1854850ad3c8", "60d2c47e129b1854850ad3c9"]
+   }
+]

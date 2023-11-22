@@ -33,7 +33,7 @@ const lodgingSchema = new Schema({
       type: String,
    },
    description: { type: String, required: true }, //  설명
-   review: { type: [Schema.Types.ObjectId], ref: 'Review', }, // 호텔 리뷰
+   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 호텔 리뷰
 })
 lodgingSchema.pre('save', function (next) {
    // 숙소 유형이 'hotel'이 아니면 level필드를 제거
@@ -74,7 +74,7 @@ module.exports = Lodging;
  *         lodgingId:
  *           type: number
  *           description: The lodging ID
- *         destination:
+ *         attraction:
  *           type: string
  *           description: The ID of the destination
  *         types:

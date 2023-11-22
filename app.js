@@ -26,10 +26,11 @@ app.use(
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-app.use(express.static("views"));
+
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.static("views"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -55,7 +56,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({ message: err.message });
 });
 
 const port = process.env.PORT || 3000;
