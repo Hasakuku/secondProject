@@ -8,7 +8,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /attractions:
+ * /api/attractions:
  *   get:
  *     summary: 추천 관광지
  *     parameters:
@@ -16,6 +16,7 @@ module.exports = router;
  *       name: city
  *       schema: {type: string}
  *       description: 도시
+ *       required: true
  *     responses:
  *       200:
  *         description: OK

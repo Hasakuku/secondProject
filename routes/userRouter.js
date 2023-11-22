@@ -11,7 +11,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/signup:
+ * /api/users/signup:
  *   post:
  *     summary: 사용자 등록
  *     requestBody:  
@@ -48,7 +48,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/login:
+ * /api/users/login:
  *   post:
  *     summary: 사용자 로그인
  *     requestBody:  
@@ -73,7 +73,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/logout:
+ * /api/users/logout:
  *   delete:
  *     summary: 사용자 로그아웃
  *     responses:
@@ -83,7 +83,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/findUser:
+ * /api/users/findUser:
  *   get:
  *     summary: 사용자 찾기
  *     requestBody:  

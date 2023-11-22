@@ -13,7 +13,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /lodgings/{lodgingId}:
+ * /api/lodgings/{lodgingId}:
  *   get:
  *     summary: 숙소 상세
  *     parameters:
@@ -86,9 +86,15 @@ module.exports = router;
 
 /**
  * @swagger
- * /lodgings:
+ * /api/lodgings:
  *   get:
  *     summary: 인기 숙소
+ *     parameters:
+ *       - in: query
+ *         name: city
+ *         schema: {type: string}
+ *         description: 특정 도시
+ *         required: true
  *     responses:
  *       200:
  *         description: OK
@@ -111,9 +117,44 @@ module.exports = router;
 
 /**
  * @swagger
- * /lodgings/search:
+ * /api/lodgings/search:
  *   get:
  *     summary: 검색후 숙소 목록
+ *     parameters:
+ *       - in: query
+ *         name: city
+ *         schema: {type: string}
+ *         description: 특정 도시
+ *         required: true
+ *       - in: query
+ *         name: checkInDate
+ *         schema: {type: string}
+ *         description: 체크인 날짜
+ *         required: true
+ *       - in: query
+ *         name: checkOutDate
+ *         schema: {type: string}
+ *         description: 체크아웃 날짜
+ *         required: true
+ *       - in: query
+ *         name: adults
+ *         schema: {type: number}
+ *         description: 성인 수
+ *         required: true
+ *       - in: query
+ *         name: children
+ *         schema: {type: number}
+ *         description: 어린이 수
+ *       - in: query
+ *         name: level
+ *         schema: {type: string}
+ *         description: 호텔 성급
+ *       - in: query
+ *         name: page
+ *         schema: {type: number}
+ *         description: 페이지 번호
+ *         required: true
+ *         
  *     responses:
  *       200:
  *         description: OK
