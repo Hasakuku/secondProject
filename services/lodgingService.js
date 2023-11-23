@@ -55,6 +55,7 @@ const lodgingServices = {
             console.log(minPriceRoom)
             return {
                lodgingId: lodging.lodgingId,
+               name: lodging.name,
                mainImage: lodging.mainImage,
                avgRating: lodging.avgRating,
                reviewCount: lodging.review.length,
@@ -65,7 +66,7 @@ const lodgingServices = {
    },
 
    //* 숙소 검색(1페이지당 20개)
-   async lodgingsList(city, checkInDate, checkOutDate, adults, children, level, page,) {
+   async lodgingsList(city, checkInDate, checkOutDate, adults, children, level, page, item) {
       // 특정 도시와 성급에 해당하는 숙소
       const selectCity = { 'address.city': city };
       if (level) selectCity.level >= level;
@@ -99,7 +100,7 @@ const lodgingServices = {
       })
       );
       //페이지 네이션
-      const perPage = 20;
+      const perPage = item;
       const start = (page - 1) * perPage;
       const end = page * perPage;
       const result = results.slice(start, end);

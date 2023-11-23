@@ -13,6 +13,7 @@ const lodgingSchema = new Schema({
    level: { type: Number, min: 0, max: 5, }, // 호텔일 경우 성급
    theme: [{ type: String }], // 숙소 테마 (예시: 온천호텔, 야경 명소)
    name: { type: String, required: true }, // 숙소 이름
+   country: { type: String, },
    address: {
       city: { type: String }, // 시
       county: { type: String }, // 군

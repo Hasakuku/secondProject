@@ -15,6 +15,7 @@ module.exports = router;
  *     - in: query
  *       name: city
  *       schema: {type: string}
+ *       example: "서울"
  *       description: 도시
  *       required: true
  *     responses:
@@ -30,4 +31,18 @@ module.exports = router;
  *                         avgRating: { type: number}
  *                         reviewCount: { type: number}
  *                         name: { type: string}
+ *                  example:
+ *                     {
+ *                      "attractionId": 2,
+ *                      "name": "63빌딩",
+ *                      "mainImage": "mainImage2.jpg",
+ *                      "reviewCount": 2,
+ *                       "avgRating": 4.5
+ *                      }
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  */

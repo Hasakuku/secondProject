@@ -5,7 +5,7 @@ const attractionService = {
     async getTopAttractions(city) {
         // 특정 도시 &리뷰 수가 10개 이상
         const attractions = await Attraction.find({
-            'address.city': city,
+            $or:[{ 'address.city': { $regex: city, $options: 'i' } }],
             'review.1': { $exists: true }
         }).populate('review');
         // 각 관광지의 평균 평점
@@ -25,6 +25,8 @@ const attractionService = {
                 name: attraction.name,
                 mainImage: attraction.mainImage,
                 reviewCount: attraction.review.length,
+                country: attraction.country,
+                address: attraction.address,
                 avgRating: attraction.avgRating,
             }));
         return topAttractions;

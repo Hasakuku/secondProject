@@ -20,6 +20,7 @@ module.exports = router;
  *       - in: path
  *         name: lodgingId
  *         required: true
+ *         example: 0
  *         schema:
  *           type: integer
  *     responses:
@@ -93,6 +94,7 @@ module.exports = router;
  *       - in: query
  *         name: city
  *         schema: {type: string}
+ *         example: 서울
  *         description: 특정 도시
  *         required: true
  *     responses:
@@ -104,10 +106,18 @@ module.exports = router;
  *                  type: object
  *                  properties:
  *                         lodgingId: {type: number}
+ *                         name: {type: string}
  *                         mainImage: {type: string}
  *                         avgRating: { type: number}
  *                         reviewCount: { type: number}
  *                         minPrice: { type: number}
+ *                  example:
+ *                     {lodgingId: 1,
+ *                      name: 호텔1,
+ *                       mainImage: mainImage.jpg,
+ *                       avgRating: 4.5,
+ *                       reviewCount: 2,
+ *                       minPrice: 100000}
  *   post:
  *     summary: 숙소 등록
  *     responses:
@@ -124,35 +134,48 @@ module.exports = router;
  *       - in: query
  *         name: city
  *         schema: {type: string}
+ *         example: 서울
  *         description: 특정 도시
  *         required: true
  *       - in: query
  *         name: checkInDate
  *         schema: {type: string}
+ *         example: 2023-11-22
  *         description: 체크인 날짜
  *         required: true
  *       - in: query
  *         name: checkOutDate
  *         schema: {type: string}
+ *         example: 2023-11-23
  *         description: 체크아웃 날짜
  *         required: true
  *       - in: query
  *         name: adults
  *         schema: {type: number}
+ *         example: 1
  *         description: 성인 수
  *         required: true
  *       - in: query
  *         name: children
  *         schema: {type: number}
+ *         example: 0
  *         description: 어린이 수
  *       - in: query
  *         name: level
  *         schema: {type: string}
+ *         example: 5
  *         description: 호텔 성급
  *       - in: query
  *         name: page
  *         schema: {type: number}
+ *         example: 1
  *         description: 페이지 번호
+ *         required: true
+ *       - in: query
+ *         name: item
+ *         schema: {type: number}
+ *         example: 20
+ *         description: 아이템 수
  *         required: true
  *         
  *     responses:
@@ -168,4 +191,10 @@ module.exports = router;
  *                          mainImage: { type: 'string' }
  *                          reviewCount: { type: 'number' }
  *                          averageRating: { type: 'number' }
+ *                  example:
+ *                     {"lodgingId": 1,
+ *                      "hotelName": "호텔1",
+ *                      "mainImage": "mainImage.jpg",
+ *                      "reviewCount": 2,
+ *                      "averageRating": 4.5}
  */
