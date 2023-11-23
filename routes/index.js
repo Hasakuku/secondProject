@@ -26,7 +26,7 @@ module.exports = router
  *         name: item
  *         schema:
  *           type: integer
- *         example: 4
+ *         example: 1
  *         description: 반환할 항목 수
  *     responses:
  *       200:

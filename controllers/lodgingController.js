@@ -20,6 +20,7 @@ const lodgingsList = asyncHandler(async (req, res) => {
       children,
       level,
       page,
+      item,
    } = req.query;
    const result = await lodgingService.lodgingsList(
       city,
@@ -29,6 +30,7 @@ const lodgingsList = asyncHandler(async (req, res) => {
       Number(children),
       Number(level),
       Number(page),
+      Number(item),
    );
    res.json(result);
 });
