@@ -23,6 +23,18 @@ module.exports = router
  *         example: 서울
  *         description: 검색 키워드
  *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         example: attraction
+ *         description: 검색할 유형
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *         description: 페이지 번호
+ *       - in: query
  *         name: item
  *         schema:
  *           type: integer
@@ -79,23 +91,7 @@ module.exports = router
  *             examples:
  *               lodgingsAndAttractions:
  *                 value:
- *                   {lodgings: [{
- *                       "lodgingId": "1",
- *                       "name": "호텔1",
- *                       "mainImage": "mainImage.jpg",
- *                       "avgRating": 4.5,
- *                       "reviewCount": 2,
- *                       "country": "KR",
- *                       "address": {
- *                         "city": "서울",
- *                         "county": "강남구",
- *                         "district": "삼성동",
- *                         "detail": "테헤란로 123"
- *                       },
- *                       "minPrice": 100000
- *                     }
- *                   ],
- *                   attractions: [
+ *                   {attractions: [
  *                     {
  *                       "attractionId": "1",
  *                       "name": "63빌딩",
