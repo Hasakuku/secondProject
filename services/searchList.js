@@ -5,7 +5,7 @@ const Attraction = require('../models/attractionModel')
 module.exports = asynchandler(async (req, res) => {
    const { keyword, item } = req.query
    const items = Number(item)
-   let result = [];
+
    // 주소, 이름, 나라 필드에서 키워드를 포함하는 숙소를 찾습니다.
    const findLodgings = await Lodging.find({
       $or: [
@@ -52,7 +52,7 @@ module.exports = asynchandler(async (req, res) => {
             minPrice: minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null
          };
       });
-   result.push(lodgings);
+
    // 관광지
    const findAttractions = await Attraction.find({
       $or: [
@@ -87,7 +87,6 @@ module.exports = asynchandler(async (req, res) => {
          };
       });
 
-   result.push(attractions);
-   res.json(result)
+   res.json({lodgings, attractions})
 })
 
