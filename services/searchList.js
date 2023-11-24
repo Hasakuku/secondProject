@@ -3,102 +3,110 @@ const Lodging = require('../models/lodgingModel');
 const Attraction = require('../models/attractionModel');
 const { BadRequestError } = require('../utils/customError');
 // 키워드를 받아 숙소를 검색하는 함수
+const findItems = async (Model, keyword, type) => {
+   let query = Model.find({
+      $or: [
+         { 'address.city': { $regex: keyword, $options: 'i' } },
+         { 'address.county': { $regex: keyword, $options: 'i' } },
+         { 'address.district': { $regex: keyword, $options: 'i' } },
+         { 'address.detail': { $regex: keyword, $options: 'i' } },
+         { name: { $regex: keyword, $options: 'i' } },
+         { country: { $regex: keyword, $options: 'i' } }
+      ]
+   }).populate('review');
+
+   if (type === 'lodging') {
+      query = query.populate({
+         path: 'rooms',
+         populate: {
+            path: 'roomType',
+            model: 'RoomType'
+         }
+      });
+   }
+
+   const items = await query.exec();
+   items.forEach(item => {
+      let totalRating = 0;
+      item.review.forEach(review => {
+         totalRating += review.rating;
+      });
+      item.avgRating = totalRating / item.review.length;
+   });
+   return items;
+};
+
+const mapItems = (items, start, end, type, sort) => {
+   const a = items
+      .slice(start, end)
+      .map(item => {
+         let minPrice = null;
+         if (type === 'lodging') {
+            const minPriceRoom = item.rooms.reduce(
+               (min, room) => room.roomType && room.roomType.price < min.roomType.price ? room : min, item.rooms[0]
+            );
+            minPrice = minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null;
+         }
+         if (type === 'attraction') {
+            minPrice = item.ticket.adult.price;
+         }
+         return {
+            id: item[`${type}Id`],
+            name: item.name,
+            mainImage: item.mainImage,
+            avgRating: (item.avgRating).toFixed(2),
+            reviewCount: item.review.length,
+            country: item.country,
+            address: item.address,
+            minPrice: minPrice
+         };
+      });
+   let sortedItems;
+   switch (sort) {
+      case 'price':
+         sortedItems = a.sort((a, b) => a.minPrice - b.minPrice);
+         break;
+      case 'rating':
+         sortedItems = a.sort((a, b) => b.avgRating - a.avgRating);
+         break;
+      case 'review':
+         sortedItems = a.sort((a, b) => b.reviewCount - a.reviewCount);
+         break;
+      default:
+         sortedItems = a;
+   }
+   return sortedItems
+};
+
 module.exports = asynchandler(async (req, res) => {
-   const { keyword, item, page, type } = req.query
-   // const items = Number(item)
+   const { keyword, item, page, type, sort } = req.query;
    const perPage = item;
    const start = (page - 1) * perPage;
    const end = page * perPage;
-   // 주소, 이름, 나라 필드에서 키워드를 포함하는 숙소를 찾습니다.
    let result = {};
+   let Model;
    switch (type) {
       case "lodging":
-         const findLodgings = await Lodging.find({
-            $or: [
-               { 'address.city': { $regex: keyword, $options: 'i' } },
-               { 'address.county': { $regex: keyword, $options: 'i' } },
-               { 'address.district': { $regex: keyword, $options: 'i' } },
-               { 'address.detail': { $regex: keyword, $options: 'i' } },
-               { name: { $regex: keyword, $options: 'i' } },
-               { country: { $regex: keyword, $options: 'i' } }
-            ]
-         }).populate('review').populate({
-            path: 'rooms',
-            populate: {
-               path: 'roomType',
-               model: 'RoomType'
-            }
-         }).exec();
-         findLodgings.forEach(lodging => {
-            let totalRating = 0;
-            lodging.review.forEach(review => {
-               totalRating += review.rating;
-            });
-            lodging.avgRating = totalRating / lodging.review.length;
-         });
-         // 상위 item개의 숙소
-         const lodgings = findLodgings
-            .sort((a, b) => b.avgRating - a.avgRating)
-            .slice(start, end)
-            // console.log(lodgings)
-            .map(lodging => {
-               // 객실 중 최저가
-               const minPriceRoom = lodging.rooms.reduce(
-                  (min, room) => room.roomType && room.roomType.price < min.roomType.price ? room : min, lodging.rooms[0]
-               );
-               console.log(minPriceRoom)
-               return {
-                  lodgingId: lodging.lodgingId,
-                  name: lodging.name,
-                  mainImage: lodging.mainImage,
-                  avgRating: lodging.avgRating,
-                  reviewCount: lodging.review.length,
-                  country: lodging.country,
-                  address: lodging.address,
-                  minPrice: minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null
-               };
-            });
-         result.lodgings = lodgings;
+         Model = Lodging;
          break;
       case "attraction":
-         // 관광지
-         const findAttractions = await Attraction.find({
-            $or: [
-               { 'address.city': { $regex: keyword, $options: 'i' } },
-               { 'address.county': { $regex: keyword, $options: 'i' } },
-               { 'address.district': { $regex: keyword, $options: 'i' } },
-               { 'address.detail': { $regex: keyword, $options: 'i' } },
-               { name: { $regex: keyword, $options: 'i' } },
-               { country: { $regex: keyword, $options: 'i' } }
-            ]
-         }).populate('review');
-         findAttractions.forEach(attraction => {
-            let totalRating = 0;
-            attraction.review.forEach(review => {
-               totalRating += review.rating;
-            });
-            attraction.avgRating = totalRating / attraction.review.length;
-         });
-         // 상위 item개의 숙소
-         const attractions = findAttractions
-            .sort((a, b) => b.avgRating - a.avgRating)
-            .slice(start, end)
-            .map(attraction => {
-               return {
-                  attractionId: attraction.lodgingId,
-                  name: attraction.name,
-                  mainImage: attraction.mainImage,
-                  avgRating: attraction.avgRating,
-                  reviewCount: attraction.review.length,
-                  address: attraction.address,
-                  country: attraction.country,
-               };
-            });
-         result.attractions = attractions;
+         Model = Attraction;
          break;
-         default: throw new BadRequestError('잘못된 타입입니다.')
+      case "airport":
+         Model = Airport;
+         break;
+      default:
+         const models = [Lodging, Attraction]; // 사용할 모델 목록
+         for (const model of models) {
+            const type = (model.modelName).toLowerCase()
+            const items = await findItems(model, keyword, type);
+            result[model.modelName] = mapItems(items, start, end, type, sort);
+         }
+         res.json(result);
+         return;
+      // default: throw new BadRequestError('잘못된 타입입니다.')
    }
+   const items = await findItems(Model, keyword, type);
+   result[type] = mapItems(items, start, end, type, sort);
    res.json(result)
-
-})
-
+});

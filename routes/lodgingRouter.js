@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/search', lodgingController.lodgingsList) // 검색후 숙소 목록
 router.get('/:lodgingId', lodgingController.getLodgingDetail) // 숙소 상세
-router.get('/', lodgingController.getTopLodgings) // 인기 숙소
+// router.get('/', lodgingController.getTopLodgings) // 인기 숙소
 router.post('/', lodgingController.registerLodging) // 숙소 등록
 
 
@@ -86,7 +86,7 @@ module.exports = router;
 
 
 /**
- * @swagger
+ * 
  * /api/lodgings:
  *   get:
  *     summary: 인기 숙소

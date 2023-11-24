@@ -3,12 +3,12 @@ const attractionController= require('../controllers/attractionController')
 const router = express.Router();
 
 router.get('/:attractionId', attractionController.getAttractionDetail)
-router.get('/', attractionController.getTopAttractions)
+// router.get('/', attractionController.getTopAttractions)
 
 module.exports = router;
 
 /**
- * @swagger
+ * 
  * /api/attractions:
  *   get:
  *     summary: 추천 관광지

@@ -24,25 +24,34 @@ module.exports = router
  *         schema:
  *           type: string
  *         example: 서울
- *         description: 검색 키워드
- *       - in: query
- *         name: type
- *         schema:
- *           type: string
- *         example: attraction
- *         description: 검색할 유형
+ *         description: "**검색 키워드**"
+ *         required: true
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
  *         example: 1
- *         description: 페이지 번호
+ *         description: "**페이지 번호**"
+ *         required: true
  *       - in: query
  *         name: item
  *         schema:
  *           type: integer
  *         example: 1
- *         description: 반환할 항목 수
+ *         description: "**반환할 항목 수**"
+ *         required: true
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         example: attraction
+ *         description: "**검색할 유형**\n\n-미입력시 모든 유형 반환"
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *         example: review
+ *         description: "**정렬기능**\n\n-미입력시 등록순으로 데이터 반환\n\n-리뷰수, 최저가격, 평균평점\n\n-[review, price, rating]"
  *     responses:
  *       200:
  *         description: 검색 결과를 성곡적으로 반환
