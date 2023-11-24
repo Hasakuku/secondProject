@@ -9,7 +9,7 @@ const router = express.Router();
 router.use('/users', userRouter);
 router.use('/lodgings', lodgingRouter);
 router.use('/attractions', attractionRouter);
-router.use('/airplane', airplaneRouter);
+// router.use('/airplane', airplaneRouter);
 router.get('/search', searchList)
 module.exports = router
 
