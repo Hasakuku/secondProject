@@ -20,7 +20,7 @@ module.exports = router;
  *       - in: path
  *         name: lodgingId
  *         required: true
- *         example: 0
+ *         example: 1
  *         schema:
  *           type: integer
  *     responses:

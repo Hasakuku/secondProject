@@ -1,5 +1,5 @@
 const asynchandler = require('express-async-handler')
-const attractionService = require('../services/attractionService')
+const airplaneService = require('../services/airplaneService')
 
 // 추천 여행지
 const getTopAttractions = asynchandler(async (req, res) => {
@@ -13,5 +13,6 @@ const getAttractionDetail = asynchandler(async (req, res) => {
    const attractionDetail = await attractionService.getAttractionDetail(attractionId);
    res.json(attractionDetail);
 })
-const attractionController = { getTopAttractions, getAttractionDetail };
-module.exports = attractionController
+const airplaneController = { getTopAttractions, getAttractionDetail };
+
+module.exports = airplaneController

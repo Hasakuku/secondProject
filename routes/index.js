@@ -2,19 +2,22 @@ const express = require('express');
 const userRouter = require('./userRouter');
 const lodgingRouter = require('./lodgingRouter');
 const attractionRouter = require('./attractionRouter');
+const airplaneRouter = require('./airplaneRouter');
 const searchList = require('../services/searchList')
 const router = express.Router();
 
 router.use('/users', userRouter);
 router.use('/lodgings', lodgingRouter);
 router.use('/attractions', attractionRouter);
+router.use('/airplane', airplaneRouter);
 router.get('/search', searchList)
 module.exports = router
+
 /**
  * @swagger
  * /api/search:
  *   get:
- *     summary: 키워드를 사용하여 숙소과 관광지 검색
+ *     summary: 키워드를 사용하여 숙소과 관광지등 목록 검색
  *     parameters:
  *       - in: query
  *         name: keyword

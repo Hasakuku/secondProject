@@ -65,7 +65,7 @@ const lodgingServices = {
       return lodgings;
    },
 
-   //* 숙소 검색(1페이지당 20개)
+   //* 숙소 상세 검색(1페이지당 20개)
    async lodgingsList(city, checkInDate, checkOutDate, adults, children, level, page, item) {
       // 특정 도시와 성급에 해당하는 숙소
       const selectCity = { 'address.city': city };

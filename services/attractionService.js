@@ -5,7 +5,7 @@ const attractionService = {
     async getTopAttractions(city) {
         // 특정 도시 &리뷰 수가 10개 이상
         const attractions = await Attraction.find({
-            $or:[{ 'address.city': { $regex: city, $options: 'i' } }],
+            $or: [{ 'address.city': { $regex: city, $options: 'i' } }],
             'review.1': { $exists: true }
         }).populate('review');
         // 각 관광지의 평균 평점
@@ -30,6 +30,17 @@ const attractionService = {
                 avgRating: attraction.avgRating,
             }));
         return topAttractions;
-    }
+    },
+    async getAttractionDetail(attractionID) {
+        // 숙소 정보 조회
+        const attraction = await Attraction.findOne({ attractionId: attractionID }).exec();
+        if (!attraction) {
+            throw new BadRequestError('숙소를 찾을 수 없습니다.');
+        }
+        console.log(attraction)
+        //반환값
+        const result = attraction
+        return result;
+    },
 }
 module.exports = attractionService;
