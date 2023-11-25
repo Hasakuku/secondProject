@@ -110,6 +110,9 @@ module.exports = router
  *                       "mainImage": "mainImage2.jpg",
  *                       "avgRating": 4.5,
  *                       "reviewCount": 2,
+ *                       "map": {
+ *                         "latitude": 37.2456,
+ *                         "longitude": 125.4154},
  *                       "address": {
  *                         "city": "서울특별시",
  *                         "county": "영등포구",

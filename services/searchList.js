@@ -57,6 +57,7 @@ const mapItems = (items, start, end, type, sort) => {
             avgRating: (item.avgRating).toFixed(2),
             reviewCount: item.review.length,
             country: item.country,
+            map: item.map,
             address: item.address,
             minPrice: minPrice
          };

@@ -22,7 +22,6 @@ const lodgingServices = {
          }
       }).exec();
       // 예약 가능한 객실 여부
-      // console.log(filteredLodgings)
       filteredLodgings.filter(lodging => {
          return lodging.rooms.some(room => {
             return (
@@ -46,13 +45,11 @@ const lodgingServices = {
       const lodgings = filteredLodgings
          .sort((a, b) => b.avgRating - a.avgRating)
          .slice(0, 4)
-         // console.log(lodgings)
          .map(lodging => {
             // 객실 중 최저가
             const minPriceRoom = lodging.rooms.reduce(
                (min, room) => room.roomType && room.roomType.price < min.roomType.price ? room : min, lodging.rooms[0]
             );
-            console.log(minPriceRoom)
             return {
                lodgingId: lodging.lodgingId,
                name: lodging.name,
@@ -78,7 +75,6 @@ const lodgingServices = {
             model: 'RoomType'
          }
       }).exec();
-      console.log(lodgings)
       // 체크인&아웃 날짜와 객실당 인원 수 
       const availableLodgings = lodgings.filter(lodging => {
          return lodging.rooms.some(room => {
