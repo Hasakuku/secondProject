@@ -2,6 +2,7 @@ const Lodging = require('../models/lodging/lodgingModel');
 const RoomType = require('../models/lodging/roomTypeModel');
 const Room = require('../models/lodging/roomModel');
 const LodgingReview = require('../models/lodging/LodgingReviewModel');
+const RoomBooking = require('../models/lodging/roomBookingModel');
 const { InternalServerError, BadRequestError } = require('../utils/customError')
 
 const lodgingServices = {
@@ -22,17 +23,17 @@ const lodgingServices = {
          }
       }).exec();
       // 예약 가능한 객실 여부
-      filteredLodgings.filter(lodging => {
-         return lodging.rooms.some(room => {
-            return (
-               room.roomBooking &&
-               !room.roomBooking.status
-               ||
-               room.roomBooking && (room.roomBooking.checkOutDate < today ||
-                  room.roomBooking.checkInDate > tomorrow)
-            );
-         });
-      });
+      for (let lodging of filteredLodgings) {
+         for (let room of lodging.rooms) {
+            const bookings = await RoomBooking.find({
+               room: room._id,
+               checkInDate: { $lt: tomorrow },
+               checkOutDate: { $gt: today },
+               bookingStatus: { $ne: 'cancelled' }
+            });
+            room.isAvailable = bookings.length === 0;
+         }
+      }
       // 각 숙소의 평균 평점 
       filteredLodgings.forEach(lodging => {
          let totalRating = 0;
@@ -79,9 +80,9 @@ const lodgingServices = {
       const availableLodgings = lodgings.filter(lodging => {
          return lodging.rooms.some(room => {
             return room.roomType.capacity >= adults + children &&
-               (!room.roomBooking.status ||
-                  room.roomBooking.checkOutDate < checkInDate ||
-                  room.roomBooking.checkInDate > checkOutDate);
+               (!room.status ||
+                  room.checkOutDate < checkInDate ||
+                  room.checkInDate > checkOutDate);
          });
       });
 
@@ -107,7 +108,7 @@ const lodgingServices = {
    //* 숙소 상세페이지
    async getLodgingDetail(lodgingID) {
       // 숙소 정보 조회
-      const lodging = await Lodging.findOne({ lodgingId: lodgingID }).populate('rooms');
+      const lodging = await Lodging.findOne({ lodgingId: lodgingID }).populate('rooms').populate('review');
       if (!lodging) {
          throw new BadRequestError('숙소를 찾을 수 없습니다.');
       }
@@ -136,7 +137,6 @@ const lodgingServices = {
    async createBooking(order) {
       const { roomId, roomType, roomNumber, floor, roomBooking } = order
       // const { checkInDate, checkOutDate, adults, children, bookingStatus } = roomBooking;
-      console.log(order.roomBooking)
       // 새로운 Room 인스턴스를 생성합니다.
       const newRoom = new Room({
          roomId: 101,
@@ -159,20 +159,16 @@ const lodgingServices = {
    },
 
    // 예약 상태 업데이트
-   async updateRoomBookingStatus(roomId, bookingInfo) {
-      const { checkInDate, checkOutDate, adults, children, bookingStatus } = bookingInfo;
+   async updateRoomBookingStatus(bookingInfo) {
+      const { roomBookingId, bookingStatus, status } = bookingInfo;
 
       // roomId에 해당하는 객실을 찾아 예약 상태를 업데이트
-      const updatedRoom = await Room.findOneAndUpdate(
-         { roomId: roomId },
+      const updatedRoom = await RoomBooking.findOneAndUpdate(
+         { roomBookingId: roomBookingId },
          {
             $set: {
-               'roomBooking.status': true,
-               'roomBooking.checkInDate': checkInDate,
-               'roomBooking.checkOutDate': checkOutDate,
-               'roomBooking.adults': adults,
-               'roomBooking.children': children,
-               'roomBooking.bookingStatus': bookingStatus,
+               status: status,
+               bookingStatus: bookingStatus,
             },
          },
          { new: true } // 업데이트된 문서를 반환
@@ -186,8 +182,8 @@ module.exports = lodgingServices
 
 // 최근 예약 객실 조회
 // const lastBookedRoom = lodging.rooms.reduce((lastRoom, room) => {
-//    if (!room.roomBooking.status) return lastRoom;
-//    if (!lastRoom || lastRoom.roomBooking.checkInDate < room.roomBooking.checkInDate) {
+//    if (!room.status) return lastRoom;
+//    if (!lastRoom || lastRoom.checkInDate < room.checkInDate) {
 //       return room;
 //    }
 //    return lastRoom;

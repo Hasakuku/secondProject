@@ -52,15 +52,15 @@ const registerLodging = asyncHandler(async (req, res) => {
    res.status(201).json({ message: '숙소가 성공적으로 등록되었습니다.' });
 })
 
-// 예약
+// 예약 생성
 const createBooking = asyncHandler(async (req, res) => {
    const newRoomBooking = new RoomBooking({
       user: "6551b296421c13b08b19fdf3",
       room: "655d96451116b641aa22f786",
-      roomBookingpo: 1,
+      roomBookingId: 2,
       status: false,
       checkInDate: new Date(2023, 11, 27),
-      checkOutDate: new Date(2023, 11, 30),
+      checkOutDate: new Date(2023, 11, 29),
       adults: 2,
       children: 1,
       bookingStatus: 'waiting'
@@ -71,7 +71,7 @@ const createBooking = asyncHandler(async (req, res) => {
    res.status(201).json({ message: '예약이 들어왔습니다.' });
 })
 
-//
+//예약 상태 수정
 const updateRoomBookingStatus = asyncHandler(async (req, res) => {
    const a = req.body;
    await lodgingService.updateRoomBookingStatus(a);

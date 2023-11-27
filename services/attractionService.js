@@ -32,8 +32,8 @@ const attractionService = {
         return topAttractions;
     },
     async getAttractionDetail(attractionID) {
-        // 숙소 정보 조회
-        const attraction = await Attraction.findOne({ attractionId: attractionID }).exec();
+        // 관광지 상세 조회
+        const attraction = await Attraction.findOne({ attractionId: attractionID }).populate('review').exec();
         if (!attraction) {
             throw new BadRequestError('숙소를 찾을 수 없습니다.');
         }

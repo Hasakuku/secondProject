@@ -4,7 +4,7 @@ const roomBookingSchema = new Schema({
    user: { type: Schema.Types.ObjectId, ref: 'User', },
    // passenger: {type:Schema.Types.ObjectId, ref: 'Passenger',},
    room: { type: Schema.Types.ObjectId, ref: 'Room', },
-   roomBookingpo: { type: Number, },
+   roomBookingId: { type: Number, },
    status: { type: Boolean, default: false }, // 예약 여부
    checkInDate: { type: Date, required: true }, // 체크인 날짜
    checkOutDate: { type: Date, required: true }, // 체크아웃 날짜
