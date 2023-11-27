@@ -1,7 +1,7 @@
-const Lodging = require('../models/lodgingModel');
-const RoomType = require('../models/roomTypeModel');
-const Room = require('../models/roomModel');
-const Review = require('../models/reviewModel');
+const Lodging = require('../models/lodging/lodgingModel');
+const RoomType = require('../models/lodging/roomTypeModel');
+const Room = require('../models/lodging/roomModel');
+const LodgingReview = require('../models/lodging/LodgingReviewModel');
 const { InternalServerError, BadRequestError } = require('../utils/customError')
 
 const lodgingServices = {
@@ -91,6 +91,7 @@ const lodgingServices = {
          lodgingId: lodging.lodgingId,
          hotelName: lodging.name,
          mainImage: lodging.mainImage,
+
          reviewCount: lodging.review.length,
          averageRating: lodging.review.reduce((sum, review) => sum + review.rating, 0) / lodging.review.length,
       })
@@ -131,6 +132,54 @@ const lodgingServices = {
       }
       return result;
    },
+   // 예약 생성
+   async createBooking(order) {
+      const { roomId, roomType, roomNumber, floor, roomBooking } = order
+      // const { checkInDate, checkOutDate, adults, children, bookingStatus } = roomBooking;
+      console.log(order.roomBooking)
+      // 새로운 Room 인스턴스를 생성합니다.
+      const newRoom = new Room({
+         roomId: 101,
+         roomNumber: 100,
+         floor: 100,
+         roomBooking: {
+            status: false,
+            checkInDate: new Date(2023, 11, 27),
+            checkOutDate: new Date(2023, 11, 30),
+            adults: 2,
+            children: 1,
+            bookingStatus: 'waiting'
+         },
+      });
+
+      // Room 인스턴스를 데이터베이스에 저장합니다.
+      const savedRoom = await newRoom.save();
+
+      return savedRoom;
+   },
+
+   // 예약 상태 업데이트
+   async updateRoomBookingStatus(roomId, bookingInfo) {
+      const { checkInDate, checkOutDate, adults, children, bookingStatus } = bookingInfo;
+
+      // roomId에 해당하는 객실을 찾아 예약 상태를 업데이트
+      const updatedRoom = await Room.findOneAndUpdate(
+         { roomId: roomId },
+         {
+            $set: {
+               'roomBooking.status': true,
+               'roomBooking.checkInDate': checkInDate,
+               'roomBooking.checkOutDate': checkOutDate,
+               'roomBooking.adults': adults,
+               'roomBooking.children': children,
+               'roomBooking.bookingStatus': bookingStatus,
+            },
+         },
+         { new: true } // 업데이트된 문서를 반환
+      );
+
+      return updatedRoom;
+   }
 }
 
 module.exports = lodgingServices

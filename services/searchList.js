@@ -1,6 +1,7 @@
 const asynchandler = require('express-async-handler')
-const Lodging = require('../models/lodgingModel');
-const Attraction = require('../models/attractionModel');
+const Lodging = require('../models/lodging/lodgingModel');
+const Attraction = require('../models/attraction/attractionModel');
+const Airplane = require('../models/flight/airplaneModel');
 const { BadRequestError } = require('../utils/customError');
 // 키워드를 받아 숙소를 검색하는 함수
 const findItems = async (Model, keyword, type) => {
@@ -24,8 +25,9 @@ const findItems = async (Model, keyword, type) => {
          }
       });
    }
-
+   
    const items = await query.exec();
+   console.log(items)
    items.forEach(item => {
       let totalRating = 0;
       item.review.forEach(review => {

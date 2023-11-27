@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const lodgingSchema = new Schema({
    lodgingId: { type: Number, required: true },
@@ -34,7 +33,7 @@ const lodgingSchema = new Schema({
       type: String,
    },
    description: { type: String, required: true }, //  설명
-   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 호텔 리뷰
+   review: [{ type: Schema.Types.ObjectId, ref: 'LodgingReview', }], // 호텔 리뷰
 })
 lodgingSchema.pre('save', function (next) {
    // 숙소 유형이 'hotel'이 아니면 level필드를 제거
@@ -44,7 +43,6 @@ lodgingSchema.pre('save', function (next) {
    next();
 });
 
-lodgingSchema.plugin(AutoIncrement, { inc_field: 'lodgingId' });
 const Lodging = mongoose.model('Lodging', lodgingSchema);
 
 module.exports = Lodging;

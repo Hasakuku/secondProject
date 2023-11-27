@@ -22,7 +22,7 @@ const options = {
       //    //schemes: (Optional) 가능한 통신 방식 ex) ["http"], ["https"], ["http", "https"]
       //    //defomotopms: (Optional) DB 모델 정의
    },
-   apis: ['./routes/*.js', './models/*.js', './models/TP/*.js',] // '../swagger/*', '../swagger/*.yaml'
+   apis: ['./routes/*.js', './models/*.js', './models/lodging/*.js','./models/flight/*.js','./models/attraction/*.js',] // '../swagger/*', '../swagger/*.yaml'
 };
 
 const specs = swaggerJsdoc(options);

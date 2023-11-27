@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 const ticketSchema = new Schema({
    adult: {
       price: { type: Number, default: 0 }, // 가격
@@ -45,12 +44,10 @@ const attractionSchema = new Schema({
       close: { type: String },
    }, // 운영시간
    recommendTourTime: { type: Number }, // 추천 관광시간/단위 시간
-   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 관광 리뷰
+   review: [{ type: Schema.Types.ObjectId, ref: 'AttractionReview',}], // 관광 리뷰
 });
 
-attractionSchema.plugin(AutoIncrement, { inc_field: 'attractionId' });
 const Attraction = mongoose.model('Attraction', attractionSchema);
-
 module.exports = Attraction;
 
 /**

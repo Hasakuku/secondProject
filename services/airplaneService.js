@@ -1,4 +1,4 @@
-const Airplane = require('../models/TP/airplaneModel');
+const Airplane = require('../models/flight/airplaneModel');
 
 const AirplaneService ={
    async airplaneList(city, checkInDate, checkOutDate, adults, children, level, page, item) {

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const airplaneSchema = new Schema({
    airplaneId: { type: Number, required: true }, // 비행기의 고유 ID
@@ -8,6 +7,7 @@ const airplaneSchema = new Schema({
    destination: { type: String, required: true }, // 도착지
    departureDate: { type: Date, required: true }, // 출발 날짜
    arrivalDate: { type: Date, required: true }, // 도착 날짜
+   
 
    flightType: { type: String, enum: ['one-way', 'round-trip'] }, // 비행 타입 (편도 또는 왕복)
    age: { type: String, enum: ['adult', 'child', 'infant'] }, // 승객의 연령대 (성인, 아동, 유아)
@@ -33,8 +33,6 @@ const airplaneSchema = new Schema({
    },
 });
 
-
-airplaneSchema.plugin(AutoIncrement, { inc_field: 'airplaneId' });
 const Airplane = mongoose.model('Airplane', airplaneSchema);
 
 module.exports = Airplane;

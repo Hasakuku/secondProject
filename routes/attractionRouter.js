@@ -3,6 +3,7 @@ const attractionController= require('../controllers/attractionController')
 const router = express.Router();
 
 router.get('/:attractionId', attractionController.getAttractionDetail)
+router.post('/', attractionController.createReview)
 // router.get('/', attractionController.getTopAttractions)
 
 module.exports = router;
@@ -48,7 +49,7 @@ module.exports = router;
  * @swagger
  * /api/attractions/{attractionId}:
  *   get:
- *     summary: 숙소 상세
+ *     summary: 관광지 상세
  *     parameters:
  *       - in: path
  *         name: attractionId

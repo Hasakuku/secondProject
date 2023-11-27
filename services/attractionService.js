@@ -1,4 +1,4 @@
-const Attraction = require('../models/attractionModel')
+const Attraction = require('../models/attraction/attractionModel')
 
 const attractionService = {
     //* 추천 여행지
@@ -37,7 +37,6 @@ const attractionService = {
         if (!attraction) {
             throw new BadRequestError('숙소를 찾을 수 없습니다.');
         }
-        console.log(attraction)
         //반환값
         const result = attraction
         return result;
