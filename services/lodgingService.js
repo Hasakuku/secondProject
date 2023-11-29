@@ -1,7 +1,7 @@
 const Lodging = require('../models/lodging/lodging');
 const RoomType = require('../models/lodging/roomType');
 const Room = require('../models/lodging/room');
-const LodgingReview = require('../models/lodging/LodgingReview');
+// const LodgingReview = require('../models/lodging/LodgingReview');
 const RoomBooking = require('../models/lodging/roomBooking');
 const { InternalServerError, BadRequestError } = require('../utils/customError')
 
