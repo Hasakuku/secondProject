@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const orderSchema = new Schema({
-	orderId: { type: Number, required: true },
 	user: { // 예약자
 		type: Schema.Types.ObjectId, // 회원 정보 
 		ref: 'User',
@@ -34,13 +32,11 @@ const orderSchema = new Schema({
 	timestamps: true
 })
 
-orderSchema.plugin(AutoIncrement, { inc_field: 'orderId' });
 const Order = mongoose.model('Order', orderSchema)
-
 module.exports = Order;
 
 /**
- * @swagger
+ * 
  * components:
  *   schemas:
  *     Order:

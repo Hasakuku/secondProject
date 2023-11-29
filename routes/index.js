@@ -2,15 +2,20 @@ const express = require('express');
 const userRouter = require('./userRouter');
 const lodgingRouter = require('./lodgingRouter');
 const attractionRouter = require('./attractionRouter');
-const airplaneRouter = require('./airplaneRouter');
-const searchList = require('../services/searchList')
+const flightRouter = require('./flightRouter');
+const { searchList, createReview, getUserReview, locationList } = require('../services/commonService')
 const router = express.Router();
 
 router.use('/users', userRouter);
 router.use('/lodgings', lodgingRouter);
 router.use('/attractions', attractionRouter);
-// router.use('/airplane', airplaneRouter);
+router.use('/flights', flightRouter);
+
 router.get('/search', searchList)
+router.get('/location', locationList)
+
+router.post('/review', createReview)
+router.get('/review', getUserReview)
 module.exports = router
 
 /**
@@ -123,3 +128,69 @@ module.exports = router
  *                     }
  *                   ]}
  */
+
+/**
+ * @swagger
+ * /api/location:
+ *   get:
+ *     summary: 위치 목록 
+ *     parameters:
+ *     responses:
+ *       200:
+ *         description: 위치 목록 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 locationId:
+ *                   type: number
+ *                   description: 위치 ID
+ *                 country:
+ *                   type: string
+ *                   description: 국가 이름
+ *                 province:
+ *                   type: string
+ *                   description: 지방 이름
+ *                 city:
+ *                   type: string
+ *                   description: 도시 이름
+ *                 map:
+ *                   type: object
+ *                   properties:
+ *                     latitude:
+ *                       type: number
+ *                       description: 위도
+ *                     longitude:
+ *                       type: number
+ *                       description: 경도
+ *                 airport:
+ *                   type: string
+ *                   format: ObjectId
+ *                   description: 공항 ID
+ *                 description:
+ *                   type: string
+ *                   description: 위치 설명
+ *                 image:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: 이미지 URL 리스트
+ *                 review:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: 리뷰 리스트
+ *               example:
+ *                 {"map": {
+ *                  "latitude": 37.5665,
+ *                  "longitude": 126.978
+ *                   },
+ *                  "image": [],
+ *                  "_id": "65665b151f3d0e674c67474b",
+ *                  "locationId": 1,
+ *                  "country": "대한민국",
+ *                  "city": "서울",
+ *                  "airport": "65665cdd65d9065a5de583d4"}
+ */
+

@@ -2,8 +2,7 @@ const express = require('express');
 const attractionController= require('../controllers/attractionController')
 const router = express.Router();
 
-router.get('/:attractionId', attractionController.getAttractionDetail)
-router.post('/', attractionController.createReview)
+router.get('/:attractionId', attractionController.getAttractionDetail) // 관광지 상세
 // router.get('/', attractionController.getTopAttractions)
 
 module.exports = router;

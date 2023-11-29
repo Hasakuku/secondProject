@@ -1,0 +1,514 @@
+[{
+  "_id": {
+    "$oid": "655d93d91116b641aa22f75a"
+  },
+  "lodgingId": 1,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a2"
+  },
+  "types": "hotel",
+  "level": 5,
+  "theme": [
+    "온천호텔",
+    "야경 명소"
+  ],
+  "name": "호텔1",
+  "country": "KR",
+  "location": {
+    "$oid": "656546083a90a56e2b2b709d"
+  },
+  "address": "서울좋아",
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f785"
+    },
+    {
+      "$oid": "655d96451116b641aa22f786"
+    },
+    {
+      "$oid": "655d96451116b641aa22f787"
+    },
+    {
+      "$oid": "655d96451116b641aa22f788"
+    }
+  ],
+  "map": {
+    "latitude": 37.50802,
+    "longitude": 127.062835
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "벨멘",
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image1.jpg",
+    "image2.jpg"
+  ],
+  "mainImage": "mainImage.jpg",
+  "description": "서울 강남구에 위치한 5성급 호텔입니다. 온천과 야경을 즐길 수 있습니다.",
+  "review": [
+    {
+      "$oid": "6566816423e06c5b72b3c7a6"
+    },
+    {
+      "$oid": "6566801754450d587f91182e"
+    },
+    {
+      "$oid": "655d94921116b641aa22f774"
+    },
+    {
+      "$oid": "655dc022022acfe5c721001b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655d93d91116b641aa22f75b"
+  },
+  "lodgingId": 2,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a2"
+  },
+  "types": "apart",
+  "theme": [
+    "가족여행",
+    "비즈니스"
+  ],
+  "name": "아파트2",
+  "country": "KR",
+  "address": {
+    "city": "부산",
+    "county": "해운대구",
+    "district": "중동",
+    "detail": "해운대로 456"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f789"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78a"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78b"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78c"
+    }
+  ],
+  "map": {
+    "latitude": 35.158697,
+    "longitude": 129.175899
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image3.jpg",
+    "image4.jpg"
+  ],
+  "mainImage": "mainImage2.jpg",
+  "description": "부산 해운대구에 위치한 아파트입니다. 가족여행과 비즈니스에 적합합니다.",
+  "review": [
+    {
+      "$oid": "655d94921116b641aa22f772"
+    },
+    {
+      "$oid": "655d94921116b641aa22f776"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655d93d91116b641aa22f75c"
+  },
+  "lodgingId": 3,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a2"
+  },
+  "types": "motel",
+  "theme": [
+    "로맨틱",
+    "커플"
+  ],
+  "name": "모텔3",
+  "country": "KR",
+  "address": {
+    "city": "제주",
+    "county": "제주시",
+    "district": "이도2동",
+    "detail": "연동로 789"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f785"
+    },
+    {
+      "$oid": "655d96451116b641aa22f786"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78d"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78e"
+    }
+  ],
+  "map": {
+    "latitude": 33.499621,
+    "longitude": 126.531188
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image5.jpg",
+    "image6.jpg"
+  ],
+  "mainImage": "mainImage3.jpg",
+  "description": "제주시에 위치한 모텔입니다. 로맨틱하고 커플에게 적합합니다.",
+  "review": [
+    {
+      "$oid": "655d94921116b641aa22f76f"
+    },
+    {
+      "$oid": "655d94921116b641aa22f773"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655d93d91116b641aa22f75d"
+  },
+  "lodgingId": 4,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a3"
+  },
+  "types": "hostel",
+  "theme": [
+    "백패커",
+    "저렴한"
+  ],
+  "name": "호스텔4",
+  "country": "KR",
+  "address": {
+    "city": "인천",
+    "county": "중구",
+    "district": "운서동",
+    "detail": "공항대로 1234"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f785"
+    },
+    {
+      "$oid": "655d96451116b641aa22f787"
+    },
+    {
+      "$oid": "655d96451116b641aa22f789"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78b"
+    }
+  ],
+  "map": {
+    "latitude": 37.460191,
+    "longitude": 126.440696
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image7.jpg",
+    "image8.jpg"
+  ],
+  "mainImage": "mainImage4.jpg",
+  "description": "인천 중구에 위치한 호스텔입니다. 백패커와 저렴한 숙박을 찾는 분들에게 적합합니다.",
+  "review": [
+    {
+      "$oid": "655dc022022acfe5c721001d"
+    },
+    {
+      "$oid": "655dc022022acfe5c7210020"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655d93d91116b641aa22f75e"
+  },
+  "lodgingId": 5,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a3"
+  },
+  "types": "guestHouse",
+  "theme": [
+    "친절한",
+    "편안한"
+  ],
+  "name": "게스트하우스5",
+  "country": "KR",
+  "location": {
+    "$oid": "656546083a90a56e2b2b709d"
+  },
+  "address": {
+    "city": "광주",
+    "county": "북구",
+    "district": "용봉동",
+    "detail": "용봉로 5678"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f786"
+    },
+    {
+      "$oid": "655d96451116b641aa22f788"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78a"
+    },
+    {
+      "$oid": "655d96451116b641aa22f78c"
+    }
+  ],
+  "map": {
+    "latitude": 35.1601,
+    "longitude": 126.8536
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image9.jpg",
+    "image10.jpg"
+  ],
+  "mainImage": "mainImage5.jpg",
+  "description": "광주 북구에 위치한 게스트하우스입니다. 친절하고 편안한 숙박을 원하는 분들에게 적합합니다.",
+  "review": [
+    {
+      "$oid": "655d94921116b641aa22f775"
+    },
+    {
+      "$oid": "655d94921116b641aa22f770"
+    },
+    {
+      "$oid": "655d94921116b641aa22f771"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655f6e884c744594d29c6c0e"
+  },
+  "lodgingId": 6,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a2"
+  },
+  "types": "hotel",
+  "level": 5,
+  "theme": [
+    "온천호텔",
+    "야경 명소"
+  ],
+  "name": "호텔2",
+  "country": "KR",
+  "address": {
+    "city": "서울",
+    "county": "강남구",
+    "district": "삼성동",
+    "detail": "테헤란로 123"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f785"
+    },
+    {
+      "$oid": "655d96451116b641aa22f786"
+    },
+    {
+      "$oid": "655d96451116b641aa22f787"
+    },
+    {
+      "$oid": "655d96451116b641aa22f788"
+    }
+  ],
+  "map": {
+    "latitude": 37.50802,
+    "longitude": 127.062835
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "벨멘",
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image1.jpg",
+    "image2.jpg"
+  ],
+  "mainImage": "mainImage.jpg",
+  "description": "서울 강남구에 위치한 5성급 호텔입니다. 온천과 야경을 즐길 수 있습니다.",
+  "review": [
+    {
+      "$oid": "655dc022022acfe5c721001f"
+    },
+    {
+      "$oid": "655dc022022acfe5c7210021"
+    },
+    {
+      "$oid": "655dc022022acfe5c7210023"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655f6e934c744594d29c6c0f"
+  },
+  "lodgingId": 7,
+  "attraction": {
+    "$oid": "655d99d01116b641aa22f7a2"
+  },
+  "types": "hotel",
+  "level": 5,
+  "theme": [
+    "온천호텔",
+    "야경 명소"
+  ],
+  "name": "호텔3",
+  "country": "KR",
+  "address": {
+    "city": "서울",
+    "county": "강남구",
+    "district": "삼성동",
+    "detail": "테헤란로 123"
+  },
+  "rooms": [
+    {
+      "$oid": "655d96451116b641aa22f785"
+    },
+    {
+      "$oid": "655d96451116b641aa22f786"
+    },
+    {
+      "$oid": "655d96451116b641aa22f787"
+    },
+    {
+      "$oid": "655d96451116b641aa22f788"
+    }
+  ],
+  "map": {
+    "latitude": 37.50802,
+    "longitude": 127.062835
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "벨멘",
+        "24시간서비스"
+      ]
+    }
+  ],
+  "image": [
+    "image1.jpg",
+    "image2.jpg"
+  ],
+  "mainImage": "mainImage.jpg",
+  "description": "서울 강남구에 위치한 5성급 호텔입니다. 온천과 야경을 즐길 수 있습니다.",
+  "review": [
+    {
+      "$oid": "655dc022022acfe5c721001a"
+    },
+    {
+      "$oid": "655dc022022acfe5c721001c"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6566796affe6222b71127246"
+  },
+  "attraction": {
+    "$oid": "605c17c4b392053daaa3c9a6"
+  },
+  "types": "hotel",
+  "level": 5,
+  "theme": [
+    "온천호텔",
+    "야경 명소"
+  ],
+  "name": "롯데호텔",
+  "location": {
+    "$oid": "605c17c4b392053daaa3c9a7"
+  },
+  "address": "서울특별시 중구 을지로 30",
+  "rooms": [
+    {
+      "$oid": "605c17c4b392053daaa3c9a8"
+    },
+    {
+      "$oid": "605c17c4b392053daaa3c9a9"
+    }
+  ],
+  "map": {
+    "latitude": 37.5650172,
+    "longitude": 126.9782914
+  },
+  "option": [
+    {
+      "category": "프론트서비스",
+      "details": [
+        "벨멘",
+        "24시간서비스"
+      ],
+      "_id": {
+        "$oid": "6566796affe6222b71127247"
+      }
+    }
+  ],
+  "image": [
+    [
+      "image1.jpg",
+      "image2.jpg",
+      "image3.jpg"
+    ]
+  ],
+  "mainImage": "mainImage.jpg",
+  "description": "롯데호텔은 서울 중심부에 위치하고 있으며, 최고의 서비스를 제공합니다.",
+  "review": [
+    {
+      "$oid": "605c17c4b392053daaa3c9aa"
+    },
+    {
+      "$oid": "605c17c4b392053daaa3c9ab"
+    }
+  ],
+  "__v": 0
+}]

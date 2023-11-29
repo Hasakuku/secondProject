@@ -1,8 +1,8 @@
-const Lodging = require('../models/lodging/lodgingModel');
-const RoomType = require('../models/lodging/roomTypeModel');
-const Room = require('../models/lodging/roomModel');
-const LodgingReview = require('../models/lodging/LodgingReviewModel');
-const RoomBooking = require('../models/lodging/roomBookingModel');
+const Lodging = require('../models/lodging/lodging');
+const RoomType = require('../models/lodging/roomType');
+const Room = require('../models/lodging/room');
+const LodgingReview = require('../models/lodging/LodgingReview');
+const RoomBooking = require('../models/lodging/roomBooking');
 const { InternalServerError, BadRequestError } = require('../utils/customError')
 
 const lodgingServices = {
@@ -92,7 +92,6 @@ const lodgingServices = {
          lodgingId: lodging.lodgingId,
          hotelName: lodging.name,
          mainImage: lodging.mainImage,
-
          reviewCount: lodging.review.length,
          averageRating: lodging.review.reduce((sum, review) => sum + review.rating, 0) / lodging.review.length,
       })
@@ -112,6 +111,12 @@ const lodgingServices = {
       if (!lodging) {
          throw new BadRequestError('숙소를 찾을 수 없습니다.');
       }
+      let totalRating = 0;
+      lodging.review.forEach(review => {
+         totalRating += review.rating;
+      });
+      lodging.avgRating = totalRating / lodging.review.length;
+      console.log(lodging.avgRating)
       const rooms = lodging.rooms;
       // 객실 유형 id 조회
       let roomTypeIds = [];
@@ -135,27 +140,36 @@ const lodgingServices = {
    },
    // 예약 생성
    async createBooking(order) {
-      const { roomId, roomType, roomNumber, floor, roomBooking } = order
-      // const { checkInDate, checkOutDate, adults, children, bookingStatus } = roomBooking;
+      const {
+         roomBookingId,
+         passenger,
+         room,
+         status,
+         checkInDate,
+         checkOutDate,
+         adults,
+         children,
+         request,
+         bookingStatus
+      } = order
       // 새로운 Room 인스턴스를 생성합니다.
-      const newRoom = new Room({
-         roomId: 101,
-         roomNumber: 100,
-         floor: 100,
-         roomBooking: {
-            status: false,
-            checkInDate: new Date(2023, 11, 27),
-            checkOutDate: new Date(2023, 11, 30),
-            adults: 2,
-            children: 1,
-            bookingStatus: 'waiting'
-         },
+      const newRoomBooking = new RoomBooking({
+         roomBookingId: roomBookingId,
+         passenger,
+         room,
+         status,
+         checkInDate,
+         checkOutDate,
+         adults,
+         children,
+         request,
+         bookingStatus
       });
 
       // Room 인스턴스를 데이터베이스에 저장합니다.
-      const savedRoom = await newRoom.save();
+      const savedRoomBooking = await newRoomBooking.save();
 
-      return savedRoom;
+      return savedRoomBooking;
    },
 
    // 예약 상태 업데이트

@@ -19,17 +19,12 @@ const ticketSchema = new Schema({
 })
 
 const attractionSchema = new Schema({
-   attractionId: { type: Number, required: true },
+   attractionId: { type: Number, required: true, unique: true },
    lodging: { type: Schema.Types.ObjectId, ref: 'Lodging' }, // 숙소 
    types: { type: String, enum: ['activity', 'landmark'], required: true },
    name: { type: String, unique: true }, // 여행지
-   country: { type: String, required: true }, // 국가KR,US
-   address: {
-      city: { type: String }, // 시
-      county: { type: String }, // 군
-      district: { type: String }, // 구
-      detail: { type: String }, // 상세
-   },
+   location: { type: Schema.Types.ObjectId, ref: 'Location' },
+   address: { type: String, required: true },
    map: {
       latitude: { type: Number }, // 위도
       longitude: { type: Number }, // 경도
@@ -44,7 +39,8 @@ const attractionSchema = new Schema({
       close: { type: String },
    }, // 운영시간
    recommendTourTime: { type: Number }, // 추천 관광시간/단위 시간
-   review: [{ type: Schema.Types.ObjectId, ref: 'AttractionReview',}], // 관광 리뷰
+   avgRating: Number,
+   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 관광 리뷰
 });
 
 const Attraction = mongoose.model('Attraction', attractionSchema);

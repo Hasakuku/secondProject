@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const lodgingSchema = new Schema({
-   lodgingId: { type: Number, required: true },
+   lodgingId: { type: Number, required: true, unique: true },
    attraction: { type: Schema.Types.ObjectId, ref: 'Attraction' }, // 관광지
    types: { // 숙소 유형
       type: String,
@@ -12,13 +12,8 @@ const lodgingSchema = new Schema({
    level: { type: Number, min: 0, max: 5, }, // 호텔일 경우 성급
    theme: [{ type: String }], // 숙소 테마 (예시: 온천호텔, 야경 명소)
    name: { type: String, required: true }, // 숙소 이름
-   country: { type: String, },
-   address: {
-      city: { type: String }, // 시
-      county: { type: String }, // 군
-      district: { type: String }, // 구
-      detail: { type: String }, // 상세
-   },
+   location: { type: Schema.Types.ObjectId, ref: 'Location', },
+   address: { type: String, required: true },
    rooms: [{ type: Schema.Types.ObjectId, ref: 'Room', required: true }], // 객실 목록
    map: {
       latitude: { type: Number }, // 위도
@@ -33,7 +28,8 @@ const lodgingSchema = new Schema({
       type: String,
    },
    description: { type: String, required: true }, //  설명
-   review: [{ type: Schema.Types.ObjectId, ref: 'LodgingReview', }], // 호텔 리뷰
+   avgRating: Number,
+   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 호텔 리뷰
 })
 lodgingSchema.pre('save', function (next) {
    // 숙소 유형이 'hotel'이 아니면 level필드를 제거
@@ -44,7 +40,6 @@ lodgingSchema.pre('save', function (next) {
 });
 
 const Lodging = mongoose.model('Lodging', lodgingSchema);
-
 module.exports = Lodging;
 
 // 호텔 옵션	상세

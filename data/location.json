@@ -1,0 +1,51 @@
+
+[
+   {
+      "country": "대한민국",
+      "city": "서울",
+      "map": {
+         "latitude": 37.5665,
+         "longitude": 126.9780
+      }
+   },
+   {
+      "country": "대한민국",
+      "city": "인천",
+      "map": {
+         "latitude": 37.4563,
+         "longitude": 126.7052
+      }
+   },
+   {
+      "country": "대한민국",
+      "city": "제주",
+      "map": {
+         "latitude": 33.4890,
+         "longitude": 126.4983
+      }
+   },
+   {
+      "country": "대한민국",
+      "city": "대구",
+      "map": {
+         "latitude": 35.8714,
+         "longitude": 128.6014
+      }
+   },
+   {
+      "country": "대한민국",
+      "city": "부산",
+      "map": {
+         "latitude": 35.1796,
+         "longitude": 129.0756
+      }
+   },
+   {
+      "country": "대한민국",
+      "city": "무안",
+      "map": {
+         "latitude": 34.9901,
+         "longitude": 126.4717
+      }
+   }
+]

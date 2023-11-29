@@ -34,7 +34,7 @@ const Train = mongoose.model('Train', trainSchema);
 module.exports = Train;
 
 /**
- * @swagger
+ * 
  * components:
  *   schemas:
  *     Train:

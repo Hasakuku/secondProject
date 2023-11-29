@@ -1,35 +1,27 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const userSchema = new Schema({
-    userId: { type: Number, required: true },
+    userId: { type: Number, required: true, unique: true },
     email: { type: String, required: true, unique: true }, // 이메일
     password: { type: String, required: true }, // 비밀번호
     name: { type: String, required: true }, // 이름
     phoneNumber: { type: String }, // 전화번호
-    orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }], // 사용자의 예약 목록
-    favorites: [{ // 즐겨찾기
-        type: Schema.Types.ObjectId,
-        ref: 'Attraction',
-        required: true,
-    }],
-    level: {
+    favorites: {// 즐겨찾기
+        attractions: [{ type: Schema.Types.ObjectId, ref: 'Attraction' }],
+    },
+    level: { // 사용자의 등급
         type: String,
         enum: ['silver', 'gold', 'platinum', 'diamond'],
         default: 'silver',
-    }, // 사용자의 등급
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }], // 사용자가 작성한 리뷰들
-    order: { type: Schema.Types.ObjectId, ref: 'Order' }, // 예약
+    },
     isAdmin: { type: Boolean, default: false }, // 관리자인지 여부 
     deleteAt: { type: Date, default: null }, // 계정 삭제 시간
 }, {
     timestamps: true
 });
 
-userSchema.plugin(AutoIncrement, { inc_field: 'userId' });
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;
 
 /**
@@ -39,7 +31,6 @@ module.exports = User;
  *     User:
  *       type: object
  *       required:
- *         - userId
  *         - email
  *         - password
  *         - name

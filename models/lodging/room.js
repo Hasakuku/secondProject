@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const roomSchema = new Schema({
-   roomId: { type: Number, required: true, },
+   roomId: { type: Number, required: true, unique: true },
    roomType: { type: Schema.Types.ObjectId, ref: 'RoomType', },
    roomNumber: { type: Number, required: true }, // 방번호
    floor: { type: Number, required: true }, // 방이 위치한 층수

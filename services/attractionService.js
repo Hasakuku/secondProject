@@ -1,5 +1,6 @@
-const Attraction = require('../models/attraction/attractionModel')
-
+const Attraction = require('../models/attraction/attraction')
+const AttractionReview = require('../models/attraction/attractionReview')
+const { InternalServerError, BadRequestError } = require('../utils/customError')
 const attractionService = {
     //* 추천 여행지
     async getTopAttractions(city) {
@@ -8,6 +9,7 @@ const attractionService = {
             $or: [{ 'address.city': { $regex: city, $options: 'i' } }],
             'review.1': { $exists: true }
         }).populate('review');
+        if (!attractions) throw new BadRequestError('잘못된 요청입니다.')
         // 각 관광지의 평균 평점
         attractions.forEach(attraction => {
             let totalRating = 0;
@@ -31,15 +33,50 @@ const attractionService = {
             }));
         return topAttractions;
     },
-    async getAttractionDetail(attractionID) {
-        // 관광지 상세 조회
-        const attraction = await Attraction.findOne({ attractionId: attractionID }).populate('review').exec();
+    // 관광지 상세 조회
+    async getAttractionDetail(id) {
+        const attraction = await Attraction.findOne({ attractionId: id }).populate('review').exec();
         if (!attraction) {
-            throw new BadRequestError('숙소를 찾을 수 없습니다.');
+            throw new BadRequestError('관광지를 찾을 수 없습니다.');
         }
         //반환값
-        const result = attraction
+        let totalRating = 0;
+        attraction.review.forEach(review => {
+            totalRating += review.rating;
+        });
+        attraction.avgRating = totalRating / attraction.review.length;
+
+        const result = {
+            attractionId: attraction.attractionId,
+            lodging:attraction.lodging,
+            types:attraction.types,
+            name:attraction.name,
+            location: attraction.location,
+            address: attraction.address,
+            map: attraction.map,
+            phoneNumber: attraction.map,
+            description: attraction.description,
+            image: attraction.image,
+            mainImage: attraction.mainImage,
+            ticket: attraction.ticket,
+            operatingTime: attraction.operatingTime,
+            recommendTourTime: attraction.recommendTourTime,
+            avgRating: (attraction.avgRating).toFixed(2),
+            review: attraction.review
+        };
         return result;
     },
+    // 관광지 리뷰 생성
+    async createReview(data) {
+        const { user, content, rating, image } = data
+        const results = new AttractionReview({
+            user,
+            content,
+            rating,
+            image,
+        })
+        const result = await results.save()
+        return {result}
+    }
 }
 module.exports = attractionService;

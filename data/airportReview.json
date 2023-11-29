@@ -1,0 +1,38 @@
+[
+   {
+      "user": "ObjectId",
+      "content": "김포 국제공항에서의 경험은 전반적으로 훌륭했습니다. 직원들이 친절하고, 공항 시설도 깨끗했습니다.",
+      "rating": 5,
+      "image": ["image1", "image2"]
+   },
+   {
+      "user": "ObjectId",
+      "content": "인천 국제공항은 넓고 깨끗한 공간, 훌륭한 음식점, 그리고 편안한 대기 공간을 제공합니다.",
+      "rating": 4,
+      "image": ["image1", "image2"]
+   },
+   {
+      "user": "ObjectId",
+      "content": "제주 국제공항은 비행기 탑승 및 하차가 원활하게 이루어졌습니다. 공항 내부는 깨끗하고 직원들도 친절했습니다.",
+      "rating": 4,
+      "image": ["image1", "image2"]
+   },
+   {
+      "user": "ObjectId",
+      "content": "대구 국제공항은 작지만 효율적으로 운영되고 있습니다. 모든 공항 직원들이 친절하고 도움이 되었습니다.",
+      "rating": 3,
+      "image": ["image1", "image2"]
+   },
+   {
+      "user": "ObjectId",
+      "content": "부산 국제공항은 깨끗하고 잘 관리되고 있습니다. 또한, 공항 직원들이 매우 친절하고 도움이 되었습니다.",
+      "rating": 4,
+      "image": ["image1", "image2"]
+   },
+   {
+      "user": "ObjectId",
+      "content": "무안 국제공항은 작지만 효율적으로 운영되고 있습니다. 공항 직원들이 친절하게 안내해 주어서 좋았습니다.",
+      "rating": 3,
+      "image": ["image1", "image2"]
+   }
+]

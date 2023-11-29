@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const User = require('../models/user');
 const hashPassword = require('../utils/hashPW');
 const nodemailer = require('nodemailer');
 const { BadRequestError, InternalServerError } = require('../utils/customError')

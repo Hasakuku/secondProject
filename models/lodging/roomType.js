@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
    
 const roomTypeSchema = new Schema({
+   roomTypeId: { type: Number, required: true, unique: true },
    name: { type: Number, required: true }, // 객실 이름 (패밀리, 스위트 등)
    types: { type: String, required: true }, // 유형 (싱글룸, 더블룸 등)
    bedType: { type: String, required: true }, // 침대 유형 (킹 사이즈 등)

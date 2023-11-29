@@ -1,0 +1,63 @@
+[
+   {
+     "name": "김포 국제공항",
+     "location": "ObjectId",
+     "address": "서울특별시 강서구 하늘길 112",
+     "map": {
+       "latitude": 37.460191,
+       "longitude": 126.440696
+     },
+     "image": ["image1", "image2"]
+   },
+   {
+     "name": "인천 국제공항",
+     "location": "ObjectId",
+     "address": "인천광역시 중구 운서동 2850번지",
+     "map": {
+       "latitude": 37.460191,
+       "longitude": 126.440696
+     },
+     "image": ["image1", "image2"]
+   },
+   {
+     "name": "제주 국제공항",
+     "location": "ObjectId",
+     "address": "제주특별자치도 제주시 공항로 2",
+     "map": {
+       "latitude": 33.510414,
+       "longitude": 126.491353
+     },
+     "image": ["image1", "image2"]
+   },
+   {
+     "name": "대구 국제공항",
+     "location": "ObjectId",
+     "address": "대구광역시 동구 공항로 221",
+     "map": {
+       "latitude": 35.899378,
+       "longitude": 128.638252
+     },
+     "image": ["image1", "image2"]
+   },
+   {
+     "name": "부산 국제공항",
+     "location": "ObjectId",
+     "address": "부산광역시 강서구 공항진입로 108",
+     "map": {
+       "latitude": 35.179737,
+       "longitude": 128.938222
+     },
+     "image": ["image1", "image2"]
+   },
+   {
+     "name": "무안 국제공항",
+     "location": "ObjectId",
+     "address": "전라남도 무안군 망운면 공항로 970-260",
+     "map": {
+       "latitude": 34.9914056,
+       "longitude": 126.3828139
+     },
+     "image": ["image1", "image2"]
+   }
+ ]
+ 

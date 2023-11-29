@@ -25,7 +25,7 @@ const Car = mongoose.model('Car', carSchema);
 module.exports = Car;
 
 /**
- * @swagger
+ * 
  * components:
  *   schemas:
  *     Car:
