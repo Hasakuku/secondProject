@@ -28,7 +28,7 @@ const lodgingSchema = new Schema({
       type: String,
    },
    description: { type: String, required: true }, //  설명
-   avgRating: Number,
+   avgRating: {type: Number, default: 0},
    review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 호텔 리뷰
 })
 lodgingSchema.pre('save', function (next) {

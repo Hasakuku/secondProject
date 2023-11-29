@@ -39,7 +39,7 @@ const attractionSchema = new Schema({
       close: { type: String },
    }, // 운영시간
    recommendTourTime: { type: Number }, // 추천 관광시간/단위 시간
-   avgRating: Number,
+   avgRating: {type: Number, default: 0},
    review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 관광 리뷰
 });
 
