@@ -3,7 +3,7 @@ const secret = process.env.ACCESS_SECRET;
 
 module.exports = (user) => {
    const token = jwt.sign(
-      { id: user._id, userRole: user.userRole },
+      { id: user._id, userRole: user.isAdmin },
       secret,
       { expiresIn: '1h' }
    );

@@ -58,6 +58,7 @@ const lodgingServices = {
                mainImage: lodging.mainImage,
                avgRating: lodging.avgRating,
                reviewCount: lodging.review.length,
+               theme: lodging.theme,
                minPrice: minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null
             };
          });
@@ -95,6 +96,7 @@ const lodgingServices = {
          hotelName: lodging.name,
          mainImage: lodging.mainImage,
          reviewCount: lodging.review.length,
+         theme: lodging.theme,
          averageRating: lodging.review.reduce((sum, review) => sum + review.rating, 0) / lodging.review.length,
       })
       );

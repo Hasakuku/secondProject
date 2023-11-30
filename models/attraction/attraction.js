@@ -31,6 +31,7 @@ const attractionSchema = new Schema({
    },
    phoneNumber: { type: String }, // 전화번호
    description: { type: String, required: true }, // 설명
+   theme: [{ type: String, }],
    image: [{ type: String }], // 여행지 이미지 URL
    mainImage: { type: String, }, // 대표이미지 
    ticket: ticketSchema,
@@ -39,7 +40,7 @@ const attractionSchema = new Schema({
       close: { type: String },
    }, // 운영시간
    recommendTourTime: { type: Number }, // 추천 관광시간/단위 시간
-   avgRating: {type: Number, default: 0},
+   avgRating: { type: Number, default: 0 },
    review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 관광 리뷰
 });
 
@@ -73,24 +74,11 @@ module.exports = Attraction;
  *         name:
  *           type: string
  *           description: 여행지 이름
- *         country:
+ *         location:
  *           type: string
- *           description: 국가
+ *           description: 위치 정보
  *         address:
- *           type: object
- *           properties:
- *             city:
- *               type: string
- *               description: 시
- *             county:
- *               type: string
- *               description: 군
- *             district:
- *               type: string
- *               description: 구
- *             detail:
- *               type: string
- *               description: 상세 주소
+ *           type: string
  *         map:
  *           type: object
  *           properties:
@@ -100,6 +88,9 @@ module.exports = Attraction;
  *             longitude:
  *               type: number
  *               description: 경도
+ *         theme:
+ *           type: string
+ *           description: 테마
  *         phoneNumber:
  *           type: string
  *           description: 전화번호

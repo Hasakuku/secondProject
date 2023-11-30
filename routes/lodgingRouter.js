@@ -241,6 +241,7 @@ module.exports = router;
  *                      "hotelName": "호텔1",
  *                      "mainImage": "mainImage.jpg",
  *                      "reviewCount": 2,
+ *                      "theme": ["야경명소", "온천 호텔"],
  *                      "averageRating": 4.5}
  */
 

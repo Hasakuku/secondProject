@@ -93,6 +93,8 @@ module.exports = router;
  *                          type: number
  *                        longitude:
  *                          type: number
+ *                    theme:
+ *                      type: string
  *                    phoneNumber:
  *                      type: string
  *                    description:
@@ -156,7 +158,7 @@ module.exports = router;
  *                 "user": "605c17c4b392053daaa3c9a6",
  *                 "attraction": "605c17c4b392053daaa3c9a7",
  *                 "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다. 다음에도 이용하고 싶습니다.",
- *                 "rating": 1,
+ *                 "rating": 1,         
  *                 "image": ["image1.jpg", "image2.jpg"]
  *                 }
  *
