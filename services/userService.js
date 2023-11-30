@@ -7,18 +7,19 @@ const { findById } = require('../models/location');
 
 const userService = {
   //* 회원 가입
-  async signupService(email, name, password,  address, userRole) {
+  async signupService(userId, email, name, password, address, userRole) {
     const findedUser = await User.findOne({ email });
     if (findedUser) {
       throw new BadRequestError('이미 가입하신 회원입니다.');
     }
     const hashedPassword = hashPassword(password);
     const user = await User.create({
+      userId,
       email,
       name,
       address,
       password: hashedPassword,
-      userRole,
+      isAdmin,
     });
     if (!user) {
       throw new InternalServerError('회원 생성에 실패하였습니다.');
@@ -77,18 +78,18 @@ const userService = {
     const users = await User.findById(id);
     const { password, ...rest } = data;
     if (!users) {
-        throw new NotFoundError('사용자를 찾을 수 없습니다.');
+      throw new NotFoundError('사용자를 찾을 수 없습니다.');
     }
     if (password) {
-        const hashedPassword = hashPassword(password)
-        rest.password = hashedPassword
+      const hashedPassword = hashPassword(password)
+      rest.password = hashedPassword
     }
     const updatedUser = await User.updateOne(
-        { _id: id },
-        { rest },
+      { _id: id },
+      { rest },
     );
     if (updatedUser.modifiedCount === 0) {
-        throw new InternalServerError('서버 오류입니다.');
+      throw new InternalServerError('서버 오류입니다.');
     }
   }
 
