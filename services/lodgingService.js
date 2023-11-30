@@ -97,7 +97,8 @@ const lodgingServices = {
          mainImage: lodging.mainImage,
          reviewCount: lodging.review.length,
          theme: lodging.theme,
-         averageRating: lodging.review.reduce((sum, review) => sum + review.rating, 0) / lodging.review.length,
+         averageRating: (lodging.review.reduce(
+            (sum, review) => sum + review.rating, 0) / lodging.review.length).toFixed(2),
       })
       );
       //페이지 네이션
