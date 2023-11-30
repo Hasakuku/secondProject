@@ -7,7 +7,7 @@ const { findById } = require('../models/location');
 
 const userService = {
   //* 회원 가입
-  async signupService(userId, email, name, password, address, userRole) {
+  async signupService(userId, email, name, password, address, isAdmin) {
     const findedUser = await User.findOne({ email });
     if (findedUser) {
       throw new BadRequestError('이미 가입하신 회원입니다.');
