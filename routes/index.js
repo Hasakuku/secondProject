@@ -215,7 +215,7 @@ module.exports = router
 
 /**
  * @swagger
- * /api/users/login:
+ * /api/login:
  *   post:
  *     summary: 사용자 로그인
  *     requestBody:  
@@ -240,7 +240,7 @@ module.exports = router
 
 /**
  * @swagger
- * /api/users/logout:
+ * /api/logout:
  *   delete:
  *     summary: 사용자 로그아웃
  *     responses:
