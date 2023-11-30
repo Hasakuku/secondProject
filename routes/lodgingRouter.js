@@ -178,9 +178,9 @@ module.exports = router;
  *     parameters:
  *       - in: query
  *         name: locationId
- *         schema: {type: string}
- *         example: 서울
- *         description: 특정 도시
+ *         schema: {type: integer}
+ *         example: 1
+ *         description: locationID
  *         required: true
  *       - in: query
  *         name: checkInDate
