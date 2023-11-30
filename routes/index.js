@@ -1,9 +1,11 @@
 const express = require('express');
 const userRouter = require('./userRouter');
+const userController = require('../controllers/userController')
 const lodgingRouter = require('./lodgingRouter');
 const attractionRouter = require('./attractionRouter');
 const flightRouter = require('./flightRouter');
-const { searchList, createReview, getUserReview, locationList } = require('../services/commonService')
+const { searchList, locationList } = require('../services/commonService');
+const permission = require('../middlewares/permission');
 const router = express.Router();
 
 router.use('/users', userRouter);
@@ -11,11 +13,14 @@ router.use('/lodgings', lodgingRouter);
 router.use('/attractions', attractionRouter);
 router.use('/flights', flightRouter);
 
+router.post('/signup', userController.signup)
+router.post('/login', userController.login)
+router.delete('/logout', userController.logout)
+
+
 router.get('/search', searchList)
 router.get('/location', locationList)
 
-router.post('/review', createReview)
-router.get('/review', getUserReview)
 module.exports = router
 
 /**
@@ -80,7 +85,7 @@ module.exports = router
  *                         type: number
  *                       reviewCount:
  *                         type: integer
- *                       country:
+ *                       location:
  *                         type: string
  *                       address:
  *                         type: object
@@ -103,7 +108,7 @@ module.exports = router
  *                         type: integer
  *                       address:
  *                         type: object
- *                       country:
+ *                       location:
  *                         type: string
  *             examples:
  *               lodgingsAndAttractions:
@@ -118,12 +123,8 @@ module.exports = router
  *                       "map": {
  *                         "latitude": 37.2456,
  *                         "longitude": 125.4154},
- *                       "address": {
- *                         "city": "서울특별시",
- *                         "county": "영등포구",
- *                         "district": "여의도동",
- *                         "detail": "63로 50"
- *                       },
+ *                       "location": "65665b151f3d0e674c67474b",
+ *                       "address":  "서울특별시 영등포구 여의도동 63로 50",
  *                       "country": "KR"
  *                     }
  *                   ]}
@@ -143,54 +144,107 @@ module.exports = router
  *             schema:
  *               type: object
  *               properties:
- *                 locationId:
- *                   type: number
- *                   description: 위치 ID
- *                 country:
- *                   type: string
- *                   description: 국가 이름
- *                 province:
- *                   type: string
- *                   description: 지방 이름
- *                 city:
- *                   type: string
- *                   description: 도시 이름
- *                 map:
- *                   type: object
- *                   properties:
- *                     latitude:
- *                       type: number
- *                       description: 위도
- *                     longitude:
- *                       type: number
- *                       description: 경도
- *                 airport:
- *                   type: string
- *                   format: ObjectId
- *                   description: 공항 ID
- *                 description:
- *                   type: string
- *                   description: 위치 설명
- *                 image:
- *                   type: array
- *                   items:
- *                     type: string
- *                   description: 이미지 URL 리스트
- *                 review:
- *                   type: array
- *                   items:
- *                     type: string
- *                   description: 리뷰 리스트
  *               example:
- *                 {"map": {
- *                  "latitude": 37.5665,
- *                  "longitude": 126.978
- *                   },
- *                  "image": [],
- *                  "_id": "65665b151f3d0e674c67474b",
- *                  "locationId": 1,
- *                  "country": "대한민국",
- *                  "city": "서울",
- *                  "airport": "65665cdd65d9065a5de583d4"}
+ *                 [
+ *                    {
+ *                       "map": {
+ *                             "latitude": 37.5665,
+ *                             "longitude": 126.978
+ *                       },
+ *                       "review": [],
+ *                       "_id": "65665b151f3d0e674c67474b",
+ *                       "locationId": 1,
+ *                       "country": "대한민국",
+ *                       "city": "서울",
+ *                       "airport": "65665cdd65d9065a5de583d4",
+ *                       "image": [
+ *                             "image1"
+ *                       ]
+ *                    },
+ *                    {
+ *                       "map": {
+ *                             "latitude": 37.4563,
+ *                             "longitude": 126.7052
+ *                       },
+ *                       "review": [],
+ *                      "_id": "65665b151f3d0e674c67474c",
+ *                       "locationId": 2,
+ *                       "country": "대한민국",
+ *                       "city": "인천",
+ *                       "airport": "65665cdd65d9065a5de583d5",
+ *                       "image": [
+ *                             "image2"
+ *                       ]
+ *                    },
+ *                 ]
+ */
+
+/**
+ * @swagger
+ * /api/signup:
+ *   post:
+ *     summary: 사용자 등록
+ *     requestBody:  
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:  
+ *               email:
+ *                 type: string
+ *               userName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               isAdmin:
+ *                 type: boolean
+ *                 default: false
+ *             required:  
+ *               - email
+ *               - userName
+ *               - password
+ *               - address
+ *               - isAdmin
+ *     responses:
+ *       200:
+ *         description: 회원 가입이 완료 되었습니다.
+ */
+
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: 사용자 로그인
+ *     requestBody:  
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:  
+ *               email: {type: string}
+ *               password: {type: string}
+ *     responses:
+ *       200:
+ *         description: ${user.userName}님 환영합니다!
+ *         content:
+ *            application/json:
+ *               schema:
+ *                  type: object
+ *                  properties:
+ *                    token: {type: string}
+ */
+
+/**
+ * @swagger
+ * /api/users/logout:
+ *   delete:
+ *     summary: 사용자 로그아웃
+ *     responses:
+ *       200:
+ *         description: 이용해주셔서 감사합니다.
  */
 

@@ -32,3 +32,43 @@ reviewSchema.pre('save', function (next) {
 
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Review:
+ *        type: object
+ *        required:
+ *          - types
+ *          - user
+ *          - content
+ *          - rating
+ *        properties:
+ *          types:
+ *             type: string
+ *             enum: ['lodging', 'airport', 'attraction']
+ *          user:
+ *             type: string
+ *             format: ObjectId
+ *             description: 리뷰를 작성한 사용자
+ *          lodging:
+ *             type: string
+ *             format: ObjectId
+ *             description: 숙소에 대한 리뷰
+ *          attraction:
+ *             type: string
+ *             format: ObjectId
+ *             description: 관광지에 대한 리뷰
+ *          content:
+ *             type: string
+ *             description: 리뷰 내용
+ *          rating:
+ *             type: number
+ *             minimum: 1
+ *             maximum: 5
+ *             description: 평점
+ *          image:
+ *             type: array
+ *             items:
+ *               type: string
+ */

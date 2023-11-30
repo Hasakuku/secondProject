@@ -23,6 +23,7 @@ module.exports = RoomType;
  *     RoomType:
  *       type: object
  *       required:
+ *         - roomTypeId
  *         - name
  *         - types
  *         - bedType
@@ -30,9 +31,12 @@ module.exports = RoomType;
  *         - capacity
  *         - size
  *       properties:
+ *         roomTypeId:
+ *           type: integer
+ *           description: 객실 유형ID
  *         name:
  *           type: number
- *           description: 객실 이름 
+ *           description: 객실 유형 이름
  *         types:
  *           type: string
  *           description: 유형 

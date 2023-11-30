@@ -1,92 +1,24 @@
 const express = require('express');
-const userController= require('../controllers/userController')
+const userController = require('../controllers/userController')
+const { getUserReview } = require('../services/commonService')
+const permission = require('../middlewares/permission')
 const router = express.Router();
 
-router.post('/signup', userController.signup)
-router.post('/login', userController.login)
-router.delete('/logout', userController.logout)
-router.get('/findUser', userController.findUser)
+router.get('/review', permission('user'), getUserReview)
+
+router.get('/', permission('user'), userController.getUser)
+router.post('/', permission('user'), userController.findUser)
+router.put('/', permission('user'), userController.updateUser)
 
 module.exports = router;
-
 /**
  * @swagger
- * /api/users/signup:
+ * /api/users:
  *   post:
- *     summary: 사용자 등록
- *     requestBody:  
- *       required: true
- *       content:
- *         application/json:  
- *           schema: 
- *             type: object
- *             properties:  
- *               email:
- *                 type: string
- *               userName:
- *                 type: string
- *               password:
- *                 type: string
- *               birthDay:
- *                 type: string
- *               address:
- *                 type: string
- *               isAdmin:
- *                 type: boolean
- *                 default: false
- *             required:  
- *               - email
- *               - userName
- *               - password
- *               - birthDay
- *               - address
- *               - isAdmin
- *     responses:
- *       200:
- *         description: 회원 가입이 완료 되었습니다.
- */
-
-/**
- * @swagger
- * /api/users/login:
- *   post:
- *     summary: 사용자 로그인
- *     requestBody:  
- *       required: true
- *       content:
- *         application/json:  
- *           schema: 
- *             type: object
- *             properties:  
- *               email: {type: string}
- *               password: {type: string}
- *     responses:
- *       200:
- *         description: ${user.userName}님 환영합니다!
- *         content:
- *            application/json:
- *               schema:
- *                  type: object
- *                  properties:
- *                    token: {type: string}
- */
-
-/**
- * @swagger
- * /api/users/logout:
- *   delete:
- *     summary: 사용자 로그아웃
- *     responses:
- *       200:
- *         description: 이용해주셔서 감사합니다.
- */
-
-/**
- * @swagger
- * /api/users/findUser:
- *   get:
- *     summary: 사용자 찾기
- *     requestBody:  
+ *     summary: 회원 찾기
+ *     requestBody:
+ *       token: 
+ *         type: string
  *       required: true
  *       content:
  *         application/json:  
@@ -95,8 +27,169 @@ module.exports = router;
  *             properties:  
  *               email: {type: string}
  *               name: {type: string}
+ *             example:
+ *               {"email": "admin@test.com",
+ *               "name": "admin"}
+ *
  *     responses:
  *       200:
- *         description: 임시 비밀번호를 이메일로 전송하였습니다.
+ *         description: 임시 비밀번호 발급
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 password: {type: string}
+ *                 message: {type: string}
+ *               example:
+ *                 {"password": "7c40873a",
+ *                 "message": "임시 비밀번호 발급완료"}
  */
 
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: 회원 정보 조회
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:  
+ *               
+ *             example:
+ *               
+ *
+ *     responses:
+ *       200:
+ *         description: 회원 정보 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 userId: {type: integer}
+ *                 name: {type: string}
+ *                 email: {type: string}
+ *                 level: {type: string}
+ *                 isAdmin: {type: boolean}
+ *                 favorites: [{type: string}]
+ *               example:
+ *                 {"userId": 1,
+ *                 "name": "admin",
+ *                 "email": "admin@test.com",
+ *                 "level": "sliver",
+ *                 "isAdmin": true,
+ *                 "favorites": []}
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   put:
+ *     summary: 회원 정보 수정
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:  
+ *               email: {type: string}
+ *               password: {type: string}
+ *               name: {type: string}
+ *             example:
+ *               {
+ *                "email": "admin@test2.com",
+ *                "password": "a123456",
+ *                "name": "admin2"
+ *                }
+ *
+ *     responses:
+ *       200:
+ *         description: 회원정보 수정 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 {message: "회원정보 수정에 성공하였습니다."}
+ */
+
+/**
+ * @swagger
+ * /api/users/review:
+ *   get:
+ *     summary: 리뷰 조회
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               types:
+ *                 type: string
+ *               user:
+ *                 type: string
+ *               lodging:
+ *                 type: string
+ *               attraction:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               rating:
+ *                 type: string
+ *               image:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *             example:
+ *               {
+ *                 "types": "lodging",
+ *                 "user": "605c17c4b392053daaa3c9a6",
+ *                 "lodging": "605c17c4b392053daaa3c9a7",
+ *                 "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다. 다음에도 이용하고 싶습니다.",
+ *                 "rating": 1,
+ *                 "image": ["image1.jpg", "image2.jpg"]
+ *                 }
+ *
+ *     responses:
+ *       201:
+ *         description: 리뷰 조회 성공
+ *         content:
+ *            application/json:
+ *               schema:
+ *                  type: object
+ *                  properties:
+ *                    types:
+ *                      type: string
+ *                    user:
+ *                      type: string
+ *                    lodging:
+ *                      type: string
+ *                    attraction:
+ *                      type: string
+ *                    content:
+ *                      type: string
+ *                    rating:
+ *                      type: string
+ *                    image:
+ *                      type: array
+ *                      items:
+ *                        type: string
+ *                  example:
+ *                    {
+ *                      "types": "lodging",
+ *                      "user": "605c17c4b392053daaa3c9a6",
+ *                      "lodging": "605c17c4b392053daaa3c9a7",
+ *                      "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다. 다음에도 이용하고 싶습니다.",
+ *                      "rating": 1,
+ *                      "image": ["image1.jpg", "image2.jpg"]
+ *                      }
+ */

@@ -56,7 +56,7 @@ const registerLodging = asyncHandler(async (req, res) => {
 const createBooking = asyncHandler(async (req, res) => {
    const order = req.body
    const newRoomBooking = await lodgingService.createBooking(order)
-   await newRoomBooking.save();
+   // await newRoomBooking.save();
    res.status(201).json({ message: '예약이 등록되었습니다.' });
 })
 

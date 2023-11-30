@@ -27,24 +27,71 @@ const roomBookingSchema = new Schema({
 const RoomBooking = mongoose.model('RoomBooking', roomBookingSchema);
 module.exports = RoomBooking;
 
-// const mongoose = require('mongoose');
-// const autoIncrement = require('mongoose-auto-increment');
-// const { Schema } = mongoose;
-
-// // Initialize autoIncrement
-// autoIncrement.initialize(mongoose.connection);
-
-// const roomBookingSchema = new Schema({
-//    // ... your schema setup
-// });
-
-// // Apply the autoIncrement plugin to roomBookingSchema.
-// roomBookingSchema.plugin(autoIncrement.plugin, {
-//     model: 'RoomBooking',
-//     field: 'roomBookingId',
-//     startAt: 1,
-//     incrementBy: 1
-// });
-
-// const RoomBooking = mongoose.model('RoomBooking', roomBookingSchema);
-// module.exports = RoomBooking;
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     RoomBooking:
+ *       type: object
+ *       properties:
+ *         roomBookingId:
+ *           type: integer
+ *           description: 객실 예약 ID
+ *         user:
+ *           type: string
+ *           format: ObjectId
+ *           description: 회원
+ *         firstName:
+ *           type: string
+ *           description: 예약자 이름
+ *         lastName:
+ *           type: string
+ *           description: 예약자 성
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: 예약자 email
+ *         phoneNumber:
+ *           type: string
+ *           description: 예약자 전화번호
+ *         room:
+ *           type: string
+ *           format: ObjectId
+ *           description: 예약 객실
+ *         status:
+ *           type: boolean
+ *           description: 예약 여부
+ *         checkInDate:
+ *           type: string
+ *           format: date
+ *           description: 체크인
+ *         checkOutDate:
+ *           type: string
+ *           format: date
+ *           description: 체크아웃
+ *         adults:
+ *           type: integer
+ *           description: 성인 수
+ *         children:
+ *           type: integer
+ *           description: 어린이 수
+ *         request:
+ *           type: string
+ *           description: 요청사항
+ *         bookingStatus:
+ *           type: string
+ *           enum: [confirmed, waiting, cancelled]
+ *           description: 예약 상태
+ *       required:
+ *         - roomBookingId
+ *         - user
+ *         - firstName
+ *         - lastName
+ *         - email
+ *         - phoneNumber
+ *         - room
+ *         - checkInDate
+ *         - checkOutDate
+ *         - adults
+ *         - bookingStatus
+ */

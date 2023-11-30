@@ -1,9 +1,12 @@
 const express = require('express');
 const attractionController= require('../controllers/attractionController')
+const { createReview } = require('../services/commonService')
+const permission = require('../middlewares/permission')
 const router = express.Router();
 
 router.get('/:attractionId', attractionController.getAttractionDetail) // 관광지 상세
 // router.get('/', attractionController.getTopAttractions)
+router.post('/review', permission('user'), createReview)
 
 module.exports = router;
 
@@ -77,20 +80,12 @@ module.exports = router;
  *                    name:
  *                      type: string
  *                      description: 관광지 이름
- *                    country:
+ *                    location:
  *                      type: string
- *                      description: 국가
+ *                      description: 위치 정보
  *                    address:
- *                      type: object
- *                      properties:
- *                        city:
- *                          type: string
- *                        county:
- *                          type: string
- *                        district:
- *                          type: string
- *                        detail:
- *                          type: string
+ *                      type: string
+ *                      description: 주소
  *                    map:
  *                      type: object
  *                      properties:
@@ -125,3 +120,48 @@ module.exports = router;
  *                        type: string
  */
 
+/**
+ * @swagger
+ * /api/attractions/review:
+ *   post:
+ *     summary: 리뷰 생성
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               types:
+ *                 type: string
+ *               user:
+ *                 type: string
+ *               lodging:
+ *                 type: string
+ *               attraction:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               rating:
+ *                 type: string
+ *               image:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *             example:
+ *               {
+ *                 "types": "lodging",
+ *                 "user": "605c17c4b392053daaa3c9a6",
+ *                 "attraction": "605c17c4b392053daaa3c9a7",
+ *                 "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다. 다음에도 이용하고 싶습니다.",
+ *                 "rating": 1,
+ *                 "image": ["image1.jpg", "image2.jpg"]
+ *                 }
+ *
+ *     responses:
+ *       201:
+ *         description: 리뷰 생성 성공
+ *         content:
+ */

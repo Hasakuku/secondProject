@@ -115,8 +115,7 @@ const lodgingServices = {
       lodging.review.forEach(review => {
          totalRating += review.rating;
       });
-      lodging.avgRating = totalRating / lodging.review.length;
-      console.log(lodging.avgRating)
+      lodging.avgRating = (totalRating / lodging.review.length).toFixed(2);
       const rooms = lodging.rooms;
       // 객실 유형 id 조회
       let roomTypeIds = [];
@@ -140,33 +139,13 @@ const lodgingServices = {
    },
    // 예약 생성
    async createBooking(order) {
-      const {
-         roomBookingId,
-         passenger,
-         room,
-         status,
-         checkInDate,
-         checkOutDate,
-         adults,
-         children,
-         request,
-         bookingStatus
-      } = order
-      // 새로운 Room 인스턴스를 생성합니다.
-      const newRoomBooking = new RoomBooking({
-         roomBookingId: roomBookingId,
-         passenger,
-         room,
-         status,
-         checkInDate,
-         checkOutDate,
-         adults,
-         children,
-         request,
-         bookingStatus
-      });
+      const data = order
+      // 새로운 Room 인스턴스를 생성
+      const newRoomBooking = new RoomBooking(
+         data
+      );
 
-      // Room 인스턴스를 데이터베이스에 저장합니다.
+      // Room 인스턴스를 데이터베이스에 저장
       const savedRoomBooking = await newRoomBooking.save();
 
       return savedRoomBooking;

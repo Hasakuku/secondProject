@@ -3,24 +3,24 @@ const userService = require('../services/userService')
 const setToken = require('../utils/jwtToken')
 const { InternalServerError } = require('../utils/customError')
 
-//회원가입
+//*회원가입
 const signup = asynchandler(async (req, res) => {
-   const { email, userName, password, birthDay, address, isAdmin } = req.body;
-   await userService.signup(email, userName, password, birthDay, address, isAdmin);
+   const { email, userName, password, address, isAdmin } = req.body;
+   await userService.signupService(email, userName, password, birthDay, address, isAdmin);
    res.json({ message: '회원 가입이 완료 되었습니다.' });
 });
 
-//로그인
+//*로그인
 const login = asynchandler(async (req, res, next) => {
    const { email, password } = req.body;
-   const user = await userService.login(email, password);
+   const user = await userService.loginService(email, password);
    const token = setToken(user);
 
    res.cookie('accessToken', token, { maxAge: 3600000 });
-   res.json({ data: token, message: `${user.userName}님 환영합니다!` });
+   res.json({ data: token, message: `${user.name}님 환영합니다!` });
 })
 
-//로그아웃
+//*로그아웃
 const logout = asynchandler(async (req, res) => {
    res.cookie('accessToken', null, { maxAge: 0 })
    if (res.cookie.accessToken) {
@@ -28,12 +28,26 @@ const logout = asynchandler(async (req, res) => {
    } res.json({ message: '이용해주셔서 감사합니다.' })
 });
 
-// email&PW찾기
+//* email&PW찾기
 const findUser = asynchandler(async (req, res) => {
    const { email, name } = req.body;
-   await userService.findUser(email, name);
-   res.json({ message: '임시 비밀번호를 이메일로 전송하였습니다.' });
+   const result = await userService.findUser(email, name);
+   res.json({ 'password': result, message: '임시 비밀번호 발급완료.' });
 })
 
-const userController = { signup, login, logout, findUser }
+//* 회원정보 수정
+const updateUser = asynchandler(async (req, res) => {
+   const user = req.user
+   const data = req.body;
+   const result = await userService.updateUser(user, data);
+   res.status(200).json({ message: '회원정보 수정에 성공하였습니다.' })
+})
+
+//* 회원정보 조회
+const getUser = asynchandler(async (req, res) => {
+   const user = req.user;
+   const result = await userService.getUser(user);
+   res.status(200).json({ data: result, message: '회원정보 조회에 성공하였습니다.' })
+})
+const userController = { signup, login, logout, findUser, updateUser, getUser }
 module.exports = userController;

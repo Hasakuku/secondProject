@@ -16,36 +16,6 @@ module.exports = Room;
  * @swagger
  * components:
  *   schemas:
- *     RoomBooking:
- *       type: object
- *       required:
- *         - status
- *         - checkInDate
- *         - checkOutDate
- *         - adults
- *         - bookingStatus
- *       properties:
- *         status:
- *           type: boolean
- *           description: 예약 여부
- *         checkInDate:
- *           type: string
- *           format: date
- *           description: 체크인 날짜
- *         checkOutDate:
- *           type: string
- *           format: date
- *           description: 체크아웃 날짜
- *         adults:
- *           type: number
- *           description: 성인 수
- *         children:
- *           type: number
- *           description: 아이 수
- *         bookingStatus:
- *           type: string
- *           enum: ['confirmed', 'waiting', 'cancelled']
- *           description: 예약 상태
  *     Room:
  *       type: object
  *       required:

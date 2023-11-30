@@ -9,8 +9,8 @@ const lodgingSchema = new Schema({
       enum: ['hotel', 'apart', 'motel', 'hostel', 'guestHouse'],
       default: "hotel"
    },
-   level: { type: Number, min: 0, max: 5, }, // 호텔일 경우 성급
-   theme: [{ type: String }], // 숙소 테마 (예시: 온천호텔, 야경 명소)
+   level: { type: Number, min: 0, max: 5, }, // 숙소일 경우 성급
+   theme: [{ type: String }], // 숙소 테마 (예시: 온천숙소, 야경 명소)
    name: { type: String, required: true }, // 숙소 이름
    location: { type: Schema.Types.ObjectId, ref: 'Location', },
    address: { type: String, required: true },
@@ -27,9 +27,10 @@ const lodgingSchema = new Schema({
    mainImage: {
       type: String,
    },
+   rule: { type: String, }, // 숙소 정책
    description: { type: String, required: true }, //  설명
-   avgRating: {type: Number, default: 0},
-   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 호텔 리뷰
+   avgRating: { type: Number, default: 0 }, // 평균 평점
+   review: [{ type: Schema.Types.ObjectId, ref: 'Review', }], // 숙소 리뷰
 })
 lodgingSchema.pre('save', function (next) {
    // 숙소 유형이 'hotel'이 아니면 level필드를 제거
@@ -42,7 +43,7 @@ lodgingSchema.pre('save', function (next) {
 const Lodging = mongoose.model('Lodging', lodgingSchema);
 module.exports = Lodging;
 
-// 호텔 옵션	상세
+// 숙소 옵션	상세
 // 프런트데스크서비스	VIP 체크인, 24시간 프론트 데스크, 안전금고, 벨맨, 짐보관
 // 식사 및 음료 서비스	키오스크/편의점
 // 건강 및 웰니스 시설	피트니스룸
@@ -64,53 +65,43 @@ module.exports = Lodging;
  *         - rooms
  *         - image
  *         - description
+ *         - address
+ *         - option
  *       properties:
  *         lodgingId:
  *           type: number
- *           description: The lodging ID
+ *           description: 숙소 ID
  *         attraction:
  *           type: string
- *           description: The ID of the destination
+ *           description: 연관 관광지
  *         types:
  *           type: string
  *           enum: [hotel, apart, motel, hostel, guestHouse]
  *           default: hotel
- *           description: The type of the lodging
+ *           description: 숙소 유형
  *         theme:
  *           type: string
- *           description: The theme of the lodging
+ *           description: 숙소 테마
  *         name:
  *           type: string
- *           description: The name of the lodging
+ *           description: 숙소 이름
  *         address:
  *           type: object
- *           properties:
- *             city:
- *               type: string
- *               description: The city of the lodging
- *             county:
- *               type: string
- *               description: The county of the lodging
- *             district:
- *               type: string
- *               description: The district of the lodging
- *             detail:
- *               type: string
- *               description: The detailed address of the lodging
+*           description: 주소
  *         rooms:
  *           type: array
  *           items:
  *             type: string
- *           description: The list of room IDs
+ *           description: 객실
  *         map:
  *           type: object
  *           properties:
  *             latitude:
  *               type: number
- *               description: The latitude of the lodging
+ *               description: 위도
  *             longitude:
  *               type: number
- *               description: The longitude of the lodging
+ *               description: 경도
  *         option:
  *           type: array
  *           items:
@@ -118,26 +109,29 @@ module.exports = Lodging;
  *             properties:
  *               category:
  *                 type: string
- *                 description: The category of the option
+ *                 description: 옵션 카테고리
  *               details:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: The details of the option
+ *                 description: 옵션
  *         image:
  *           type: array
  *           items:
  *             type: string
- *           description: The URLs of the images
+ *           description: 이미지
  *         mainImage:
  *           type: string
- *           description: The URL of the main image
+ *           description: 메인이미지
+ *         rule:
+ *           type: string
+ *           description: 숙소정책
  *         description:
  *           type: string
- *           description: The description of the lodging
+ *           description: 설명
  *         review:
  *           type: array
  *           items:
  *             type: string
- *           description: The list of review IDs
+ *           description: 리뷰 목록
  */

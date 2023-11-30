@@ -7,16 +7,6 @@ const { BadRequestError, NotFoundError, } = require('../utils/customError');
 const Airport = require('../models/flight/airport');
 // 키워드를 받아 숙소를 검색하는 함수
 const findItems = async (Model, keyword, type) => {
-   // let query = Model.find({
-   //    $or: [
-   //       { 'address.city': { $regex: keyword, $options: 'i' } },
-   //       { 'address.county': { $regex: keyword, $options: 'i' } },
-   //       { 'address.district': { $regex: keyword, $options: 'i' } },
-   //       { 'address.detail': { $regex: keyword, $options: 'i' } },
-   //       { name: { $regex: keyword, $options: 'i' } },
-   //       { country: { $regex: keyword, $options: 'i' } }
-   //    ]
-   // }).populate('review');
    let items;
    let queries = Model.find({
       $or: [
@@ -26,19 +16,6 @@ const findItems = async (Model, keyword, type) => {
       ]
    }).populate('review');
 
-   // const modelIds = (await Location.find(
-   //    {
-   //       $or: [
-   //          { city: { $regex: keyword, $options: 'i' } },
-   //          { country: { $regex: keyword, $options: 'i' } }
-   //       ]
-   //    }))
-   //    .map(model => model._id);
-
-   // let modelsByLocation = Model.find(
-   //    { location: { $in: modelIds } }
-   // );
-
    if (type === 'lodging') {
       const populateOptions = {
          path: 'rooms',
@@ -47,18 +24,10 @@ const findItems = async (Model, keyword, type) => {
             model: 'RoomType'
          }
       };
-
       items = await queries.populate(populateOptions);
-      // modelsByLocation = await modelsByLocation.populate(populateOptions);
    } else {
       items = await queries.exec()
-      // modelsByLocation = await modelsByLocation.exec()
    }
-
-   // const items = [...new Set([...queries, ...modelsByLocation])];
-   // console.log(items)
-
-   // const items = await query.exec();
    items.forEach(item => {
       let totalRating = 0;
       item.review.forEach(review => {
@@ -156,13 +125,14 @@ const createReview = asynchandler(async (req, res) => {
 
 // 특정 유저의 리뷰 조회
 const getUserReview = asynchandler(async (req, res) => {
-   const userId = req.query.user
+   const userId = req.user._id
    const reviews = await Review.find({ user: userId });
    if (!reviews) throw new NotFoundError('리뷰를 찾을 수 없습니다.')
    res.status(201).json(reviews)
-
-
 })
+
+// 리뷰삭제
+
 // 위치 목록
 const locationList = asynchandler(async (req, res) => {
    const result = await Location.find({});

@@ -1,5 +1,7 @@
 const express = require('express');
 const lodgingController = require('../controllers/lodgingController')
+const { createReview } = require('../services/commonService')
+const permission = require('../middlewares/permission')
 const router = express.Router();
 
 router.get('/search', lodgingController.lodgingsList) // 검색후 숙소 목록
@@ -8,6 +10,8 @@ router.get('/', lodgingController.getTopLodgings) // 인기 숙소
 
 router.post('/order', lodgingController.createBooking) // 숙소 예약
 router.put('/order', lodgingController.updateRoomBookingStatus) // 숙소 예약 상태 변경
+
+router.post('/review', permission('user'), createReview)
 
 router.post('/', lodgingController.registerLodging) // 숙소 등록
 
@@ -45,15 +49,8 @@ module.exports = router;
  *                        level: { type: 'integer' }
  *                        theme: { type: 'array', items: { type: 'string' } }
  *                        name: { type: 'string' }
- *                        address: { 
- *                          type: 'object',
- *                          properties: {
- *                            city: { type: 'string' },
- *                            county: { type: 'string' },
- *                            district: { type: 'string' },
- *                            detail: { type: 'string' },
- *                          }
- *                        }
+ *                        location: {type: 'string' }
+ *                        address: {type: 'string'}
  *                        rooms: { type: 'array', items: { type: 'string' } }
  *                        map: { 
  *                          type: 'object',
@@ -91,7 +88,7 @@ module.exports = router;
 
 
 /**
- * @swagger
+ * 
  * /api/lodgings:
  *   get:
  *     summary: 인기 숙소
@@ -132,9 +129,52 @@ module.exports = router;
 
 /**
  * @swagger
+ * /api/lodgings:
+ *   post:
+ *     summary: 숙소 등록
+ *     requestBody:
+ *         content:
+ *           application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                example:
+ *                  {
+ *                    "lodgingId": 10,
+ *                    "attraction": "605c17c4b392053daaa3c9a6",
+ *                    "types": "hotel",
+ *                    "level": 5,
+ *                    "theme": ["온천호텔", "야경 명소"],
+ *                    "name": "롯데호텔",
+ *                    "location": "605c17c4b392053daaa3c9a7",
+ *                    "address": "서울특별시 중구 을지로 30",
+ *                    "rooms": ["605c17c4b392053daaa3c9a8", "605c17c4b392053daaa3c9a9"],
+ *                    "map": {
+ *                       "latitude": 37.5650172,
+ *                       "longitude": 126.9782914
+ *                    },
+ *                    "option": [
+ *                       {
+ *                          "category": "프론트서비스",
+ *                          "details": ["벨멘", "24시간서비스"]
+ *                       }
+ *                    ],
+ *                    "image": ["image1.jpg", "image2.jpg", "image3.jpg"],
+ *                    "mainImage": "mainImage.jpg",
+ *                    "description": "롯데호텔은 서울 중심부에 위치하고 있으며, 최고의 서비스를 제공합니다.",
+ *                    "review": ["605c17c4b392053daaa3c9aa", "605c17c4b392053daaa3c9ab"]
+ *                  }
+ *     responses:
+ *       200:
+ *         description: 숙소 등록 성공
+ *         content:
+ */
+
+/**
+ * @swagger
  * /api/lodgings/search:
  *   get:
- *     summary: 검색후 숙소 목록
+ *     summary: 조건 검색후 목록
  *     parameters:
  *       - in: query
  *         name: city
@@ -202,4 +242,114 @@ module.exports = router;
  *                      "mainImage": "mainImage.jpg",
  *                      "reviewCount": 2,
  *                      "averageRating": 4.5}
+ */
+
+/**
+ * @swagger
+ * /api/lodging/review:
+ *   post:
+ *     summary: 리뷰 생성
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               types:
+ *                 type: string
+ *               user:
+ *                 type: string
+ *               lodging:
+ *                 type: string
+ *               attraction:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               rating:
+ *                 type: string
+ *               image:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *             example:
+ *               {
+ *                 "types": "lodging",
+ *                 "user": "605c17c4b392053daaa3c9a6",
+ *                 "lodging": "605c17c4b392053daaa3c9a7",
+ *                 "content": "이 호텔은 정말 훌륭했습니다. 서비스도 좋고, 방도 깨끗했습니다. 다음에도 이용하고 싶습니다.",
+ *                 "rating": 1,
+ *                 "image": ["image1.jpg", "image2.jpg"]
+ *                 }
+ *
+ *     responses:
+ *       201:
+ *         description: 리뷰 생성 성공
+ *         content:
+ */
+
+/**
+ * @swagger
+ * /api/lodging/order:
+ *   post:
+ *     summary: 숙소 예약 생성
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:
+ *             example:
+ *               {
+ *                 "roomBookingId": 3,
+ *                 "user": "6567aac0910622e34444b351",
+ *                 "firstName": "wonsik",
+ *                 "lastName": "seo",
+ *                 "email":"test@test.com",
+ *                 "phoneNumber": "010-1111-1111",
+ *                 "room": "655d96451116b641aa22f786",
+ *                 "status": false,
+ *                 "checkInDate": "2023-12-14",
+ *                 "checkOutDate": "2023-12-15",
+ *                 "adults": 1,
+ *                 "children": 0,
+ *                 "request": "솔로"
+ *               }
+ *
+ *     responses:
+ *       201:
+ *         description: 예약이 등록되었습니다.
+ *         content:
+ */
+
+/**
+ * @swagger
+ * /api/lodging/order:
+ *   put:
+ *     summary: 숙소 예약 상태 수정
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:
+ *             example:
+ *               {
+ *                 "roomBookingId": 3,
+ *                 "status": true,
+ *                 "bookingStatus": "cancel",
+ *               }
+ *
+ *     responses:
+ *       201:
+ *         description: 예약이 수정되었습니다.
+ *         content:
  */

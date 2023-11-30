@@ -1,7 +1,9 @@
 const User = require('../models/user');
 const hashPassword = require('../utils/hashPW');
 const nodemailer = require('nodemailer');
-const { BadRequestError, InternalServerError } = require('../utils/customError')
+const crypto = require('crypto')
+const { BadRequestError, InternalServerError, NotFoundError } = require('../utils/customError');
+const { findById } = require('../models/location');
 
 const userService = {
   //* 회원 가입
@@ -42,37 +44,54 @@ const userService = {
   async findUser(email, name) {
     const user = await User.findOne({ email });
     if (!user) {
-      throw new BadRequestError('해당 이메일로 가입된 계정이 없습니다.');
+      throw new NotFoundError('해당 이메일로 가입된 계정이 없습니다.');
     }
     if (user.name !== name) {
-      throw new BadRequestError('해당 이름으로 가입된 계정이 없습니다.');
+      throw new NotFoundError('해당 이름으로 가입된 계정이 없습니다.');
     }
     // 임시 비밀번호 생성
-    const createPW = crypto.randomBytes(20).toString('hex');
+    const createPW = crypto.randomBytes(4).toString('hex');
     const tempPW = hashPassword(createPW);
 
     // 임시 비밀번호로 업데이트
     user.password = tempPW;
     await user.save();
+    return createPW;
+  },
+  //* 회원정보 조회
+  async getUser(data) {
+    const id = data._id
+    const user = await User.findById(id);
+    return {
+      userId: user.userId,
+      name: user.name,
+      email: user.email,
+      level: user.level,
+      isAdmin: user.isAdmin,
+      favorites: user.favorites,
+    }
+  },
 
-    // 이메일 전송 설정
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'YOUR_EMAIL@gmail.com',
-        pass: 'YOUR_PASSWORD',
-      },
-    })
-
-    // 이메일 전송
-    const mailOptions = {
-      from: 'YOUR_EMAIL@gmail.com',
-      to: user.email,
-      subject: '임시 비밀번호 발급',
-      text: `귀하의 임시 비밀번호는 ${createPW} 입니다.`,
-    };
-    transporter.sendMail(mailOptions);
-    return;
+  //* 회원정보 수정
+  async updateUser(user, data) {
+    const id = user._id
+    const users = await User.findById(id);
+    const { password, ...rest } = data;
+    if (!users) {
+        throw new NotFoundError('사용자를 찾을 수 없습니다.');
+    }
+    if (password) {
+        const hashedPassword = hashPassword(password)
+        rest.password = hashedPassword
+    }
+    const updatedUser = await User.updateOne(
+        { _id: id },
+        { rest },
+    );
+    if (updatedUser.modifiedCount === 0) {
+        throw new InternalServerError('서버 오류입니다.');
+    }
   }
+
 }
 module.exports = userService;

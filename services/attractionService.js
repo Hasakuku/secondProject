@@ -33,7 +33,7 @@ const attractionService = {
             }));
         return topAttractions;
     },
-    // 관광지 상세 조회
+    //* 관광지 상세 조회
     async getAttractionDetail(id) {
         const attraction = await Attraction.findOne({ attractionId: id }).populate('review').exec();
         if (!attraction) {
@@ -44,39 +44,39 @@ const attractionService = {
         attraction.review.forEach(review => {
             totalRating += review.rating;
         });
-        attraction.avgRating = totalRating / attraction.review.length;
+        attraction.avgRating = (totalRating / attraction.review.length).toFixed(2);
 
-        const result = {
-            attractionId: attraction.attractionId,
-            lodging:attraction.lodging,
-            types:attraction.types,
-            name:attraction.name,
-            location: attraction.location,
-            address: attraction.address,
-            map: attraction.map,
-            phoneNumber: attraction.map,
-            description: attraction.description,
-            image: attraction.image,
-            mainImage: attraction.mainImage,
-            ticket: attraction.ticket,
-            operatingTime: attraction.operatingTime,
-            recommendTourTime: attraction.recommendTourTime,
-            avgRating: (attraction.avgRating).toFixed(2),
-            review: attraction.review
-        };
+        const result = attraction;
         return result;
     },
-    // 관광지 리뷰 생성
-    async createReview(data) {
-        const { user, content, rating, image } = data
-        const results = new AttractionReview({
-            user,
-            content,
-            rating,
-            image,
-        })
-        const result = await results.save()
-        return {result}
-    }
+//     // 관광지 리뷰 생성
+//     async createReview(data) {
+//         const { user, content, rating, image } = data
+//         const results = new AttractionReview({
+//             user,
+//             content,
+//             rating,
+//             image,
+//         })
+//         const result = await results.save()
+//         return {result}
+//     }
 }
 module.exports = attractionService;
+
+// attractionId: attraction.attractionId,
+//             lodging:attraction.lodging,
+//             types:attraction.types,
+//             name:attraction.name,
+//             location: attraction.location,
+//             address: attraction.address,
+//             map: attraction.map,
+//             phoneNumber: attraction.map,
+//             description: attraction.description,
+//             image: attraction.image,
+//             mainImage: attraction.mainImage,
+//             ticket: attraction.ticket,
+//             operatingTime: attraction.operatingTime,
+//             recommendTourTime: attraction.recommendTourTime,
+//             avgRating: (attraction.avgRating).toFixed(2),
+//             review: attraction.review[0]
