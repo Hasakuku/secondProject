@@ -1,6 +1,7 @@
 const Lodging = require('../models/lodging/lodging');
 const RoomType = require('../models/lodging/roomType');
 const Room = require('../models/lodging/room');
+const Location = require('../models/location')
 // const LodgingReview = require('../models/lodging/LodgingReview');
 const RoomBooking = require('../models/lodging/roomBooking');
 const { InternalServerError, BadRequestError } = require('../utils/customError')
@@ -64,9 +65,10 @@ const lodgingServices = {
    },
 
    //* 숙소 상세 검색(1페이지당 20개)
-   async lodgingsList(city, checkInDate, checkOutDate, adults, children, level, page, item) {
+   async lodgingsList(locationId, checkInDate, checkOutDate, adults, children, level, page, item) {
       // 특정 도시와 성급에 해당하는 숙소
-      const selectCity = { 'address.city': city };
+      const findLocation = await Location.findOne({ locationId: locationId });
+      const selectCity = { location: findLocation._id };
       if (level) selectCity.level >= level;
 
       const lodgings = await Lodging.find(selectCity).populate('review').populate({
@@ -76,6 +78,7 @@ const lodgingServices = {
             model: 'RoomType'
          }
       }).exec();
+
       // 체크인&아웃 날짜와 객실당 인원 수 
       const availableLodgings = lodgings.filter(lodging => {
          return lodging.rooms.some(room => {
@@ -85,7 +88,6 @@ const lodgingServices = {
                   room.checkInDate > checkOutDate);
          });
       });
-
       // 반환값
       const results = availableLodgings.map(lodging =>
       ({
@@ -97,7 +99,7 @@ const lodgingServices = {
       })
       );
       //페이지 네이션
-      const perPage = item;
+      let perPage = item || 20;
       const start = (page - 1) * perPage;
       const end = page * perPage;
       const result = results.slice(start, end);

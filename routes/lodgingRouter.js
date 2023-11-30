@@ -177,7 +177,7 @@ module.exports = router;
  *     summary: 조건 검색후 목록
  *     parameters:
  *       - in: query
- *         name: city
+ *         name: locationId
  *         schema: {type: string}
  *         example: 서울
  *         description: 특정 도시

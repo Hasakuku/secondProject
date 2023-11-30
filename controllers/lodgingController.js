@@ -13,7 +13,7 @@ const getTopLodgings = asyncHandler(async (req, res) => {
 // 숙소검색 -> 숙소 목록 데이터(20개)
 const lodgingsList = asyncHandler(async (req, res) => {
    const {
-      city,
+      locationId,
       checkInDate,
       checkOutDate,
       adults,
@@ -23,7 +23,7 @@ const lodgingsList = asyncHandler(async (req, res) => {
       item,
    } = req.query;
    const result = await lodgingService.lodgingsList(
-      city,
+      Number(locationId),
       new Date(checkInDate),
       new Date(checkOutDate),
       Number(adults),
