@@ -9,7 +9,7 @@ router.get('/review', permission('user'), getUserReview)
 router.get('/', userController.getUser)
 // router.get('/', permission('user'), userController.getUser)
 router.post('/', userController.findUser)
-router.put('/', permission('user'), userController.updateUser)
+router.put('/', userController.updateUser)
 
 module.exports = router;
 
