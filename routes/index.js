@@ -14,7 +14,12 @@ const router = express.Router();
  *   name: Hey! 모두들 안녕~ 내가 누군지 아니?
  *   description: 
  */
-
+/**
+ * @swagger
+ * tags:
+ *   name: Default
+ *   description: 
+ */
 /**
  * @swagger
  * tags:
@@ -219,7 +224,7 @@ module.exports = router
  * /api/signup:
  *   post:
  *     summary: 사용자 등록
- *     tags: [Users]
+ *     tags: [Default]
  *     requestBody:  
  *       required: true
  *       content:
@@ -254,7 +259,7 @@ module.exports = router
  * /api/login:
  *   post:
  *     summary: 사용자 로그인
- *     tags: [Users]
+ *     tags: [Default]
  *     requestBody:  
  *       required: true
  *       content:
@@ -280,7 +285,7 @@ module.exports = router
  * /api/logout:
  *   delete:
  *     summary: 사용자 로그아웃
- *     tags: [Users]
+ *     tags: [Default]
  *     responses:
  *       200:
  *         description: 이용해주셔서 감사합니다.
@@ -291,7 +296,7 @@ module.exports = router
  * /api/findUser:
  *   post:
  *     summary: 사용자 찾기
- *     tags: [Users]
+ *     tags: [Default]
  *     requestBody:
  *       token: 
  *         type: string
