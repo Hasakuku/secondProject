@@ -4,6 +4,7 @@ const userController = require('../controllers/userController')
 const lodgingRouter = require('./lodgingRouter');
 const attractionRouter = require('./attractionRouter');
 const flightRouter = require('./flightRouter');
+const orderRouter = require('./orderRouter')
 const { searchList, locationList } = require('../services/commonService');
 const permission = require('../middlewares/permission');
 const router = express.Router();
@@ -12,6 +13,7 @@ router.use('/users', userRouter);
 router.use('/lodgings', lodgingRouter);
 router.use('/attractions', attractionRouter);
 router.use('/flights', flightRouter);
+router.use('/orders', orderRouter)
 
 router.post('/signup', userController.signup)
 router.post('/login', userController.login)

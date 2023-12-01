@@ -8,8 +8,8 @@ router.get('/search', lodgingController.lodgingsList) // 검색후 숙소 목록
 router.get('/:lodgingId', lodgingController.getLodgingDetail) // 숙소 상세
 router.get('/', lodgingController.getTopLodgings) // 인기 숙소
 
-router.post('/order', lodgingController.createBooking) // 숙소 예약
-router.put('/order', lodgingController.updateRoomBookingStatus) // 숙소 예약 상태 변경
+// router.post('/order', lodgingController.createBooking) // 숙소 예약
+// router.put('/order', lodgingController.updateRoomBookingStatus) // 숙소 예약 상태 변경
 
 router.post('/review', permission('user'), createReview)
 

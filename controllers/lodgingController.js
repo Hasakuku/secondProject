@@ -47,24 +47,10 @@ const getLodgingDetail = asyncHandler(async (req, res) => {
 
 // 호텔 등록
 const registerLodging = asyncHandler(async (req, res) => {
-   const lodging = new Lodging(req.body);
+   let lodgingId;
+   const lodging = new Lodging({...req.body, lodgingId});
    await lodging.save();
    res.status(201).json({ message: '숙소가 성공적으로 등록되었습니다.' });
-})
-
-// 예약 생성
-const createBooking = asyncHandler(async (req, res) => {
-   const order = req.body
-   const newRoomBooking = await lodgingService.createBooking(order)
-   // await newRoomBooking.save();
-   res.status(201).json({ message: '예약이 등록되었습니다.' });
-})
-
-//예약 상태 수정
-const updateRoomBookingStatus = asyncHandler(async (req, res) => {
-   const updateStatus = req.body;
-   const result = await lodgingService.updateRoomBookingStatus(updateStatus);
-   res.status(201).json({ message: '예약 상태가 수정되었습니다.' });
 })
 
 const lodgingController = {
@@ -72,7 +58,5 @@ const lodgingController = {
    lodgingsList,
    registerLodging,
    getLodgingDetail,
-   createBooking,
-   updateRoomBookingStatus,
 }
 module.exports = lodgingController;

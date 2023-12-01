@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-   
+
 const roomTypeSchema = new Schema({
    roomTypeId: { type: Number, required: true, unique: true },
    name: { type: Number, required: true }, // 객실 이름 (패밀리, 스위트 등)
@@ -11,6 +11,23 @@ const roomTypeSchema = new Schema({
    size: { type: Number, required: true }, // 방의 크기 (단위: m^2)
    image: [{ type: String, }], // 객실 사진
    amenities: { type: [String] }, // 제공되는 편의 시설 (와이파이, 에어컨 등)
+});
+const Counter = require('../counter');
+roomTypeSchema.pre('save', async function (next) {
+   var doc = this;
+   try {
+      // model명으로 counter를 찾아서 seq 필드를 1 증가시킵니다.
+      const counter = await Counter.findOneAndUpdate(
+         { model: 'RoomType' },
+         { $inc: { seq: 1 } },
+         { new: true } // 이 옵션은 업데이트된 문서를 반환합니다.
+      );
+      // 증가된 seq 값을 Id 필드에 저장합니다.
+      doc.roomTypeId = counter.seq;
+      next();
+   } catch (error) {
+      return next(error);
+   }
 });
 
 const RoomType = mongoose.model('RoomType', roomTypeSchema);

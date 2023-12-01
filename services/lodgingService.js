@@ -13,8 +13,8 @@ const lodgingServices = {
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
       // 특정 도시 & 리뷰수 10개 이상
-      const filteredLodgings = await Lodging.find({
-         'address.city': city,
+      let filteredLodgings = await Lodging.find({
+         location: city,
          'review.1': { $exists: true }
       },).populate('review').populate({
          path: 'rooms',
@@ -30,11 +30,13 @@ const lodgingServices = {
                room: room._id,
                checkInDate: { $lt: tomorrow },
                checkOutDate: { $gt: today },
-               bookingStatus: { $ne: 'cancelled' }
+               status: { $ne: false }
             });
             room.isAvailable = bookings.length === 0;
          }
       }
+      filteredLodgings = filteredLodgings.filter(
+         lodging => lodging.rooms.some(room => room.isAvailable));
       // 각 숙소의 평균 평점 
       filteredLodgings.forEach(lodging => {
          let totalRating = 0;
@@ -67,27 +69,40 @@ const lodgingServices = {
 
    //* 숙소 상세 검색(1페이지당 20개)
    async lodgingsList(locationId, checkInDate, checkOutDate, adults, children, level, page, item) {
+      const checkIn = new Date(checkInDate)
+      const checkOut = new Date(checkOutDate)
       // 특정 도시와 성급에 해당하는 숙소
       const findLocation = await Location.findOne({ locationId: locationId });
       const selectCity = { location: findLocation._id };
       if (level) selectCity.level >= level;
 
-      const lodgings = await Lodging.find(selectCity).populate('review').populate({
+      let lodgings = await Lodging.find(selectCity).populate('review').populate({
          path: 'rooms',
          populate: {
             path: 'roomType',
             model: 'RoomType'
          }
       }).exec();
+      // 예약 가능한 객실 여부
+      console.log(checkIn)
+      for (let lodging of lodgings) {
+         for (let room of lodging.rooms) {
+            const bookings = await RoomBooking.find({
+               room: room._id,
+               checkInDate: { $lt: checkOut },
+               checkOutDate: { $gt: checkIn },
+               status: { $ne: false }
+            });
+            room.isAvailable = bookings.length === 0;
+         }
+      }
+      lodgings = lodgings.filter(
+         lodging => lodging.rooms.some(room => room.isAvailable));
 
       // 체크인&아웃 날짜와 객실당 인원 수 
       const availableLodgings = lodgings.filter(lodging => {
          return lodging.rooms.some(room => {
-            return room.roomType.capacity >= adults + children &&
-               (!room.status ||
-                  room.checkOutDate < checkInDate ||
-                  room.checkInDate > checkOutDate);
-         });
+            return room.roomType.capacity >= adults + children });
       });
       // 반환값
       const results = availableLodgings.map(lodging =>
@@ -142,38 +157,6 @@ const lodgingServices = {
       }
       return result;
    },
-   // 예약 생성
-   async createBooking(order) {
-      const data = order
-      // 새로운 Room 인스턴스를 생성
-      const newRoomBooking = new RoomBooking(
-         data
-      );
-
-      // Room 인스턴스를 데이터베이스에 저장
-      const savedRoomBooking = await newRoomBooking.save();
-
-      return savedRoomBooking;
-   },
-
-   // 예약 상태 업데이트
-   async updateRoomBookingStatus(bookingInfo) {
-      const { roomBookingId, bookingStatus, status } = bookingInfo;
-
-      // roomId에 해당하는 객실을 찾아 예약 상태를 업데이트
-      const updatedRoom = await RoomBooking.findOneAndUpdate(
-         { roomBookingId: roomBookingId },
-         {
-            $set: {
-               status: status,
-               bookingStatus: bookingStatus,
-            },
-         },
-         { new: true } // 업데이트된 문서를 반환
-      );
-
-      return updatedRoom;
-   }
 }
 
 module.exports = lodgingServices
