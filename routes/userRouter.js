@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.get('/review', permission('user'), getUserReview)
 
-router.get('/', permission('user'), userController.getUser)
+router.get('/', userController.getUser)
+// router.get('/', permission('user'), userController.getUser)
 router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
 

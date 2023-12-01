@@ -68,7 +68,7 @@ const lodgingServices = {
    },
 
    //* 숙소 상세 검색(1페이지당 20개)
-   async lodgingsList(locationId, checkInDate, checkOutDate, adults, children, level, page, item) {
+   async lodgingsList(locationId, checkInDate, checkOutDate, adults, children, level, page, item, sort) {
       const checkIn = new Date(checkInDate)
       const checkOut = new Date(checkOutDate)
       // 특정 도시와 성급에 해당하는 숙소
@@ -84,7 +84,6 @@ const lodgingServices = {
          }
       }).exec();
       // 예약 가능한 객실 여부
-      console.log(checkIn)
       for (let lodging of lodgings) {
          for (let room of lodging.rooms) {
             const bookings = await RoomBooking.find({
@@ -98,29 +97,51 @@ const lodgingServices = {
       }
       lodgings = lodgings.filter(
          lodging => lodging.rooms.some(room => room.isAvailable));
-
       // 체크인&아웃 날짜와 객실당 인원 수 
       const availableLodgings = lodgings.filter(lodging => {
          return lodging.rooms.some(room => {
-            return room.roomType.capacity >= adults + children });
+            return room.roomType.capacity >= adults + children
+         });
       });
       // 반환값
-      const results = availableLodgings.map(lodging =>
-      ({
-         lodgingId: lodging.lodgingId,
-         hotelName: lodging.name,
-         mainImage: lodging.mainImage,
-         reviewCount: lodging.review.length,
-         theme: lodging.theme,
-         averageRating: (lodging.review.reduce(
-            (sum, review) => sum + review.rating, 0) / lodging.review.length).toFixed(2),
-      })
+      const results = availableLodgings.map(lodging => {
+         const minPriceRoom = lodging.rooms.reduce(
+            (min, room) => room.roomType && room.roomType.price < min.roomType.price ? room : min, lodging.rooms[0]
+         );
+         minPrice = minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null;
+
+         return ({
+            lodgingId: lodging.lodgingId,
+            hotelName: lodging.name,
+            minPrice: minPrice,
+            mainImage: lodging.mainImage,
+            reviewCount: lodging.review.length,
+            theme: lodging.theme,
+            averageRating: (lodging.review.reduce(
+               (sum, review) => sum + review.rating, 0) / lodging.review.length).toFixed(2),
+         })
+      }
       );
+      let sortedItems;
+      switch (sort) {
+         case 'price':
+            sortedItems = results.sort((a, b) => a.minPrice - b.minPrice);
+            break;
+         case 'rating':
+            sortedItems = results.sort((a, b) => b.averageRating - a.averageRating);
+            break;
+         case 'review':
+            sortedItems = results.sort((a, b) => b.reviewCount - a.reviewCount);
+            break;
+         default:
+            sortedItems = results;
+      }
+      // return sortedItems
       //페이지 네이션
       let perPage = item || 20;
       const start = (page - 1) * perPage;
       const end = page * perPage;
-      const result = results.slice(start, end);
+      const result = sortedItems.slice(start, end);
       return result;
    },
 

@@ -219,6 +219,12 @@ module.exports = router;
  *         example: 20
  *         description: 아이템 수
  *         required: true
+ *       - in: query
+ *         name: sort
+ *         schema: {type: string}
+ *         example: rating, price, review
+ *         description: 정렬 기준
+ *         required: 
  *         
  *     responses:
  *       200:
@@ -231,15 +237,17 @@ module.exports = router;
  *                          lodgingId: { type: 'number' }
  *                          hotelName: { type: 'string' }
  *                          mainImage: { type: 'string' }
+ *                          minPrice: {type: 'number'}
  *                          reviewCount: { type: 'number' }
- *                          averageRating: { type: 'number' }
+ *                          avgRating: { type: 'number' }
  *                  example:
  *                     {"lodgingId": 1,
  *                      "hotelName": "호텔1",
  *                      "mainImage": "mainImage.jpg",
  *                      "reviewCount": 2,
  *                      "theme": ["야경명소", "온천 호텔"],
- *                      "averageRating": 4.5}
+ *                      "minPrice": "20000",
+ *                      "avgRating": 4.5}
  */
 
 /**
