@@ -11,7 +11,7 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: Hey! 모두들 안녕~ 내가 누군지 아니?
+ *   name: Just
  *   description: 
  */
 /**
@@ -66,7 +66,7 @@ module.exports = router
  * /api/search:
  *   get:
  *     summary: 키워드를 사용하여 숙소과 관광지등 목록 검색
- *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
+ *     tags: [Just]
  *     parameters:
  *       - in: query
  *         name: keyword
@@ -174,7 +174,7 @@ module.exports = router
  * /api/location:
  *   get:
  *     summary: 위치 목록 
- *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
+ *     tags: [Just]
  *     parameters:
  *     responses:
  *       200:
@@ -224,7 +224,7 @@ module.exports = router
  * /api/location:
  *   post:
  *     summary: 위치 등록
- *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
+ *     tags: [Just]
  *     requestBody:
  *         content:
  *           application/json:
