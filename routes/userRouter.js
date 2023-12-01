@@ -7,45 +7,10 @@ const router = express.Router();
 router.get('/review', permission('user'), getUserReview)
 
 router.get('/', permission('user'), userController.getUser)
-router.post('/', permission('user'), userController.findUser)
+router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
 
 module.exports = router;
-/**
- * @swagger
- * /api/users:
- *   post:
- *     summary: 회원 찾기
- *     requestBody:
- *       token: 
- *         type: string
- *       required: true
- *       content:
- *         application/json:  
- *           schema: 
- *             type: object
- *             properties:  
- *               email: {type: string}
- *               name: {type: string}
- *             example:
- *               {"email": "admin@test.com",
- *               "name": "admin"}
- *
- *     responses:
- *       200:
- *         description: 임시 비밀번호 발급
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 password: {type: string}
- *                 message: {type: string}
- *               example:
- *                 {"password": "7c40873a",
- *                 "message": "임시 비밀번호 발급완료"}
- */
-
 
 /**
  * @swagger
@@ -120,7 +85,7 @@ module.exports = router;
  */
 
 /**
- * @swagger
+ * 
  * /api/users/review:
  *   get:
  *     summary: 리뷰 조회

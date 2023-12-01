@@ -15,6 +15,7 @@ const userSchema = new Schema({
         enum: ['silver', 'gold', 'platinum', 'diamond'],
         default: 'silver',
     },
+    secretCode: { type: String, },
     isAdmin: { type: Boolean, default: false }, // 관리자인지 여부 
     deleteAt: { type: Date, default: null }, // 계정 삭제 시간
 }, {

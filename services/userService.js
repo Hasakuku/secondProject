@@ -2,7 +2,7 @@ const User = require('../models/user');
 const hashPassword = require('../utils/hashPW');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto')
-const { BadRequestError, InternalServerError, NotFoundError } = require('../utils/customError');
+const { BadRequestError, InternalServerError, NotFoundError, ValidationError } = require('../utils/customError');
 const { findById } = require('../models/location');
 
 const userService = {
@@ -42,13 +42,16 @@ const userService = {
   },
 
   //* email&비밀번호 찾기
-  async findUser(email, name) {
+  async findUser(email, name, secretCode) {
     const user = await User.findOne({ email });
     if (!user) {
       throw new NotFoundError('해당 이메일로 가입된 계정이 없습니다.');
     }
     if (user.name !== name) {
       throw new NotFoundError('해당 이름으로 가입된 계정이 없습니다.');
+    }
+    if(user.secretCode !== secretCode) {
+      throw new ValidationError('코드가 일치하지 않습니다.');
     }
     // 임시 비밀번호 생성
     const createPW = crypto.randomBytes(4).toString('hex');

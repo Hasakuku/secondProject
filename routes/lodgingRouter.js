@@ -120,11 +120,6 @@ module.exports = router;
  *                       avgRating: 4.5,
  *                       reviewCount: 2,
  *                       minPrice: 100000}
- *   post:
- *     summary: 숙소 등록
- *     responses:
- *       200:
- *          description: OK
  */
 
 /**
@@ -140,7 +135,6 @@ module.exports = router;
  *                properties:
  *                example:
  *                  {
- *                    "lodgingId": 10,
  *                    "attraction": "605c17c4b392053daaa3c9a6",
  *                    "types": "hotel",
  *                    "level": 5,
@@ -247,7 +241,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/lodging/review:
+ * /api/lodgings/review:
  *   post:
  *     summary: 리뷰 생성
  *     requestBody:
@@ -293,7 +287,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/lodging/order:
+ * /api/orders:
  *   post:
  *     summary: 숙소 예약 생성
  *     requestBody:
@@ -330,9 +324,9 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/lodging/order:
+ * /api/orders:
  *   put:
- *     summary: 숙소 예약 상태 수정
+ *     summary: 예약 상태 수정
  *     requestBody:
  *       token: 
  *         type: string
@@ -345,8 +339,7 @@ module.exports = router;
  *             example:
  *               {
  *                 "roomBookingId": 3,
- *                 "status": true,
- *                 "bookingStatus": "cancel",
+ *                 "status": false,
  *               }
  *
  *     responses:

@@ -18,7 +18,7 @@ router.use('/orders', orderRouter)
 router.post('/signup', userController.signup)
 router.post('/login', userController.login)
 router.delete('/logout', userController.logout)
-
+router.post('/findUser', userController.findUser)
 
 router.get('/search', searchList)
 router.get('/location', locationList)
@@ -250,3 +250,37 @@ module.exports = router
  *         description: 이용해주셔서 감사합니다.
  */
 
+/**
+ * @swagger
+ * /api/findUser:
+ *   post:
+ *     summary: 사용자 찾기
+ *     requestBody:
+ *       token: 
+ *         type: string
+ *       required: true
+ *       content:
+ *         application/json:  
+ *           schema: 
+ *             type: object
+ *             properties:  
+ *               email: {type: string}
+ *               name: {type: string}
+ *             example:
+ *               {"email": "admin@test.com",
+ *               "name": "admin"}
+ *
+ *     responses:
+ *       200:
+ *         description: 임시 비밀번호 발급
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 password: {type: string}
+ *                 message: {type: string}
+ *               example:
+ *                 {"password": "7c40873a",
+ *                 "message": "임시 비밀번호 발급완료"}
+ */

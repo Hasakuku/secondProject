@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/:attractionId', attractionController.getAttractionDetail) // 관광지 상세
 // router.get('/', attractionController.getTopAttractions)
 router.post('/review', permission('user'), createReview)
+router.post('/', attractionController.registerAttraction)
 
 module.exports = router;
 
@@ -165,5 +166,79 @@ module.exports = router;
  *     responses:
  *       201:
  *         description: 리뷰 생성 성공
+ *         content:
+ */
+
+/**
+ * @swagger
+ * /api/attractions:
+ *   post:
+ *     summary: 숙소 등록
+ *     requestBody:
+ *         content:
+ *           application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                example:
+ *                  {
+ *                    "attractionId": 6,
+ *                    "lodging": "60d21b86b31de2d418296a80",
+ *                    "types": "activity",
+ *                    "name": "부산 아쿠아리움",
+ *                    "location": {
+ *                       "$oid": "65665b151f3d0e674c67474f"
+ *                    },
+ *                    "address": "부산",
+ *                    "map": {
+ *                       "latitude": 37.5131,
+ *                       "longitude": 127.059
+ *                    },
+ *                    "theme": [
+ *                       "부산 명소",
+ *                       "어린이 테마 파크"
+ *                    ],
+ *                    "phoneNumber": "02-6002-6200",
+ *                    "description": "코엑스 아쿠아리움은 다양한 수중 생물을 볼 수 있는 아쿠아리움입니다.",
+ *                    "image": [
+ *                       "b1.jpeg",
+ *                       "b2.jpeg",
+ *                       "b3.jpeg"
+ *                    ],
+ *                    "mainImage": "bMain.jpeg",
+ *                    "ticket": {
+ *                       "adult": {
+ *                          "price": 28000,
+ *                          "period": "1day",
+ *                          "mandatoryTicket": true
+ *                       },
+ *                       "youth": {
+ *                          "price": 25000,
+ *                          "period": "1day",
+ *                          "mandatoryTicket": true
+ *                       },
+ *                       "child": {
+ *                          "price": 22000,
+ *                          "period": "1day",
+ *                          "mandatoryTicket": true
+ *                       }
+ *                    },
+ *                    "operatingTime": {
+ *                       "open": "10:00",
+ *                       "close": "20:00"
+ *                    },
+ *                    "recommendTourTime": 3,
+ *                    "review": [
+ *                       {
+ *                          "$oid": "6566801754450d587f91182e"
+ *                       },
+ *                       {
+ *                          "$oid": "6566816223e06c5b72b3c7a4"
+ *                       }
+ *                    ]
+ *                    }
+ *     responses:
+ *       200:
+ *         description: 숙소 등록 성공
  *         content:
  */
