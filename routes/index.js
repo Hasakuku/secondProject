@@ -8,6 +8,37 @@ const orderRouter = require('./orderRouter')
 const { searchList, locationList } = require('../services/commonService');
 const permission = require('../middlewares/permission');
 const router = express.Router();
+/**
+ * @swagger
+ * tags:
+ *   name: Hey! 모두들 안녕~ 내가 누군지 아니?
+ *   description: 
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: 유저
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Attractions
+ *   description: 관광지
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Lodgings
+ *   description: 숙소
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Orders
+ *   description: 예약
+ */
 
 router.use('/users', userRouter);
 router.use('/lodgings', lodgingRouter);
@@ -30,6 +61,7 @@ module.exports = router
  * /api/search:
  *   get:
  *     summary: 키워드를 사용하여 숙소과 관광지등 목록 검색
+ *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
  *     parameters:
  *       - in: query
  *         name: keyword
@@ -137,6 +169,7 @@ module.exports = router
  * /api/location:
  *   get:
  *     summary: 위치 목록 
+ *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
  *     parameters:
  *     responses:
  *       200:
@@ -186,6 +219,7 @@ module.exports = router
  * /api/signup:
  *   post:
  *     summary: 사용자 등록
+ *     tags: [Users]
  *     requestBody:  
  *       required: true
  *       content:
@@ -220,6 +254,7 @@ module.exports = router
  * /api/login:
  *   post:
  *     summary: 사용자 로그인
+ *     tags: [Users]
  *     requestBody:  
  *       required: true
  *       content:
@@ -245,6 +280,7 @@ module.exports = router
  * /api/logout:
  *   delete:
  *     summary: 사용자 로그아웃
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: 이용해주셔서 감사합니다.
@@ -255,6 +291,7 @@ module.exports = router
  * /api/findUser:
  *   post:
  *     summary: 사용자 찾기
+ *     tags: [Users]
  *     requestBody:
  *       token: 
  *         type: string

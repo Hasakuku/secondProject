@@ -17,6 +17,7 @@ module.exports = router;
  * /api/users:
  *   get:
  *     summary: 회원 정보 조회
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -56,6 +57,7 @@ module.exports = router;
  * /api/users:
  *   put:
  *     summary: 회원 정보 수정
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:

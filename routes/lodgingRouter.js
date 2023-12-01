@@ -25,6 +25,7 @@ module.exports = router;
  * /api/lodgings/{lodgingId}:
  *   get:
  *     summary: 숙소 상세
+ *     tags: [Lodgings]
  *     parameters:
  *       - in: path
  *         name: lodgingId
@@ -127,6 +128,7 @@ module.exports = router;
  * /api/lodgings:
  *   post:
  *     summary: 숙소 등록
+ *     tags: [Lodgings]
  *     requestBody:
  *         content:
  *           application/json:
@@ -169,6 +171,7 @@ module.exports = router;
  * /api/lodgings/search:
  *   get:
  *     summary: 조건 검색후 목록
+ *     tags: [Lodgings]
  *     parameters:
  *       - in: query
  *         name: locationId
@@ -244,6 +247,7 @@ module.exports = router;
  * /api/lodgings/review:
  *   post:
  *     summary: 리뷰 생성
+ *     tags: [Lodgings]
  *     requestBody:
  *       token: 
  *         type: string
@@ -290,6 +294,7 @@ module.exports = router;
  * /api/orders:
  *   post:
  *     summary: 숙소 예약 생성
+ *     tags: [Orders]
  *     requestBody:
  *       token: 
  *         type: string
@@ -327,6 +332,7 @@ module.exports = router;
  * /api/orders:
  *   put:
  *     summary: 예약 상태 수정
+ *     tags: [Orders]
  *     requestBody:
  *       token: 
  *         type: string

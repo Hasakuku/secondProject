@@ -6,7 +6,7 @@ const options = {
       openapi: "3.0.0", //사용중인 오픈API 버전
       info: { // API에 필요한 정보
          title: 'Test API', // API 제목
-         version: '1.0.0', // API 버전
+         version: '3.0.0', // API 버전
          description: 'Test API with express', // API 상세
       },
       servers: [

@@ -53,6 +53,7 @@ module.exports = router;
  * /api/attractions/{attractionId}:
  *   get:
  *     summary: 관광지 상세
+ *     tags: [Attractions]
  *     parameters:
  *       - in: path
  *         name: attractionId
@@ -128,6 +129,7 @@ module.exports = router;
  * /api/attractions/review:
  *   post:
  *     summary: 리뷰 생성
+ *     tags: [Attractions]
  *     requestBody:
  *       token: 
  *         type: string
@@ -174,6 +176,7 @@ module.exports = router;
  * /api/attractions:
  *   post:
  *     summary: 숙소 등록
+ *     tags: [Attractions]
  *     requestBody:
  *         content:
  *           application/json:
