@@ -6,7 +6,8 @@ const RoomBooking = require('../models/lodging/roomBooking');
 
 // 예약 생성
 const createBooking = asyncHandler(async (req, res) => {
-   const order = req.body
+   let roomBookingId;
+   const order = {...req.body, roomBookingId}
    const newRoomBooking = await orderService.createBooking(order)
    // await newRoomBooking.save();
    res.status(201).json({ message: '예약이 등록되었습니다.' });
