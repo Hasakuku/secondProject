@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
+   reviewId: { type: Number, unique: true },
    types: { type: String, enum: ['lodging', 'airport', 'attraction'], required: true },
    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // 리뷰를 작성한 사용자
    lodging: { type: Schema.Types.ObjectId, ref: 'Lodging' }, // 숙소에 대한 리뷰
@@ -28,6 +29,24 @@ reviewSchema.pre('save', function (next) {
       this.airport = undefined;
    }
    next();
+});
+
+const Counter = require('./counter');
+reviewSchema.pre('save', async function (next) {
+   var doc = this;
+   try {
+      // model명으로 counter를 찾아서 seq 필드를 1 증가시킵니다.
+      const counter = await Counter.findOneAndUpdate(
+         { counter: true },
+         { $inc: { reviewId: 1 } },
+         { new: true } // 이 옵션은 업데이트된 문서를 반환합니다.
+      );
+      // 증가된 seq 값을 Id 필드에 저장합니다.
+      doc.reviewId = counter.reviewId;
+      next();
+   } catch (error) {
+      return next(error);
+   }
 });
 
 const Review = mongoose.model('Review', reviewSchema);

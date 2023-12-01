@@ -18,12 +18,12 @@ roomTypeSchema.pre('save', async function (next) {
    try {
       // model명으로 counter를 찾아서 seq 필드를 1 증가시킵니다.
       const counter = await Counter.findOneAndUpdate(
-         { model: 'RoomType' },
-         { $inc: { seq: 1 } },
+         { counter: true },
+         { $inc: { roomTypeId: 1 } },
          { new: true } // 이 옵션은 업데이트된 문서를 반환합니다.
       );
       // 증가된 seq 값을 Id 필드에 저장합니다.
-      doc.roomTypeId = counter.seq;
+      doc.roomTypeId = counter.roomTypeId;
       next();
    } catch (error) {
       return next(error);

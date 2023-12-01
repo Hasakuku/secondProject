@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const lodgingSchema = new Schema({
-   lodgingId: { type: Number, unique: true },
+   lodgingId: { type: Number, required: true,unique: true },
    attraction: { type: Schema.Types.ObjectId, ref: 'Attraction' }, // 관광지
    types: { // 숙소 유형
       type: String,

@@ -47,7 +47,7 @@ const getLodgingDetail = asyncHandler(async (req, res) => {
 
 // 호텔 등록
 const registerLodging = asyncHandler(async (req, res) => {
-   let lodgingId;
+   let lodgingId = 0;
    const lodging = new Lodging({...req.body, lodgingId});
    await lodging.save();
    res.status(201).json({ message: '숙소가 성공적으로 등록되었습니다.' });
