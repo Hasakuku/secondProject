@@ -5,7 +5,7 @@ const lodgingRouter = require('./lodgingRouter');
 const attractionRouter = require('./attractionRouter');
 const flightRouter = require('./flightRouter');
 const orderRouter = require('./orderRouter')
-const { searchList, locationList } = require('../services/commonService');
+const { searchList, locationList, createLocation } = require('../services/commonService');
 const permission = require('../middlewares/permission');
 const router = express.Router();
 /**
@@ -58,7 +58,7 @@ router.post('/findUser', userController.findUser)
 
 router.get('/search', searchList)
 router.get('/location', locationList)
-
+router.post('/location', createLocation)
 module.exports = router
 
 /**
@@ -217,6 +217,34 @@ module.exports = router
  *                       ]
  *                    },
  *                 ]
+ */
+
+/**
+ * @swagger
+ * /api/location:
+ *   post:
+ *     summary: 위치 등록
+ *     tags: [Hey! 모두들 안녕~ 내가 누군지 아니?]
+ *     requestBody:
+ *         content:
+ *           application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                example:
+ *                  {
+ *                    "country": 6,
+ *                    "city": "뉴욕",
+ *                    "map": {
+ *                       "latitude": 40.755701,
+ *                       "longitude": -73.974201
+ *                    },
+ *                    "province": 뉴욕주,
+ *                  }
+ *     responses:
+ *       200:
+ *         description: 위치 등록 성공
+ *         content:
  */
 
 /**

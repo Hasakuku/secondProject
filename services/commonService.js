@@ -14,7 +14,7 @@ const findItems = async (Model, keyword, type) => {
          { name: { $regex: keyword, $options: 'i' } },
          // { country: { $regex: keyword, $options: 'i' } }
       ]
-   }).populate('review');
+   }).populate('review').populate('location');
 
    if (type === 'lodging') {
       const populateOptions = {
@@ -48,9 +48,9 @@ const mapItems = (items, start, end, type, sort) => {
             );
             minPrice = minPriceRoom && minPriceRoom.roomType ? minPriceRoom.roomType.price : null;
          }
-         if (type === 'attraction') {
-            minPrice = item.ticket.adult.price;
-         }
+         // if (type === 'attraction') {
+         //    minPrice = item.ticket.adult.price;
+         // }
          return {
             [`${type}Id`]: item[`${type}Id`],
             name: item.name,
@@ -138,4 +138,12 @@ const locationList = asynchandler(async (req, res) => {
    const result = await Location.find({});
    res.status(200).json(result)
 })
-module.exports = { searchList, createReview, getUserReview, locationList }
+
+// 위치 생성
+const createLocation = asynchandler(async (req, res) => {
+   let locationId = 0;
+   const result = new Location({...req.body, locationId});
+   result.save();
+   res.status(200).json({message: '위치가 등록되었습니다.'})
+})
+module.exports = { searchList, createReview, getUserReview, locationList, createLocation }

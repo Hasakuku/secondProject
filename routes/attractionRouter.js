@@ -209,23 +209,6 @@ module.exports = router;
  *                       "b3.jpeg"
  *                    ],
  *                    "mainImage": "bMain.jpeg",
- *                    "ticket": {
- *                       "adult": {
- *                          "price": 28000,
- *                          "period": "1day",
- *                          "mandatoryTicket": true
- *                       },
- *                       "youth": {
- *                          "price": 25000,
- *                          "period": "1day",
- *                          "mandatoryTicket": true
- *                       },
- *                       "child": {
- *                          "price": 22000,
- *                          "period": "1day",
- *                          "mandatoryTicket": true
- *                       }
- *                    },
  *                    "operatingTime": {
  *                       "open": "10:00",
  *                       "close": "20:00"

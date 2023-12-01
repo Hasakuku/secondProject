@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const ticketSchema = new Schema({
-   adult: {
-      price: { type: Number, default: 0 }, // 가격
-      period: { type: String, default: "1day" }, // 유효기간
-      mandatoryTicket: { type: Boolean, default: true, } // 입장권 수령 필수 여부
-   },
-   youth: {
-      price: { type: Number, default: 0 },
-      period: { type: String, default: "1day" },
-      mandatoryTicket: { type: Boolean, default: true, }
-   },
-   child: {
-      price: { type: Number, default: 0 },
-      period: { type: String, default: "1day" },
-      mandatoryTicket: { type: Boolean, default: true, }
-   }
-})
+// const ticketSchema = new Schema({
+//    adult: {
+//       price: { type: Number, default: 0 }, // 가격
+//       period: { type: String, default: "1day" }, // 유효기간
+//       mandatoryTicket: { type: Boolean, default: true, } // 입장권 수령 필수 여부
+//    },
+//    youth: {
+//       price: { type: Number, default: 0 },
+//       period: { type: String, default: "1day" },
+//       mandatoryTicket: { type: Boolean, default: true, }
+//    },
+//    child: {
+//       price: { type: Number, default: 0 },
+//       period: { type: String, default: "1day" },
+//       mandatoryTicket: { type: Boolean, default: true, }
+//    }
+// })
 
 const attractionSchema = new Schema({
    attractionId: { type: Number, required: true, unique: true },
@@ -34,7 +34,7 @@ const attractionSchema = new Schema({
    theme: [{ type: String, }],
    image: [{ type: String }], // 여행지 이미지 URL
    mainImage: { type: String, }, // 대표이미지 
-   ticket: ticketSchema,
+   // ticket: ticketSchema,
    operatingTime: { // HH.mm
       open: { type: String },
       close: { type: String },
