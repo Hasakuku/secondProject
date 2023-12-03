@@ -30,7 +30,7 @@ const userService = {
 
   //* 로그인
   async loginService(email, password) {
-    const user = await User.findOne({ email }).select('-password') ;
+    const user = await User.findOne({ email }) ;
     if (user === null) {
       throw new BadRequestError('이메일 또는 비밀번호 불일치입니다.');
     }
