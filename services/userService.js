@@ -1,13 +1,13 @@
 const User = require('../models/user');
 const hashPassword = require('../utils/hashPW');
-const nodemailer = require('nodemailer');
+const Review = require('../models/review');
 const crypto = require('crypto')
 const { BadRequestError, InternalServerError, NotFoundError, ValidationError } = require('../utils/customError');
 const { findById } = require('../models/location');
 
 const userService = {
   //* 회원 가입
-  async signupService( email, name, password, address, isAdmin) {
+  async signupService(email, name, password, address, isAdmin) {
     const findedUser = await User.findOne({ email });
     if (findedUser) {
       throw new BadRequestError('이미 가입하신 회원입니다.');
@@ -30,7 +30,7 @@ const userService = {
 
   //* 로그인
   async loginService(email, password) {
-    const user = await User.findOne({ email }) ;
+    const user = await User.findOne({ email });
     if (user === null) {
       throw new BadRequestError('이메일 또는 비밀번호 불일치입니다.');
     }
@@ -66,6 +66,7 @@ const userService = {
   async getUser(data) {
     const id = data._id
     const user = await User.findById(id);
+    const review = await Review.find({ user: id })
     return {
       userId: user.userId,
       name: user.name,
@@ -73,6 +74,7 @@ const userService = {
       level: user.level,
       isAdmin: user.isAdmin,
       favorites: user.favorites,
+      review: review,
     }
   },
 

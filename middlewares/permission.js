@@ -32,7 +32,7 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    }
    const user = jwt.verify(token, secret); // 토큰 검사
    req.user = await User.findById(user.id).select('-password') // req.user에 유저 할당
-   console.log(req.user)
+   
    // 권한 유무 체크
    if (role === 'user' || // 인자가 유저라면 이미 토큰검사를 했기 때문에 통과
       (role === 'seller' && user.userRole !== 'user') ||
