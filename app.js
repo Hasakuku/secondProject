@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 var app = express();
 app.use(
   cors({
-    origin: "*", // 출처 허용 옵션
+    origin: "http://localhost:5173", // 출처 허용 옵션
     credentials: true, // 사용자 인증이 필요한 리소스(쿠키 등) 접근
 }));
 // view engine setup
