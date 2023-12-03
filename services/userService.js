@@ -42,7 +42,7 @@ const userService = {
   },
 
   //* email&비밀번호 찾기
-  async findUser(email, name, secretCode) {
+  async findUser(email, name,) {
     const user = await User.findOne({ email });
     if (!user) {
       throw new NotFoundError('해당 이메일로 가입된 계정이 없습니다.');
