@@ -50,9 +50,9 @@ const userService = {
     if (user.name !== name) {
       throw new NotFoundError('해당 이름으로 가입된 계정이 없습니다.');
     }
-    if(user.secretCode !== secretCode) {
-      throw new ValidationError('코드가 일치하지 않습니다.');
-    }
+    // if(user.secretCode !== secretCode) {
+    //   throw new ValidationError('코드가 일치하지 않습니다.');
+    // }
     // 임시 비밀번호 생성
     const createPW = crypto.randomBytes(4).toString('hex');
     const tempPW = hashPassword(createPW);

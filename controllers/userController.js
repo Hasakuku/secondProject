@@ -31,7 +31,7 @@ const logout = asynchandler(async (req, res) => {
 //* email&PW찾기
 const findUser = asynchandler(async (req, res) => {
    const { email, name, secretCode } = req.body;
-   if(!secretCode) throw new BadRequestError('비밀코드를 입력하세요')
+   // if(!secretCode) throw new BadRequestError('비밀코드를 입력하세요')
    const result = await userService.findUser(email, name, secretCode);
    res.json({ 'password': result, message: '임시 비밀번호 발급완료' });
 })
