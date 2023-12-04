@@ -25,12 +25,27 @@ const secret = process.env.ACCESS_SECRET
 
 // 토큰&권한 체크
 module.exports = (role) => asyncHandler(async (req, res, next) => {
-   const token = req.headers.authorization.split(' ')[1]; // 헤더에서 토큰 추출
-   if (token === undefined) { // 토큰 존재 여부
-      const error = { status: 401, message: "인증되지 않은 유저입니다." }
-      next(error);
+   let token;
+   
+   // 헤더에서 토큰 추출
+   if (req.headers.authorization) {
+      token = req.headers.authorization.split(' ')[1];
    }
-   const user = jwt.verify(token, secret); // 토큰 검사
+   
+   // 쿠키에서 토큰 추출
+   if (req.cookies.accessToken) {
+      token = req.cookies.accessToken;
+   }
+
+   if (!token) {
+      return res.status(401).json({ message: '토큰이 없습니다.' });
+   }
+   // if (token === undefined) { // 토큰 존재 여부
+   //    const error = { status: 401, message: "인증되지 않은 유저입니다." }
+   //    next(error);
+   // }
+   // const user = jwt.verify(token, secret); // 토큰 검사
+   const user = jwt.verify(token); // 토큰 검사
    req.user = await User.findById(user.id).select('-password') // req.user에 유저 할당
    
    // 권한 유무 체크
