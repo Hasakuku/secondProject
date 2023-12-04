@@ -54,7 +54,29 @@ const userService = {
     //   throw new ValidationError('코드가 일치하지 않습니다.');
     // }
     // 임시 비밀번호 생성
-    const createPW = crypto.randomBytes(4).toString('hex');
+    function generatePassword() {
+      const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+      const numbers = '0123456789';
+      const symbols = '!@#$%^&*()_+=-';
+    
+      const all = uppercase + lowercase + numbers + symbols;
+      let password = '';
+    
+      password += uppercase[Math.floor(Math.random() * uppercase.length)];
+      password += lowercase[Math.floor(Math.random() * lowercase.length)];
+      password += numbers[Math.floor(Math.random() * numbers.length)];
+      password += symbols[Math.floor(Math.random() * symbols.length)];
+    
+      for (let i = 4; i < 8; i++) {
+        password += all[Math.floor(Math.random() * all.length)];
+      }
+    
+      return password;
+    }
+    
+    const createPW = generatePassword();
+    // const createPW = crypto.randomBytes(4).toString('hex');
     const tempPW = hashPassword(createPW);
 
     // 임시 비밀번호로 업데이트
