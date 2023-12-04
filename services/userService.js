@@ -4,7 +4,16 @@ const Review = require('../models/review');
 const crypto = require('crypto')
 const { BadRequestError, InternalServerError, NotFoundError, ValidationError } = require('../utils/customError');
 const { findById } = require('../models/location');
+function validatePassword(password) {
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*]/.test(password);
 
+  if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+    throw new BadRequestError('비밀번호는 대문자, 소문자, 숫자, 특수문자가 각각 최소 1개 이상 포함되어야 합니다.');
+  }
+}
 const userService = {
   //* 회원 가입
   async signupService(email, name, password, address, isAdmin) {
@@ -12,6 +21,7 @@ const userService = {
     if (findedUser) {
       throw new BadRequestError('이미 가입하신 회원입니다.');
     }
+    validatePassword(password)
     let userId = 0;
     const hashedPassword = hashPassword(password);
     const user = await User.create({
@@ -59,22 +69,22 @@ const userService = {
       const lowercase = 'abcdefghijklmnopqrstuvwxyz';
       const numbers = '0123456789';
       const symbols = '!@#$%^&*()_+=-';
-    
+
       const all = uppercase + lowercase + numbers + symbols;
       let password = '';
-    
+
       password += uppercase[Math.floor(Math.random() * uppercase.length)];
       password += lowercase[Math.floor(Math.random() * lowercase.length)];
       password += numbers[Math.floor(Math.random() * numbers.length)];
       password += symbols[Math.floor(Math.random() * symbols.length)];
-    
+
       for (let i = 4; i < 8; i++) {
         password += all[Math.floor(Math.random() * all.length)];
       }
-    
+
       return password;
     }
-    
+
     const createPW = generatePassword();
     // const createPW = crypto.randomBytes(4).toString('hex');
     const tempPW = hashPassword(createPW);
