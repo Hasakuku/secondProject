@@ -6,8 +6,26 @@ const router = express.Router();
 
 router.get('/review', permission('user'), getUserReview)
 
-router.get('/', permission('user'), userController.getUser)
 // router.get('/', permission('user'), userController.getUser)
+router.get('/', (req, res) => {
+   const authHeader = req.headers.authorization;
+
+   if (authHeader) {
+      const token = authHeader.split(' ')[1];
+
+      // 토큰을 검증하고 사용자 데이터를 가져옵니다.
+      // 이 부분은 실제 사용자 데이터를 가져오는 로직에 따라 달라집니다.
+      const user = getUserFromToken(token);
+
+      if (user) {
+         res.json(user);
+      } else {
+         res.status(401).json({ error: 'Invalid token' });
+      }
+   } else {
+      res.status(401).json({ error: 'No token provided' });
+   }
+})
 router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
 
