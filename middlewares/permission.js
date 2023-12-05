@@ -34,7 +34,7 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    // } else if (accessToken) {// 쿠키에서 토큰 추출
    //    token = accessToken;
    // }
-   token = accessToken;
+   token = accessToken.token;
    if (!token) {
       return res.status(401).json({ message: '토큰이 없습니다.' });
    }
