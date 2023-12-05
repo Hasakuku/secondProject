@@ -97,7 +97,9 @@ const userService = {
   //* 회원정보 조회
   async getUser(data) {
     const id = data._id
+    if(!id) throw new NotFoundError('user의 id 값을 찾을 수 없습니다.')
     const user = await User.findById(id);
+    if(!user) throw new NotFoundError('user를 찾을 수 없습니다.')
     const review = await Review.find({ user: id })
     return {
       userId: user.userId,
