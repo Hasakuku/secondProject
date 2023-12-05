@@ -106,7 +106,7 @@ const userService = {
       name: user.name,
       email: user.email,
       level: user.level,
-      isAdmin: user.isAdmin,
+      // isAdmin: user.isAdmin,
       favorites: user.favorites,
       review: review,
     }
@@ -124,6 +124,7 @@ const userService = {
       const hashedPassword = hashPassword(password)
       rest.password = hashedPassword
     }
+    if(rest.isAdmin) throw new BadRequestError('사용자는 관리자여부를 변경할 수 없습니다.')
     const updatedUser = await User.updateOne(
       { _id: id },
       { rest },
