@@ -12,11 +12,8 @@ router.get('/', (req, res) => {
 
    if (authHeader) {
       const token = authHeader.split(' ')[1];
-
       // 토큰을 검증하고 사용자 데이터를 가져옵니다.
       // 이 부분은 실제 사용자 데이터를 가져오는 로직에 따라 달라집니다.
-      
-
       if (token) {
          res.json(token);
       } else {
