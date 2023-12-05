@@ -1,9 +1,11 @@
 const User = require('../models/user');
 const hashPassword = require('../utils/hashPW');
 const Review = require('../models/review');
+const RoomBooking = require('../models/lodging/roomBooking');
 const crypto = require('crypto')
 const { BadRequestError, InternalServerError, NotFoundError, ValidationError } = require('../utils/customError');
 const { findById } = require('../models/location');
+const { OrderedBulkOperation } = require('mongodb');
 function validatePassword(password) {
   const hasUpperCase = /[A-Z]/.test(password);
   const hasLowerCase = /[a-z]/.test(password);
@@ -97,16 +99,18 @@ const userService = {
   //* 회원정보 조회
   async getUser(data) {
     const id = data._id
-    if(!id) throw new NotFoundError('user의 id 값을 찾을 수 없습니다.')
+    if (!id) throw new NotFoundError('user의 id 값을 찾을 수 없습니다.')
     const user = await User.findById(id);
-    if(!user) throw new NotFoundError('user를 찾을 수 없습니다.')
+    if (!user) throw new NotFoundError('user를 찾을 수 없습니다.')
     const review = await Review.find({ user: id })
+    const booking = await RoomBooking.find({ user: id })
     return {
       userId: user.userId,
       name: user.name,
       email: user.email,
       level: user.level,
       // isAdmin: user.isAdmin,
+      booking: booking,
       favorites: user.favorites,
       review: review,
     }
@@ -124,7 +128,7 @@ const userService = {
       const hashedPassword = hashPassword(password)
       rest.password = hashedPassword
     }
-    if(rest.isAdmin) throw new BadRequestError('사용자는 관리자여부를 변경할 수 없습니다.')
+    if (rest.isAdmin) throw new BadRequestError('사용자는 관리자여부를 변경할 수 없습니다.')
     const updatedUser = await User.updateOne(
       { _id: id },
       { rest },

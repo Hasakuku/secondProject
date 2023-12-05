@@ -31,7 +31,8 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    // if(!accessToken) throw new Error('accessToken을 찾을 수 없습니다.')
    // 헤더에서 토큰 추출
    if (authHeader) {
-      token = authHeader.split(' ')[1];}
+      token = authHeader.split(' ')[1];
+   }
    // } else if (accessToken) {// 쿠키에서 토큰 추출
    //    token = accessToken;
    // }
@@ -45,7 +46,7 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    // }
    const user = jwt.verify(token, secret); // 토큰 검사
    findUser = await User.findById(user.id).select('-password') // req.user에 유저 할당
-   if(!findUser) {
+   if (!findUser) {
       throw new Error('유저를 찾을 수 없습니다.')
    }
    req.user = findUser

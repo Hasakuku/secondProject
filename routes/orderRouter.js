@@ -16,6 +16,8 @@ module.exports = router;
  *   post:
  *     summary: 숙소 예약 생성
  *     tags: [Orders]
+ *     parameters:
+ *       - in: query
  *     requestBody:
  *       token: 
  *         type: string
@@ -54,10 +56,8 @@ module.exports = router;
  *   put:
  *     summary: 예약 상태 수정
  *     tags: [Orders]
+ * 
  *     requestBody:
- *       token: 
- *         type: string
- *       required: true
  *       content:
  *         application/json:  
  *           schema: 
@@ -81,9 +81,11 @@ module.exports = router;
  *   get:
  *     summary: 유저 숙소 예약 목록
  *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
- *       token: 
- *         type: string
+ *       userId: 
+ *         type: Number
  *       required: true
  *       content:
  *         application/json:  
@@ -117,3 +119,11 @@ module.exports = router;
  *                   "request": "솔로"
  *                 }
  */
+
+// *     parameters:
+// *       - in: query
+// *         name: roomBookingId
+// *         schema: {type: integer}
+// *         example: 3
+// *         description: roomBookingId
+// *         required: true

@@ -16,6 +16,7 @@ const userSchema = new Schema({
         enum: ['silver', 'gold', 'platinum', 'diamond'],
         default: 'silver',
     },
+    // reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
     // bookings: [{ type: Schema.Types.ObjectId, ref: 'RoomBooking' }],
     // secretCode: { type: String, },
     isAdmin: { type: Boolean, default: false }, // 관리자인지 여부 
@@ -70,11 +71,6 @@ module.exports = User;
  *         phoneNumber:
  *           type: string
  *           description: The phone number of the user
- *         orders:
- *           type: array
- *           items:
- *             type: string
- *           description: The list of order IDs
  *         favorites:
  *           type: array
  *           items:
@@ -85,18 +81,6 @@ module.exports = User;
  *           enum: [silver, gold, platinum, diamond]
  *           default: silver
  *           description: The level of the user
- *         reviews:
- *           type: array
- *           items:
- *             type: string
- *           description: The list of review IDs
- *         order:
- *           type: string
- *           description: The ID of the order
- *         isAdmin:
- *           type: boolean
- *           default: false
- *           description: Whether the user is an admin or not
  *         deleteAt:
  *           type: string
  *           format: date-time

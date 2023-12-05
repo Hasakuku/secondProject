@@ -34,6 +34,8 @@ module.exports = router;
  *   get:
  *     summary: 회원 정보 조회
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -57,15 +59,16 @@ module.exports = router;
  *                 name: {type: string}
  *                 email: {type: string}
  *                 level: {type: string}
- *                 isAdmin: {type: boolean}
+ *                 booking: {type: string}
  *                 favorites: [{type: string}]
  *               example:
  *                 {"userId": 1,
  *                 "name": "admin",
  *                 "email": "admin@test.com",
  *                 "level": "sliver",
- *                 "isAdmin": true,
- *                 "favorites": []}
+ *                 "booking": ,
+ *                 "review": ,
+ *                 "favorites": [lodgings:]}
  */
 
 /**
@@ -74,6 +77,8 @@ module.exports = router;
  *   put:
  *     summary: 회원 정보 수정
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -86,21 +91,12 @@ module.exports = router;
  *               name: {type: string}
  *             example:
  *               {
- *                "email": "admin@test2.com",
- *                "password": "a123456",
- *                "name": "admin2"
+ *                "email": "admin@test.com",
+ *                "password": "Aa1234!",
+ *                "name": "admin"
  *                }
- *
- *     responses:
- *       200:
- *         description: 회원정보 수정 성공
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               example:
- *                 {message: "회원정보 수정에 성공하였습니다."}
  */
+
 
 /**
  * 
