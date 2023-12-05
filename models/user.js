@@ -9,7 +9,7 @@ const userSchema = new Schema({
     phoneNumber: { type: String }, // 전화번호
     favorites: {// 즐겨찾기
         attractions: [{ type: Schema.Types.ObjectId, ref: 'Attraction' }],
-        lodgings: [{ type: Schema.Types.ObjectId, ref: 'Lodging' }]
+        lodgings: [{ type: Schema.Types.ObjectId, ref: 'Lodging' }],
     },
     level: { // 사용자의 등급
         type: String,
