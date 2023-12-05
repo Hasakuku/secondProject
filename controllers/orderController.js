@@ -26,5 +26,6 @@ const getUserBookings = asyncHandler(async (req, res) => {
    const result = await orderService.getUserBookings(userId);
    res.status(200).json(result);
 })
+
 const orderController = { createBooking, updateRoomBookingStatus, getUserBookings }
 module.exports = orderController;
