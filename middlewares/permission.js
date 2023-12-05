@@ -31,7 +31,7 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    // if(!accessToken) throw new Error('accessToken을 찾을 수 없습니다.')
    // 헤더에서 토큰 추출
    if (authHeader) {
-      token = authHeader.split(' ')[1];
+      token = authHeader.split(' ')[1];}
    // } else if (accessToken) {// 쿠키에서 토큰 추출
    //    token = accessToken;
    // }
