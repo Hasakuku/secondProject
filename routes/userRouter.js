@@ -15,10 +15,10 @@ router.get('/', (req, res) => {
 
       // 토큰을 검증하고 사용자 데이터를 가져옵니다.
       // 이 부분은 실제 사용자 데이터를 가져오는 로직에 따라 달라집니다.
-      const user = getUserFromToken(token);
+      
 
-      if (user) {
-         res.json(user);
+      if (token) {
+         res.json(token);
       } else {
          res.status(401).json({ error: 'Invalid token' });
       }
