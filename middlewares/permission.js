@@ -26,15 +26,15 @@ const secret = process.env.ACCESS_SECRET
 // 토큰&권한 체크
 module.exports = (role) => asyncHandler(async (req, res, next) => {
    let token;
-   const authHeader = req.headers.authorization;
+   // const authHeader = req.headers.authorization;
    const accessToken = req.cookies.accessToken
    // 헤더에서 토큰 추출
-   if (authHeader) {
-      token = authHeader.split(' ')[1];
-   } else if (accessToken) {// 쿠키에서 토큰 추출
-      token = accessToken;
-   }
-
+   // if (authHeader) {
+   //    token = authHeader.split(' ')[1];
+   // } else if (accessToken) {// 쿠키에서 토큰 추출
+   //    token = accessToken;
+   // }
+   token = accessToken;
    if (!token) {
       return res.status(401).json({ message: '토큰이 없습니다.' });
    }
@@ -43,7 +43,6 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    //    next(error);
    // }
    const user = jwt.verify(token, secret); // 토큰 검사
-   // const user = jwt.verify(token); // 토큰 검사
    findUser = await User.findById(user.id).select('-password') // req.user에 유저 할당
    if(!findUser) {
       throw new Error('유저를 찾을 수 없습니다.')
