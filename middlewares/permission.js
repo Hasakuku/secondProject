@@ -30,7 +30,7 @@ module.exports = (role) => asyncHandler(async (req, res, next) => {
    const accessToken = req.cookies.accessToken
    // if(!accessToken) throw new Error('accessToken을 찾을 수 없습니다.')
    // 헤더에서 토큰 추출
-   if (!authHeader) res.json({ message: '헤더에 토큰이 없는뎁숑?'})
+   if (!authHeader) { return res.status(400).json({ message: '헤더에 토큰이 없는뎁숑?' }) }
    if (authHeader) {
       token = authHeader.split(' ')[1];
    }
