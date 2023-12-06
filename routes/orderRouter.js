@@ -29,7 +29,7 @@ module.exports = router;
  *             properties:
  *             example:
  *               {
- *                 "lodging": "655d93d91116b641aa22f75a"
+ *                 "lodging": "655d93d91116b641aa22f75a",
  *                 "room": "655d96451116b641aa22f786",
  *                 "status": false,
  *                 "checkInDate": "2023-12-14",
