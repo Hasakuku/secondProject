@@ -90,7 +90,7 @@ const lodgingServices = {
                room: room._id,
                checkInDate: { $lt: checkOut },
                checkOutDate: { $gt: checkIn },
-               status: { $ne: false }
+               status: { $ne: true }
             });
             room.isAvailable = bookings.length === 0;
          }
