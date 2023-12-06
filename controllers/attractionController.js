@@ -28,7 +28,7 @@ const registerAttraction = asyncHandler(async (req, res) => {
    let attractionId = 0;
    const result = new Attraction({ ...req.body, attractionId });
    await result.save();
-   res.status(201).json({ message: '숙소가 성공적으로 등록되었습니다.' });
+   res.status(201).json({ message: '관광지가 성공적으로 등록되었습니다.' });
 })
 const attractionController = { registerAttraction, getTopAttractions, getAttractionDetail, createReview };
 module.exports = attractionController
