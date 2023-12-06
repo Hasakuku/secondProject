@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const roomBookingSchema = new Schema({
    roomBookingId: { type: Number, unique: true },
-   user: { type: Schema.Types.ObjectId, ref: 'User', },// 회원
-   lodging: { type: Schema.Types.ObjectId, ref: 'Lodging', },
+   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },// 회원
+   lodging: { type: Schema.Types.ObjectId, ref: 'Lodging', required: true },
    // firstName: { type: String, required: true }, // 예약자 이름
    // lastName: { type: String, required: true }, // 예약자 성
    // email: { type: String, required: true }, // 예약자 이메일
    // phoneNumber: { type: String, required: true }, // 예약자 전화 번호
 
-   room: { type: Schema.Types.ObjectId, ref: 'Room', },
+   room: { type: Schema.Types.ObjectId, ref: 'Room', required: true },
    status: { type: Boolean, default: true }, // 예약 여부
    checkInDate: { type: Date, required: true }, // 체크인 날짜
    checkOutDate: { type: Date, required: true }, // 체크아웃 날짜

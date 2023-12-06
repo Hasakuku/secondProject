@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/', permission('user'), orderController.getUserBookings)
 // router.get('/', orderController.getUserBookings)
-router.post('/', orderController.createBooking)
-router.put('/', orderController.updateRoomBookingStatus)
+router.post('/', permission('user'), orderController.createBooking)
+router.put('/', permission('user'), orderController.updateRoomBookingStatus)
 
 module.exports = router;
 
@@ -19,19 +19,18 @@ module.exports = router;
  *     parameters:
  *       - in: query
  *     requestBody:
- *       token: 
+ *       token:
  *         type: string
  *       required: true
  *       content:
- *         application/json:  
- *           schema: 
+ *         application/json:
+ *           schema:
  *             type: object
  *             properties:
  *             example:
  *               {
  *                 "lodging": "655d93d91116b641aa22f75a",
  *                 "room": "655d96451116b641aa22f786",
- *                 "status": false,
  *                 "checkInDate": "2023-12-14",
  *                 "checkOutDate": "2023-12-15",
  *                 "adults": 1,
@@ -51,11 +50,11 @@ module.exports = router;
  *   put:
  *     summary: 예약 상태 수정
  *     tags: [Orders]
- * 
+ *
  *     requestBody:
  *       content:
- *         application/json:  
- *           schema: 
+ *         application/json:
+ *           schema:
  *             type: object
  *             properties:
  *             example:
@@ -79,15 +78,15 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       userId: 
+ *       userId:
  *         type: Number
  *       required: true
  *       content:
- *         application/json:  
- *           schema: 
+ *         application/json:
+ *           schema:
  *             type: object
  *             properties:
- *             
+ *
  *
  *     responses:
  *       201:
