@@ -175,7 +175,7 @@ module.exports = router;
  * @swagger
  * /api/attractions:
  *   post:
- *     summary: 숙소 등록
+ *     summary: 관광지 등록
  *     tags: [Attractions]
  *     requestBody:
  *         content:
@@ -189,9 +189,7 @@ module.exports = router;
  *                    "lodging": "60d21b86b31de2d418296a80",
  *                    "types": "activity",
  *                    "name": "부산 아쿠아리움",
- *                    "location": {
- *                       "$oid": "65665b151f3d0e674c67474f"
- *                    },
+ *                    "location": "65665b151f3d0e674c67474f",
  *                    "address": "부산",
  *                    "map": {
  *                       "latitude": 37.5131,
@@ -215,16 +213,12 @@ module.exports = router;
  *                    },
  *                    "recommendTourTime": 3,
  *                    "review": [
- *                       {
- *                          "$oid": "6566801754450d587f91182e"
- *                       },
- *                       {
- *                          "$oid": "6566816223e06c5b72b3c7a4"
- *                       }
+ *                       "6566801754450d587f91182e",
+ *                       "6566816223e06c5b72b3c7a4"
  *                    ]
  *                    }
  *     responses:
  *       200:
- *         description: 숙소 등록 성공
+ *         description: 관광지 등록 성공
  *         content:
  */

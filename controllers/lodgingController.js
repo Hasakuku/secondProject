@@ -50,7 +50,13 @@ const getLodgingDetail = asyncHandler(async (req, res) => {
 // 호텔 등록
 const registerLodging = asyncHandler(async (req, res) => {
    let lodgingId = 0;
-   const lodging = new Lodging({...req.body, lodgingId});
+   const { name, address } = req.body;
+
+   const existingAttraction = await Lodging.findOne({ $or: [{ name }, { address }] });
+   if (existingAttraction) {
+      throw new BadRequestError('이름이나 주소가 동일한 관광지가 이미 존재합니다.');
+   }
+   const lodging = new Lodging({ ...req.body, lodgingId });
    await lodging.save();
    res.status(201).json({ message: '숙소가 성공적으로 등록되었습니다.' });
 })

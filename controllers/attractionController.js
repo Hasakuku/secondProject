@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const attractionService = require('../services/attractionService')
 const AttractionReview = require('../models/attraction/attractionReview');
 const Attraction = require('../models/attraction/attraction');
+const { BadRequestError } = require('../utils/customError');
 // 추천 여행지
 const getTopAttractions = asyncHandler(async (req, res) => {
    const city = req.query.city;
@@ -26,9 +27,17 @@ const createReview = asyncHandler(async (req, res) => {
 // 관광지 등록
 const registerAttraction = asyncHandler(async (req, res) => {
    let attractionId = 0;
+   const { name, address } = req.body;
+
+   const existingAttraction = await Attraction.findOne({ $or: [{ name }, { address }] });
+   if (existingAttraction) {
+      throw new BadRequestError('이름이나 주소가 동일한 관광지가 이미 존재합니다.');
+   }
+
    const result = new Attraction({ ...req.body, attractionId });
    await result.save();
    res.status(201).json({ message: '관광지가 성공적으로 등록되었습니다.' });
 })
+
 const attractionController = { registerAttraction, getTopAttractions, getAttractionDetail, createReview };
 module.exports = attractionController
