@@ -297,6 +297,9 @@ module.exports = router
  *             properties:  
  *               email: {type: string}
  *               password: {type: string}
+ *             example:
+ *               email: admin@test.com
+ *               password: Aa1234!
  *     responses:
  *       200:
  *         description: ${user.userName}님 환영합니다!

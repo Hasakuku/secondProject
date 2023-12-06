@@ -23,8 +23,11 @@ router.get('/', permission('user'), userController.getUser)
 //       res.status(401).json({ error: 'No token provided' });
 //    }
 // })
+router.post('/favorites', permission('user'), userController.addFavorites)
+router.delete('/favorites', permission('user'), userController.delFavorites)
 router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
+
 
 module.exports = router;
 
@@ -171,4 +174,64 @@ module.exports = router;
  *                      "rating": 1,
  *                      "image": ["image1.jpg", "image2.jpg"]
  *                      }
+ */
+
+/**
+ * @swagger
+ * /users/favorites:
+ *   delete:
+ *     summary: 즐겨찾기 삭제
+ *     tags: [Users]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *             example:
+ *               {
+ *                "attraction": "605c17c4b392053daaa3c9a6",
+ *                "lodging": "655d93d91116b641aa22f75a"
+ *               }
+ *     responses:
+ *       200:
+ *         description: 즐겨찾기 제거 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 즐겨찾기에서 제거되었습니다.
+ */
+/**
+ * @swagger
+ * /users/favorites:
+ *   post:
+ *     summary: 즐겨찾기 추가
+ *     tags: [Users]
+ *     parameters:
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *             example:
+ *               {
+ *                "attraction": "605c17c4b392053daaa3c9a6",
+ *                "lodging": "655d93d91116b641aa22f75a"
+ *               }
+ *     responses:
+ *       201:
+ *         description: 즐겨찾기 추가 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 즐겨찾기에 추가되었습니다.
  */

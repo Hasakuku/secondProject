@@ -27,15 +27,15 @@ const secret = process.env.ACCESS_SECRET
 module.exports = (role) => asyncHandler(async (req, res, next) => {
    let token;
    const authHeader = req.headers.authorization;
-   // const accessToken = req.cookies.accessToken
+   const accessToken = req.cookies.accessToken
    // if(!accessToken) throw new Error('accessToken을 찾을 수 없습니다.')
    // 헤더에서 토큰 추출
    if (authHeader) {
       token = authHeader.split(' ')[1];
    }
-   // } else if (accessToken) {// 쿠키에서 토큰 추출
-   //    token = accessToken;
-   // }
+   else if (accessToken) {// 쿠키에서 토큰 추출
+      token = accessToken;
+   }
    // token = accessToken;
    if (!token) {
       return res.status(401).json({ message: '토큰이 없습니다.' });

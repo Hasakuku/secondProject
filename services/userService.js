@@ -6,6 +6,8 @@ const crypto = require('crypto')
 const { BadRequestError, InternalServerError, NotFoundError, ValidationError } = require('../utils/customError');
 const { findById } = require('../models/location');
 const { OrderedBulkOperation } = require('mongodb');
+const Lodging = require('../models/lodging/lodging');
+const Attraction = require('../models/attraction/attraction');
 function validatePassword(password) {
   const hasUpperCase = /[A-Z]/.test(password);
   const hasLowerCase = /[a-z]/.test(password);
@@ -128,7 +130,7 @@ const userService = {
       const hashedPassword = hashPassword(password)
       rest.password = hashedPassword
     }
-    if (rest.isAdmin) throw new BadRequestError('사용자는 관리자여부를 변경할 수 없습니다.')
+    if (rest.isAdmin) throw new BadRequestError('사용자는 관리자를 변경할 수 없습니다.')
     const updatedUser = await User.updateOne(
       { _id: id },
       { rest },
@@ -136,7 +138,94 @@ const userService = {
     if (updatedUser.modifiedCount === 0) {
       throw new InternalServerError('서버 오류입니다.');
     }
-  }
+  },
+
+  //* 즐겨찾기 등록
+  async addFavorites(u, data) {
+    const userId = u._id;
+    const { attraction, lodging } = data;
+
+    // 유저를 찾기
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new NotFoundError('유저를 찾을 수 없습니다.');
+    }
+
+    // 관광지 아이디가 있으면
+    if (attraction) {
+      const findAttraction = await Attraction.findById(attraction);
+      if (!findAttraction) {
+        throw new NotFoundError('관광지를 찾을 수 없습니다.');
+      }
+      // 이미 즐겨찾기에 추가된 관광지인지 확인
+      if (user.favorites.attractions.includes(attraction)) {
+        throw new BadRequestError('이미 즐겨찾기에 추가된 관광지입니다.');
+      }
+      // 즐겨찾기에 관광지를 추가
+      user.favorites.attractions.push(attraction);
+    }
+
+    // 숙소 아이디가 있으면
+    if (lodging) {
+      const findLodging = await Lodging.findById(lodging);
+      if (!findLodging) {
+        throw new NotFoundError('숙소를 찾을 수 없습니다.');
+      }
+      // 이미 즐겨찾기에 추가된 숙소인지 확인
+      if (user.favorites.lodgings.includes(lodging)) {
+        throw new BadRequestError('이미 즐겨찾기에 추가된 숙소입니다.');
+      }
+      // 즐겨찾기에 숙소를 추가
+      user.favorites.lodgings.push(lodging);
+    }
+
+    const result = await user.save();
+    return result
+  },
+
+  //* 즐겨찾기 제거
+  async delFavorites(u, data) {
+    const userId = u._id;
+    const { attraction, lodging } = data;
+
+    // 유저를 찾기
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new NotFoundError('유저를 찾을 수 없습니다.');
+    }
+
+    // 관광지 아이디가 있으면
+    if (attraction) {
+      const findAttraction = await Attraction.findById(attraction);
+      if (!findAttraction) {
+        throw new NotFoundError('관광지를 찾을 수 없습니다.');
+      }
+      // 즐겨찾기에 추가된 관광지인지 확인
+      if (!user.favorites.attractions.includes(attraction)) {
+        throw new NotFoundError('즐겨찾기에 추가되지 않은 관광지입니다.');
+      }
+      // 즐겨찾기에서 관광지를 제거
+      user.favorites.attractions.pull(attraction);
+    }
+
+    // 숙소 아이디가 있으면
+    if (lodging) {
+      const findLodging = await Lodging.findById(lodging);
+      if (!findLodging) {
+        throw new NotFoundError('숙소를 찾을 수 없습니다.');
+      }
+      // 즐겨찾기에 추가된 숙소인지 확인
+      if (!user.favorites.lodgings.includes(lodging)) {
+        throw new NotFoundError('즐겨찾기에 추가되지 않은 숙소입니다.');
+      }
+      // 즐겨찾기에서 숙소를 제거
+      user.favorites.lodgings.pull(lodging);
+    }
+
+    const result = await user.save();
+    return result
+  },
+
 
 }
 module.exports = userService;
