@@ -178,7 +178,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/favorites:
+ * /api/users/favorites:
  *   delete:
  *     summary: 즐겨찾기 삭제
  *     tags: [Users]
@@ -207,7 +207,7 @@ module.exports = router;
  */
 /**
  * @swagger
- * /users/favorites:
+ * /api/users/favorites:
  *   post:
  *     summary: 즐겨찾기 추가
  *     tags: [Users]
