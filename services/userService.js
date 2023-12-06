@@ -155,7 +155,7 @@ const userService = {
     if (!user) {
       throw new NotFoundError('유저를 찾을 수 없습니다.');
     }
-
+    if(!attraction && !lodging) throw new BadRequestError('숙소나 관광지를 입력해주세요')
     // 관광지 아이디가 있으면
     if (attraction) {
       const findAttraction = await Attraction.findById(attraction);
