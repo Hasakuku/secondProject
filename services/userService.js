@@ -135,8 +135,9 @@ const userService = {
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { rest },
+      { ...rest },
     );
+
     console.log(updatedUser)
     if (updatedUser.modifiedCount === 0) {
       throw new InternalServerError('서버 오류입니다.');
