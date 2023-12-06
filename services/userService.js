@@ -213,7 +213,10 @@ const userService = {
     if (!user) {
       throw new NotFoundError('유저를 찾을 수 없습니다.');
     }
-
+  
+    let attractionLengthBefore = user.favorites.attractions.length;
+    let lodgingLengthBefore = user.favorites.lodgings.length;
+  
     // 관광지 아이디가 있으면
     if (attraction) {
       const findAttraction = await Attraction.findById(attraction);
@@ -227,7 +230,7 @@ const userService = {
       // 즐겨찾기에서 관광지를 제거
       user.favorites.attractions.pull(attraction);
     }
-
+  
     // 숙소 아이디가 있으면
     if (lodging) {
       const findLodging = await Lodging.findById(lodging);
@@ -241,11 +244,21 @@ const userService = {
       // 즐겨찾기에서 숙소를 제거
       user.favorites.lodgings.pull(lodging);
     }
-
+  
     const result = await user.save();
-    return result
-  },
-
-
+  
+    let attractionLengthAfter = result.favorites.attractions.length;
+    let lodgingLengthAfter = result.favorites.lodgings.length;
+  
+    if (attraction && attractionLengthBefore !== attractionLengthAfter + 1) {
+      throw new Error('관광지가 즐겨찾기에서 제거되지 않았습니다.');
+    }
+  
+    if (lodging && lodgingLengthBefore !== lodgingLengthAfter + 1) {
+      throw new Error('숙소가 즐겨찾기에서 제거되지 않았습니다.');
+    }
+  
+    return result;
+  }
 }
 module.exports = userService;
