@@ -53,6 +53,7 @@ const mapItems = (items, start, end, type, sort) => {
          // }
          return {
             [`${type}Id`]: item[`${type}Id`],
+            _id: item._id,
             name: item.name,
             address: item.address,
             avgRating: (item.avgRating).toFixed(2),
