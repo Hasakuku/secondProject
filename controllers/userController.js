@@ -16,9 +16,9 @@ const login = asynchandler(async (req, res, next) => {
    const user = await userService.loginService(email, password);
    const token = setToken(user);
 
-   res.cookie('accessToken', token, { domain: 'http://15.165.25.34:3000/', maxAge: 3600000, });
-   // res.cookie('accessToken', token, { maxAge: 3600000, httpOnly: true });
-   res.json({ message: `${user.name}님 환영합니다!` });
+   // res.cookie('accessToken', token, { domain: 'http://localhost:5173', maxAge: 3600000, });
+   res.cookie('accessToken', token, { maxAge: 3600000, });
+   res.json({ token: token, message: `${user.name}님 환영합니다!` });
 })
 
 //*로그아웃
@@ -65,7 +65,7 @@ const delFavorites = asynchandler(async (req, res) => {
    const user = req.user;
    const data = req.body;
    const result = await userService.delFavorites(user, data);
-   res.status(200).json({ message: '즐겨찾기에 삭제되었습니다.' })
+   res.status(200).json({message: '즐겨찾기에 삭제되었습니다.' })
 })
 const userController = { signup, login, logout, findUser, updateUser, getUser, addFavorites, delFavorites }
 module.exports = userController;
