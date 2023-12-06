@@ -17,7 +17,7 @@ const login = asynchandler(async (req, res, next) => {
    const token = setToken(user);
 
    // res.cookie('accessToken', token, { domain: 'http://localhost:5173', maxAge: 3600000, });
-   res.cookie('accessToken', token, { maxAge: 3600000, });
+   res.cookie('accessToken', token, { maxAge: 3600000, httpOnly: true });
    res.json({ message: `${user.name}님 환영합니다!` });
 })
 
