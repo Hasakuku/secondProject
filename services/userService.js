@@ -127,7 +127,7 @@ const userService = {
     if (!users) {
       throw new NotFoundError('사용자를 찾을 수 없습니다.');
     }
-    
+
     if (password) {
       const hashedPassword = hashPassword(password)
       rest.password = hashedPassword
@@ -155,7 +155,7 @@ const userService = {
     if (!user) {
       throw new NotFoundError('유저를 찾을 수 없습니다.');
     }
-    if(!attraction && !lodging) throw new BadRequestError('숙소나 관광지를 입력해주세요')
+    if (!attraction && !lodging) throw new BadRequestError('숙소나 관광지 정보를 입력해주세요')
     // 관광지 아이디가 있으면
     if (attraction) {
       const findAttraction = await Attraction.findById(attraction);
@@ -192,7 +192,7 @@ const userService = {
   async delFavorites(u, data) {
     const userId = u._id;
     const { attraction, lodging } = data;
-
+    if (!attraction && !lodging) throw new BadRequestError('숙소나 관광지 정보를 입력해주세요')
     // 유저를 찾기
     const user = await User.findById(userId);
     if (!user) {
