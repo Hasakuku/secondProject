@@ -102,7 +102,22 @@ const userService = {
   async getUser(data) {
     const id = data._id
     if (!id) throw new NotFoundError('user의 id 값을 찾을 수 없습니다.')
-    const user = await User.findById(id);
+    const populateOption1 = {
+      path: 'favorites',
+      populate: {
+         path: 'attractions',
+         model: 'Attraction'
+      },
+   };
+   const populateOption2 = {
+    path: 'favorites',
+    populate: {
+      path: 'lodgings',
+      model: 'Lodging'
+   },
+ };
+    const user = await User.findById(id).populate(populateOption1).populate(populateOption2);
+  
     if (!user) throw new NotFoundError('user를 찾을 수 없습니다.')
     const review = await Review.find({ user: id })
     const booking = await RoomBooking.find({ user: id })
