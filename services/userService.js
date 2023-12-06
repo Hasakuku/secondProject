@@ -107,6 +107,7 @@ const userService = {
     const review = await Review.find({ user: id })
     const booking = await RoomBooking.find({ user: id })
     return {
+      _id: user._id,
       userId: user.userId,
       name: user.name,
       email: user.email,
