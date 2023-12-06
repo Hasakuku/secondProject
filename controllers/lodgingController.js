@@ -54,7 +54,7 @@ const registerLodging = asyncHandler(async (req, res) => {
 
    const existingAttraction = await Lodging.findOne({ $or: [{ name }, { address }] });
    if (existingAttraction) {
-      throw new BadRequestError('이름이나 주소가 동일한 관광지가 이미 존재합니다.');
+      throw new BadRequestError('이름이나 주소가 동일한 숙소가 이미 존재합니다.');
    }
    const lodging = new Lodging({ ...req.body, lodgingId });
    await lodging.save();
