@@ -29,12 +29,7 @@ module.exports = router;
  *             properties:
  *             example:
  *               {
- *                 "roomBookingId": 3,
- *                 "user": "6567aac0910622e34444b351",
- *                 "firstName": "wonsik",
- *                 "lastName": "seo",
- *                 "email":"test@test.com",
- *                 "phoneNumber": "010-1111-1111",
+ *                 "lodging": "655d93d91116b641aa22f75a"
  *                 "room": "655d96451116b641aa22f786",
  *                 "status": false,
  *                 "checkInDate": "2023-12-14",
