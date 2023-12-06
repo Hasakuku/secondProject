@@ -126,15 +126,18 @@ const userService = {
     if (!users) {
       throw new NotFoundError('사용자를 찾을 수 없습니다.');
     }
+    
     if (password) {
       const hashedPassword = hashPassword(password)
       rest.password = hashedPassword
     }
-    if (rest.isAdmin) throw new BadRequestError('사용자는 관리자를 변경할 수 없습니다.')
-    const updatedUser = await User.updateOne(
-      { _id: id },
+    // if (rest.isAdmin) throw new BadRequestError('사용자는 관리자를 변경할 수 없습니다.')
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
       { rest },
     );
+    console.log(updatedUser)
     if (updatedUser.modifiedCount === 0) {
       throw new InternalServerError('서버 오류입니다.');
     }
