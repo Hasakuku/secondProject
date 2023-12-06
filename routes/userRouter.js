@@ -24,7 +24,7 @@ router.get('/', permission('user'), userController.getUser)
 //    }
 // })
 router.post('/favorites', permission('user'), userController.addFavorites)
-router.delete('/favorites', permission('user'), userController.delFavorites)
+router.put('/favorites', permission('user'), userController.delFavorites)
 router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
 
