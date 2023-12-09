@@ -1,0 +1,1168 @@
+openapi: 3.0.3
+info:
+  title: Elice SW Track 7th Web Project Team 6
+  description: 도서 판매 사이트 API 문서
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+tags:
+  - name: books
+    description: 상품 API
+  - name: auth
+    description: 인증 API
+  - name: users
+    description: 유저 API
+  - name: categories
+    description: 카테고리 API
+  - name: orders
+    description: 주문 API
+
+paths:
+  /books:
+    get:
+      tags:
+        - books
+      summary: 도서 목록
+      description: 도서 목록을 가져오는 API
+      parameters:
+        - name: category
+          in: query
+          description: 카테고리 ID
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    post:
+      tags:
+        - books
+      summary: 도서 등록
+      description: 도서 정보를 등록하는 API
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                publisher:
+                  type: string
+                  example: 문학동네
+                title:
+                  type: string
+                  example: 트렌드 코리아 2024
+                author:
+                  type: string
+                  example: 오강산
+                content:
+                  type: string
+                  example: 가나다라마바사 아자차카타파하...
+                pages:
+                  type: integer
+                  example: 483
+                publicationDate:
+                  type: string
+                  example: 2023-11-01
+                releaseDate:
+                  type: string
+                  example: 2023-11-01
+                image:
+                  type: file
+                  example: https://example.com/image/image.png
+                price:
+                  type: integer
+                  example: 15000
+                inventoryCount:
+                  type: integer
+                  example: 50
+                category:
+                  type: string
+                  example: 6543b8d140274d4982ec7e91
+        required: true
+      responses:
+        "201":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /books/{bookId}:
+    get:
+      tags:
+        - books
+      summary: 도서 상세
+      description: 도서 상세정보을 가져오는 API
+      parameters:
+        - name: bookId
+          in: path
+          description: 도서 ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    put:
+      tags:
+        - books
+      summary: 도서 수정
+      description: 도서 정보를 수정하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: 도서 ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                publisher:
+                  type: string
+                  example: 문학동네
+                title:
+                  type: string
+                  example: 트렌드 코리아 2024
+                author:
+                  type: string
+                  example: 오강산
+                content:
+                  type: string
+                  example: 가나다라마바사 아자차카타파하...
+                pages:
+                  type: integer
+                  example: 483
+                publicationDate:
+                  type: string
+                  example: 2023-11-01
+                releaseDate:
+                  type: string
+                  example: 2023-11-01
+                image:
+                  type: file
+                  example: https://example.com/image/image.png
+                price:
+                  type: integer
+                  example: 15000
+                inventoryCount:
+                  type: integer
+                  example: 50
+                category:
+                  type: string
+                  example: 6543b8d140274d4982ec7e91
+        required: true
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    delete:
+      tags:
+        - books
+      summary: 도서 삭제
+      description: 도서 정보를 삭제하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: 도서 ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /login:
+    post:
+      tags:
+        - auth
+      summary: 회원 로그인
+      description: 로그인 API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: example@example.com
+                password:
+                  type: string
+                  example: password
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    example: ObjectId(userid)
+                  authority:
+                    type: string
+                    example: 일반
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /signup:
+    post:
+      tags:
+        - auth
+      summary: 회원 가입
+      description: 회원 가입 API
+      requestBody:
+        description: 회원가입 데이터
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: example@example.com
+                password:
+                  type: string
+                  example: password
+                phoneNumber:
+                  type: string
+                  example: 010-1234-1234
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    example: ObjectId(userid)
+                  authority:
+                    type: string
+                    example: 일반
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /logout:
+    post:
+      tags:
+        - auth
+      summary: 로그아웃
+      description: 로그아웃 API
+      security:
+        - BearerAuth: []
+      responses:
+        "201":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      summary: 회원 정보
+      description: 회원정보를 가져오는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공**(name, address가 없을경우 name, zipCode, detail은 ""로 반환)**
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    example: asdjvasdvnecnsjdfl
+                  email:
+                    type: string
+                    example: example@example.com
+                  phoneNumber:
+                    type: string
+                    example: 010-1234-1234
+                  authority:
+                    type: string
+                    example: 일반
+                  name:
+                    type: string
+                    example: 오강산
+                  address:
+                    type: object
+                    properties:
+                      zipCode:
+                        type: string
+                        example: 12345
+                      detail1:
+                        type: string
+                        example: 서울시 강남구 역삼동 123
+                      detail2:
+                        type: string
+                        example: 403호
+        "500":
+          description: 서버 에러
+
+    put:
+      tags:
+        - users
+      summary: 회원 정보 수정
+      description: 회원 정보를 수정하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: password
+                phoneNumber:
+                  type: string
+                  example: 010-1234-1234
+                name:
+                  type: string
+                  example: 오강산
+                address:
+                  type: object
+                  properties:
+                    zipCode:
+                      type: string
+                      example: 12345
+                    detail1:
+                      type: string
+                      example: 서울시 강남구 역삼동 123
+                    detail2:
+                      type: string
+                      example: 111호
+        required: true
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    delete:
+      tags:
+        - users
+      summary: 회원 정보 삭제
+      description: 회원 탈퇴 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: password
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /users/{userId}/password:
+    patch:
+      tags:
+        - users
+      summary: 회원 비밀번호 수정
+      description: 회원 비밀번호 수정 하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: password
+                newPassword:
+                  type: string
+                  example: newPassword
+        required: true
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /users/{userId}/orders:
+    post:
+      tags:
+        - users
+      summary: 주문 요청
+      description: 새로운 주문을 생성하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: "유저 ID"
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipient:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                      example: 010-1234-1234
+                      description: 받는사람 전화번호
+                    name:
+                      type: string
+                      example: 오강산
+                      description: 받는사람
+                    address:
+                      type: object
+                      properties:
+                        zipCode:
+                          type: string
+                          example: 11234
+                          description: 받는사람 우편번호
+                        detail1:
+                          type: string
+                          example: 서울시 강남구 역삼동 8-2
+                          description: 받는사람 주소
+                        detail2:
+                          type: string
+                          example: 402호
+                          description: 받는사람 주소(상세)
+                books:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      book:
+                        type: string
+                        example: ObjectId(asdfkv3D2Ec)
+                      count:
+                        type: number
+                        example: 1
+                  example:
+                    - book: ObjectId(asdfkv3D2Ec)
+                      count: 1
+                  description: 주문한 책 정보 목록
+                deliveryPrice:
+                  type: integer
+                  example: 3000
+                  description: 배송비
+                productsPrice:
+                  type: integer
+                  example: 42000
+                  description: 도서 총 주문가격
+      responses:
+        "201":
+          description: 생성 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /users/{userId}/orders/{orderId}:
+    patch:
+      tags:
+        - users
+      summary: 주문 변경
+      description: 주문 상태를 변경하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: "유저 ID"
+          required: true
+          schema:
+            type: string
+        - name: orderId
+          in: path
+          description: "주문 ID"
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: deliveryState - 주문취소, 주문완료, 배송준비중, 배송중, 배송완료
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deliveryState:
+                  type: string
+                  example: 주문취소
+                  description: 배송 상태
+                recipient:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                      example: 010-1234-1234
+                      description: 받는사람 전화번호
+                    name:
+                      type: string
+                      example: 오강산
+                      description: 받는사람
+                    address:
+                      type: object
+                      properties:
+                        zipCode:
+                          type: string
+                          example: 11234
+                          description: 받는사람 우편번호
+                        detail1:
+                          type: string
+                          example: 서울시 강남구 역삼동 8-2
+                          description: 받는사람 주소
+                        detail2:
+                          type: string
+                          example: 402호
+                          description: 받는사람 주소(상세)
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    delete:
+      tags:
+        - users
+      summary: 주문 삭제
+      description: 주문 상태를 삭제하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: "유저 ID"
+          required: true
+          schema:
+            type: string
+        - name: orderId
+          in: path
+          description: "주문 ID"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /users/{userId}/books:
+    get:
+      tags:
+        - users
+      summary: 판매자(관리자)가 등록한 상품(도서) 목록
+      description: 판매자(관리자)가 등록한 상품(도서) 목록 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: "관리자 ID"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /categories:
+    get:
+      tags:
+        - categories
+      summary: 카테고리 목록
+      description: 카테고리 목록을 가져오는 API
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      example: ObjectId(asdfkv3D2Ec)
+                      description: 카테고리 ID
+                    name:
+                      type: string
+                      example: 전체도서
+                    subCategories:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: ObjectId(asdfjalfkvja)
+                          name:
+                            type: string
+                            example: 소설
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    post:
+      tags:
+        - categories
+      summary: 카테고리 등록
+      description: 카테고리 등록 API
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 카테고리명
+                  description: 카테고리 이름
+      responses:
+        "201":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /categories/{categoryId}:
+    delete:
+      tags:
+        - categories
+      summary: 카테고리 삭제
+      description: 카테고리 삭제 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          description: 카테고리 ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+    put:
+      tags:
+        - categories
+      summary: 카테고리 수정
+      description: 카테고리 수정 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          description: 카테고리 ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 카테고리명
+                  description: 카테고리 이름
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /orders:
+    get:
+      tags:
+        - orders
+      summary: 주문 목록
+      description: 도서 주문 목록을 가져오는 API
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+  /orders/{orderId}:
+    get:
+      tags:
+        - orders
+      summary: 주문 조회
+      description: 특정 유저의 주문 정보를 조회하는 API
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          description: "주문 ID"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "400":
+          description: 잘못된 요청
+        "500":
+          description: 서버 에러
+
+components:
+  schemas:
+    User:
+      required:
+        - _id
+        - email
+        - password
+        - phoneNumber
+        - authority
+      type: object
+      properties:
+        _id:
+          type: string
+          example: ObjectId(asdfnlsekfjeslfj)
+          description: Primary Key
+        email:
+          type: string
+          example: example@example.com
+          description: 유저 이메일
+        password:
+          type: string
+          example: aVEs23s!aveX#
+          description: 유저 비밀번호
+        authority:
+          type: string
+          enum:
+            - 관리자
+            - 판매자
+            - 일반
+          default: 일반
+          example: 일반
+          description: 유저 권한
+        phoneNumber:
+          type: string
+          example: 010-1234-1234
+          description: 유저 전화번호
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              example: 11234
+              description: 우편번호
+            detail1:
+              type: string
+              example: 서울시 강남구 역삼동 8-2 402호
+              description: 상세 주소
+            detail2:
+              type: string
+              example: 111호
+              description: 상세 주소
+        name:
+          type: string
+          example: 오강산
+          description: 받는사람
+        createdAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 등록날짜
+        updatedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 수정날짜
+        deletedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 삭제날짜
+
+    Book:
+      type: object
+      required:
+        - _id
+        - publisher
+        - title
+        - author
+        - content
+        - pages
+        - publicationDate
+        - releaseDate
+        - image
+        - price
+        - inventoryCount
+        - shippingFee
+        - category
+        - seller
+      properties:
+        _id:
+          type: string
+          example: ObjectId(aajeigj921fcjnszli)
+          description: Primary Key
+        publisher:
+          type: string
+          example: 문학동네
+          description: 출판사
+        title:
+          type: string
+          example: 트렌드 코리아 2024
+          description: 도서 제목
+        author:
+          type: string
+          example: 오강산
+          description: 도서 저자
+        content:
+          type: string
+          example: 가나다라마바사 아자차카타파하
+          description: 도서 내용
+        pages:
+          type: integer
+          example: 483
+          description: 전체 쪽수
+        publicationDate:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 발행일자
+        releaseDate:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 출시일자
+        image:
+          type: object
+          properties:
+            fieldname:
+              type: string
+              example: image
+            originalname:
+              type: string
+              example: image.jpg
+            encoding:
+              type: string
+              example: 7bit
+            mimetype:
+              type: string
+              example: image/jpeg
+            destination:
+              type: string
+              example: public/images/books/
+            filename:
+              type: string
+              example: 1699358026207-383193119image.jpg
+            path:
+              type: string
+              example: /public/images/books/1699358026207-383193119image.jpg
+            size:
+              type: number
+              example: 89349
+        price:
+          type: integer
+          example: 15000
+          description: 도서 가격
+        inventoryCount:
+          type: integer
+          example: 50
+          description: 재고 수량
+        category:
+          $ref: "#/components/schemas/Category"
+        seller:
+          $ref: "#/components/schemas/User"
+        createdAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 등록날짜
+        updatedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 수정날짜
+        deletedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 삭제날짜
+
+    Order:
+      required:
+        - _id
+        - user
+        - recipient
+        - books
+        - deliveryState
+        - deliveryPrice
+        - productsPrice
+      type: object
+      properties:
+        _id:
+          type: string
+          example: ObjectId(selfkseflkseesf)
+          description: Primary Key
+        user:
+          type: string
+          example: ObjectId(asX31sdF3cVs)
+          description: User 스키마 ObjectId
+        recipient:
+          type: object
+          required:
+            - name
+            - phoneNumber
+            - address
+          properties:
+            name:
+              type: string
+              example: 오강산
+              description: 받는사람
+            phoneNumber:
+              type: string
+              example: 010-1234-1234
+              description: 받는사람 전화번호
+            address:
+              type: object
+              required:
+                - zipCode
+                - detail1
+              properties:
+                zipCode:
+                  type: string
+                  example: 11234
+                  description: 받는사람 우편번호
+                detail1:
+                  type: string
+                  example: 서울시 강남구 역삼동 8-2
+                  description: 받는사람 주소
+                detail2:
+                  type: string
+                  example: 402호
+                  description: 받는사람 주소(상세)
+        books:
+          type: array
+          items:
+            type: object
+            required:
+              - book
+              - count
+            properties:
+              book:
+                type: string
+                example: ObjectId(asdfkv3D2Ec)
+              count:
+                type: number
+                example: 1
+          example:
+            - book: sdfasdfadsad
+              count: 1
+          description: 주문한 책 정보 목록
+        deliveryPrice:
+          type: integer
+          example: 3000
+          description: 배송비
+        productsPrice:
+          type: integer
+          example: 64000
+          description: 총 상품 가격
+        deliveryState:
+          type: string
+          example: 배송중
+          default: 주문완료
+          description: 주문 상태
+          enum:
+            - 주문취소
+            - 주문완료
+            - 배송준비중
+            - 배송중
+            - 배송완료
+        createdAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 등록날짜
+        updatedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 수정날짜
+        deletedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 삭제날짜
+
+    Category:
+      required:
+        - _id
+        - name
+      type: object
+      properties:
+        _id:
+          type: string
+          example: ObjectId(a12Cw33dS)
+          description: Primary Key
+        name:
+          type: string
+          example: 국내도서
+          description: 카테고리 이름
+        parent:
+          type: string
+          example: ObjectId(asdfkv3D2Ec)
+          description: Category ObjectId
+        createdAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 등록날짜
+        updatedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 수정날짜
+        deletedAt:
+          type: string
+          example: 2023-11-01T17:32:28Z
+          description: 삭제날짜
+
+  requestBodies:
+    Book:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Book"
+
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

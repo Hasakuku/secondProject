@@ -5,8 +5,11 @@ const permission = require('../middlewares/permission')
 const router = express.Router();
 
 router.get('/review', permission('user'), getUserReview)
-
+router.get('/:id', permission('user'), userController.getUserReview)
 router.get('/', permission('user'), userController.getUser)
+
+// router.get('/', permission('user'), userController.getUser)
+
 // router.get('/', (req, res) => {
 //    const authHeader = req.headers.authorization;
 
@@ -27,7 +30,6 @@ router.post('/favorites', permission('user'), userController.addFavorites)
 router.delete('/favorites', permission('user'), userController.delFavorites)
 router.post('/', userController.findUser)
 router.put('/', permission('user'), userController.updateUser)
-
 
 module.exports = router;
 

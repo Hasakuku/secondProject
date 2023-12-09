@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors");
-
+const YAML = require('yamljs');
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: "http://localhost:5173", // 출처 허용 옵션
     credentials: true, // 사용자 인증이 필요한 리소스(쿠키 등) 접근
-}));
+  }));
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -37,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 스웨거
 const { swaggerUi, specs } = require('./modules/swagger');
+// const specs = YAML.load(path.join(__dirname, "./swagger.yaml"));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api', indexRouter);

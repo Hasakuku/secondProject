@@ -23,7 +23,7 @@ const secret = process.env.ACCESS_SECRET
 //    }
 // })
 
-// 토큰&권한 체크
+// 토큰 체크
 module.exports = (role) => asyncHandler(async (req, res, next) => {
    let token;
    const authHeader = req.headers.authorization;
