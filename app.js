@@ -36,8 +36,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 스웨거
-const { swaggerUi, specs } = require('./modules/swagger');
-// const specs = YAML.load(path.join(__dirname, "./swagger.yaml"));
+// const { swaggerUi, specs } = require('./modules/swagger');
+const specs = YAML.load(path.join(__dirname, "./swagger.yaml"));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api', indexRouter);
